@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="string_request">String Request</string>
+    <string name="json_request">JSON Request</string>
+    <string name="image_request">Image Request</string>
 </resources>

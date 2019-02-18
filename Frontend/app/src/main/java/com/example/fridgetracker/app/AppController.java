@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.example.sumon.androidvolley.utils.LruBitmapCache;
+import com.example.fridgetracker.utils.LruBitmapCache;
 
 public class AppController extends Application {
 

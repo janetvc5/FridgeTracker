@@ -16,8 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.sumon.androidvolley.app.AppController;
-import com.example.sumon.androidvolley.utils.Const;
+import com.example.fridgetracker.app.AppController;
+import com.example.fridgetracker.utils.Const;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,9 +40,9 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.json_request);
 
-        btnJsonObj = (Button) findViewById(R.id.btnJsonObj);
-        btnJsonArray = (Button) findViewById(R.id.btnJsonArray);
-        msgResponse = (TextView) findViewById(R.id.msgResponse);
+        btnJsonObj = findViewById(R.id.btnJsonObj);
+        btnJsonArray = findViewById(R.id.btnJsonArray);
+        msgResponse = findViewById(R.id.msgResponse);
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -90,7 +90,7 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
              * Passing some request headers
              * */
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
                 return headers;

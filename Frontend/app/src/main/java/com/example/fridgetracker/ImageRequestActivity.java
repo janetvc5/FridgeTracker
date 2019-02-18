@@ -11,10 +11,11 @@ import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.sumon.androidvolley.app.AppController;
-import com.example.sumon.androidvolley.utils.Const;
+import com.example.fridgetracker.app.AppController;
+import com.example.fridgetracker.utils.Const;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class ImageRequestActivity extends Activity {
 
@@ -29,9 +30,9 @@ public class ImageRequestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_request);
 
-        btnImageReq = (Button) findViewById(R.id.btnImageReq);
-        imgNetWorkView = (NetworkImageView) findViewById(R.id.imgNetwork);
-        imageView = (ImageView) findViewById(R.id.imgView);
+        btnImageReq = findViewById(R.id.btnImageReq);
+        imgNetWorkView = findViewById(R.id.imgNetwork);
+        imageView = findViewById(R.id.imgView);
 
         btnImageReq.setOnClickListener(new View.OnClickListener() {
 
@@ -67,18 +68,14 @@ public class ImageRequestActivity extends Activity {
 		});*/
 
         // Loading image with placeholder and error image
-        imageLoader.get(Const.URL_IMAGE, ImageLoader.getImageListener(
+        /*imageLoader.get(Const.URL_IMAGE, ImageLoader.getImageListener(
                 imageView, R.drawable.ico_loading, R.drawable.ico_error));
-
+        */
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
         Entry entry = cache.get(Const.URL_IMAGE);
         if(entry != null){
-            try {
-                String data = new String(entry.data, "UTF-8");
-                // handle data, like converting it to xml, json, bitmap etc.,
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            String data = new String(entry.data, StandardCharsets.UTF_8);
+            // handle data, like converting it to xml, json, bitmap etc.,
         }else{
             // cached response doesn't exists. Make a network call here
         }

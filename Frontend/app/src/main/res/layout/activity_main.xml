@@ -17,7 +17,8 @@
         android:text="@string/title_home"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Fridge Tracker" />
+        tools:text="Fridge Tracker"
+        android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -36,7 +37,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="57dp"
-        android:text="String Request"
+        android:text="@string/string_request"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +49,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="129dp"
-        android:text="JSON Request"
+        android:text="@string/json_request"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +60,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="203dp"
-        android:text="Image Request"
+        android:text="@string/image_request"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

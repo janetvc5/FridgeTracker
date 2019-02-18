@@ -1,5 +1,6 @@
 package com.example.fridgetracker;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     private TextView mTextMessage;
 
@@ -20,15 +21,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_myfridge:
                     mTextMessage.setText("My Fridge");
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_grocerylist:
+                    mTextMessage.setText("Grocery List");
+                    return true;
+                case R.id.navigation_recipes:
                     mTextMessage.setText("Recipes");
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_settings:
                     mTextMessage.setText("Settings");
                     return true;
+
             }
             return false;
         }
@@ -42,17 +47,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnString = (Button) findViewById(R.id.btnStringRequest);
-        btnJson = (Button) findViewById(R.id.btnJsonRequest);
-        btnImage = (Button) findViewById(R.id.btnImageRequest);
+        btnString = findViewById(R.id.btnStringRequest);
+        btnJson = findViewById(R.id.btnJsonRequest);
+        btnImage = findViewById(R.id.btnImageRequest);
 
         // button click listeners
         btnString.setOnClickListener(this);
         btnJson.setOnClickListener(this);
         btnImage.setOnClickListener(this);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        mTextMessage = findViewById(R.id.message);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
