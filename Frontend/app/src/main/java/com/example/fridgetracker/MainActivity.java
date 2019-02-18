@@ -1,10 +1,13 @@
 package com.example.fridgetracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,27 +21,60 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    mTextMessage.setText("My Fridge");
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    mTextMessage.setText("Recipes");
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    mTextMessage.setText("Settings");
                     return true;
             }
             return false;
         }
     };
 
+
+    private Button btnJson, btnString, btnImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btnString = (Button) findViewById(R.id.btnStringRequest);
+        btnJson = (Button) findViewById(R.id.btnJsonRequest);
+        btnImage = (Button) findViewById(R.id.btnImageRequest);
+
+        // button click listeners
+        btnString.setOnClickListener(this);
+        btnJson.setOnClickListener(this);
+        btnImage.setOnClickListener(this);
+
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnStringRequest:
+                startActivity(new Intent(MainActivity.this,
+                        StringRequestActivity.class));
+                break;
+            case R.id.btnJsonRequest:
+                startActivity(new Intent(MainActivity.this,
+                        JsonRequestActivity.class));
+                break;
+            case R.id.btnImageRequest:
+                startActivity(new Intent(MainActivity.this,
+                        ImageRequestActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
+
 
 }
