@@ -32,9 +32,9 @@ class UserController {
         logger.info("Number of owners Fetched:" + results.size());
         return results;
     }
-
-	@RequestMapping(method = RequestMethod.GET, path = "/user/{userid}")
-	public Optional<User> findUserById(@PathVariable("id") int id) {
+	
+	@RequestMapping(method = RequestMethod.GET, path = "/user/{id}")
+	public Optional<User> findUserById(@PathVariable("id") Integer id) {
 		logger.info("Entered into Controller Layer");
 		Optional<User> results = userRepository.findById(id);
 		return results;
