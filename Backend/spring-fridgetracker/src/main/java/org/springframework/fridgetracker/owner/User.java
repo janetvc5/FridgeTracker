@@ -46,11 +46,11 @@ public class User {
 			this.id = id;
 		}
 		
-		public Integer getFridgeId() {
+		public Integer getFridgeid() {
 			return this.fridgeid;
 		}
 		
-		public void setFridgeId(Integer fridgeId ) {
+		public void setFridgeid(Integer fridgeId ) {
 			this.fridgeid = fridgeId;
 		}
 		
@@ -64,7 +64,7 @@ public class User {
 	        return new ToStringCreator(this)
 	                .append("id", this.getId())
 	                .append("new", this.isNew())
-	                .append("fridgeid", this.getFridgeId())
+	                .append("fridgeid", this.getFridgeid())
 	                .append("role", this.getRole()).toString();
 	    }
 }
