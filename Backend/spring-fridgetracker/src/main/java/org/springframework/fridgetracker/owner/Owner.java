@@ -12,7 +12,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
 
 @Entity
-@Table(name="Users")
+@Table(name="owner")
 public class Owner {
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY) 
@@ -25,9 +25,9 @@ public class Owner {
 		private String role;
 		
 		//@OneToMany(targetEntity = Fridge.class)
-		@Column(name="fridgeId")
+		@Column(name="fridgeid")
 	    @NotFound(action = NotFoundAction.IGNORE)
-		private Integer fridgeId;
+		private Integer fridgeid;
 		
 		
 		public String getRole() {
@@ -47,11 +47,11 @@ public class Owner {
 		}
 		
 		public Integer getFridgeId() {
-			return this.fridgeId;
+			return this.fridgeid;
 		}
 		
 		public void setFridgeId(Integer fridgeId ) {
-			this.fridgeId = fridgeId;
+			this.fridgeid = fridgeId;
 		}
 		
 		public boolean isNew() {
@@ -64,7 +64,7 @@ public class Owner {
 	        return new ToStringCreator(this)
 	                .append("id", this.getId())
 	                .append("new", this.isNew())
-	                .append("fridgeId", this.getFridgeId())
+	                .append("fridgeid", this.getFridgeId())
 	                .append("role", this.getRole()).toString();
 	    }
 }
