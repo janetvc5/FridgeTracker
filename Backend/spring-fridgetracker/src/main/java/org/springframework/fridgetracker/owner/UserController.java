@@ -21,7 +21,7 @@ class UserController {
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(method = RequestMethod.POST, path = "/user/new")
-	public String saveUser(User user) {
+	public String saveUser(@RequestBody User user) {
 		userRepository.save(user);
 		return "New User " + user.getId() + " Saved";
 	}
@@ -33,7 +33,7 @@ class UserController {
         return results;
     }
 
-	@RequestMapping(method = RequestMethod.GET, path = "/owner/{ownerId}")
+	@RequestMapping(method = RequestMethod.GET, path = "/user/{userid}")
 	public Optional<User> findUserById(@PathVariable("id") int id) {
 		logger.info("Entered into Controller Layer");
 		Optional<User> results = userRepository.findById(id);
