@@ -16,8 +16,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private TextView mTextMessage;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -34,7 +33,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 case R.id.navigation_settings:
                     mTextMessage.setText("Settings");
                     return true;
-
             }
             return false;
         }

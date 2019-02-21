@@ -4,7 +4,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
 
-    <application
+    <application>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         android:name="com.example.fridgetracker.app.AppController"
 
         android:allowBackup="true"
@@ -24,8 +28,8 @@
         </activity>
 
         <activity android:name=".StringRequestActivity" />
-        <activity android:name=".JsonRequestActivity" />
-        </activity>
+        <activity android:name=".JsonRequestActivity" ></activity>
+
     </application>
 
 </manifest>
