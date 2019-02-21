@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     };
 
 
-    private Button btnJson, btnString, btnImage;
+    private Button btnJson, btnString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         btnString = findViewById(R.id.btnStringRequest);
         btnJson = findViewById(R.id.btnJsonRequest);
-        btnImage = findViewById(R.id.btnImageRequest);
+
 
         // button click listeners
         btnString.setOnClickListener(this);
         btnJson.setOnClickListener(this);
-        btnImage.setOnClickListener(this);
+
 
         mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -72,10 +72,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.btnJsonRequest:
                 startActivity(new Intent(MainActivity.this,
                         JsonRequestActivity.class));
-                break;
-            case R.id.btnImageRequest:
-                startActivity(new Intent(MainActivity.this,
-                        ImageRequestActivity.class));
                 break;
             default:
                 break;
