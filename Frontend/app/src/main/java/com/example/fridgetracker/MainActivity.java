@@ -51,7 +51,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btnString = findViewById(R.id.btnStringRequest);
         btnJson = findViewById(R.id.btnJsonRequest);
         btnImage = findViewById(R.id.btnImageRequest);
-        btnRequest = findViewById(R.id.btnRequestQueue);
 
         // button click listeners
         btnString.setOnClickListener(this);
@@ -77,10 +76,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.btnImageRequest:
                 startActivity(new Intent(MainActivity.this,
                         ImageRequestActivity.class));
-                break;
-            case R.id.btnRequestQueue:
-                startActivity(new Intent(MainActivity.this,
-                        RequestQueue.class));
                 break;
             default:
                 break;

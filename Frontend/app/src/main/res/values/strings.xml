@@ -7,4 +7,6 @@
     <string name="json_request">JSON Request</string>
     <string name="image_request">Image Request</string>
     <string name="request_queue">Request Queue</string>
+    <string name="response">Response:</string>
+    <string name="json_object_request">JSON Object Request</string>
 </resources>

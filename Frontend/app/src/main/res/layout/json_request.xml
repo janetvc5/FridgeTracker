@@ -7,25 +7,21 @@
     android:paddingLeft="16dp"
     android:paddingRight="1dp"
     android:paddingTop="16dp"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:paddingEnd="1dp"
+    android:paddingStart="16dp">
 
     <Button
         android:id="@+id/btnJsonObj"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="JSON Object Request" />
-
-    <Button
-        android:id="@+id/btnJsonArray"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="JSON Array Request" />
+        android:text="@string/json_object_request" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Response: " />
+        android:text="@string/response" />
 
     <TextView
         android:id="@+id/msgResponse"

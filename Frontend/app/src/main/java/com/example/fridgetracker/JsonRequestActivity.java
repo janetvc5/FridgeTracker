@@ -28,12 +28,12 @@ import java.util.Map;
 public class JsonRequestActivity extends Activity implements OnClickListener {
 
     private String TAG = JsonRequestActivity.class.getSimpleName();
-    private Button btnJsonObj, btnJsonArray;
+    private Button btnJsonObj;
     private TextView msgResponse;
     private ProgressDialog pDialog;
 
     // These tags will be used to cancel the requests
-    private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private String tag_json_obj = "jobj_req";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,6 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
         setContentView(R.layout.json_request);
 
         btnJsonObj = findViewById(R.id.btnJsonObj);
-        btnJsonArray = findViewById(R.id.btnJsonArray);
         msgResponse = findViewById(R.id.msgResponse);
 
         pDialog = new ProgressDialog(this);
@@ -49,7 +48,6 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
         pDialog.setCancelable(false);
 
         btnJsonObj.setOnClickListener(this);
-        btnJsonArray.setOnClickListener(this);
     }
 
     private void showProgressDialog() {
@@ -92,14 +90,15 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
             @Override
             public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
+                // headers.put("Content-Type", "application/json");
+                headers.put("fridgeid", "role");
                 return headers;
             }
 
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", "Androidhive");
+                params.put("name", "Madi");
                 params.put("email", "abc@androidhive.info");
                 params.put("pass", "password123");
 
@@ -109,40 +108,10 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
         };
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq,
-                tag_json_obj);
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 
         // Cancelling request
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
-    }
-
-    /**
-     * Making json array request
-     * */
-    private void makeJsonArryReq() {
-        showProgressDialog();
-        JsonArrayRequest req = new JsonArrayRequest(Const.URL_JSON_ARRAY,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-                        msgResponse.setText(response.toString());
-                        hideProgressDialog();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                hideProgressDialog();
-            }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(req,
-                tag_json_arry);
-
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
     }
 
     @Override
@@ -150,9 +119,6 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
         switch (v.getId()) {
             case R.id.btnJsonObj:
                 makeJsonObjReq();
-                break;
-            case R.id.btnJsonArray:
-                makeJsonArryReq();
                 break;
         }
 
