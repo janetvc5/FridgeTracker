@@ -1,6 +1,8 @@
 package org.springframework.fridgetracker.owner;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -21,9 +23,12 @@ class UserController {
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(method = RequestMethod.POST, path = "/user/new")
-	public String saveUser(@RequestBody User user) {
+	public Map<String,String> saveUser(@RequestBody User user) {
 		userRepository.save(user);
-		return "New User " + user.getId() + " Saved";
+		HashMap<String,String> map = new HashMap<>();
+		map.put("login success","true");
+		//return "New User " + user.getId() + " Saved";
+		return map;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/user")
@@ -39,5 +44,6 @@ class UserController {
 		Optional<User> results = userRepository.findById(id);
 		return results;
 	}
+	
 
 }
