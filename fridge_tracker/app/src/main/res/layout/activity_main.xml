@@ -1,19 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/getbutton"
+        android:text="GET"
+        android:layout_height="wrap_content" />
+
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@+id/getbutton"
+        android:id="@+id/sendtext" />
 
-</android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/sendbutton"
+        android:text="Send"
+        android:layout_below="@+id/sendtext"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:text="fridgeid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendbutton"
+        android:id = "@+id/text1"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendbutton"
+        android:id="@+id/sendfridgeid" />
+
+    <TextView
+        android:text="role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendfridgeid"
+        android:id="@+id/text2"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendfridgeid"
+        android:id="@+id/sendrole"/>
+
+
+</RelativeLayout>
