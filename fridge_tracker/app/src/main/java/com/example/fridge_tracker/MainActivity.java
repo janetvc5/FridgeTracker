@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    sendJson("5");
+                    sendJson(String.valueOf(edit2.getText()), String.valueOf(edit3.getText()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 getJson(String.valueOf(edit1.getText()));
             }
         });
-
+\
     }
 
     void getJson(String userID)
@@ -119,12 +119,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void sendJson(String userID) throws JSONException {
+    void sendJson(final String userID, final String userRole) throws JSONException {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/user/new";
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, getJs(),
+                url, getJs(userRole, userID),
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -159,20 +159,12 @@ public class MainActivity extends AppCompatActivity {
                 return headers;
             }
 
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("fridgeid", "34");
-//                params.put("role", "general");
-//
-//                return params;
-//            }
 
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("fridgeid", "34");
-                params.put("role", "general");
+                params.put("fridgeid", userID);
+                params.put("role", userRole);
 
                 return params;
             }
@@ -186,10 +178,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    protected JSONObject getJs() throws JSONException {
+    protected JSONObject getJs(String role, String id) throws JSONException {
         JSONObject params = new JSONObject();
-        params.put("fridgeid", 34);
-        params.put("role", "general");
+        params.put("fridgeid", id);
+        params.put("role", role);
 
         return params;
     }
