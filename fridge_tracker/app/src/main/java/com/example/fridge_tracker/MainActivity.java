@@ -27,7 +27,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     Button sendButton, getButton;
 
-    EditText edit1, edit2, edit3;
+    EditText getUserInfo, sendID, sendRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
         sendButton = (Button) findViewById(R.id.sendbutton);
         getButton = (Button) findViewById(R.id.getbutton);
-        edit1 = (EditText) findViewById(R.id.sendtext);
-        edit2 = (EditText) findViewById(R.id.sendtext);
-        edit3 = (EditText) findViewById(R.id.sendtext);
+        getUserInfo = (EditText) findViewById(R.id.sendtext);
+        sendRole = (EditText) findViewById(R.id.sendrole);
+        sendID = (EditText) findViewById(R.id.sendfridgeid);
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    sendJson(String.valueOf(edit2.getText()), String.valueOf(edit3.getText()));
+                    sendJson(String.valueOf(sendID.getText()), String.valueOf(sendRole.getText()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getJson(String.valueOf(edit1.getText()));
+                getJson(String.valueOf(getUserInfo.getText()));
             }
         });
 
