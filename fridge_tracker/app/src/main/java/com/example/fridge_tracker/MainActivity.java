@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 getJson(String.valueOf(edit1.getText()));
             }
         });
-\
+
     }
 
     void getJson(String userID)
