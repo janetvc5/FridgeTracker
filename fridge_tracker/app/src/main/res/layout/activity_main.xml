@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,51 +7,80 @@
     tools:context=".MainActivity">
 
     <Button
-        android:layout_width="wrap_content"
         android:id="@+id/getbutton"
-        android:text="GET"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="GET" />
 
     <EditText
+        android:id="@+id/sendtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/getbutton"
-        android:id="@+id/sendtext" />
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="60dp" />
 
 
     <Button
-        android:layout_width="wrap_content"
         android:id="@+id/sendbutton"
-        android:text="Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/sendtext"
-        android:layout_height="wrap_content" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="110dp"
+        android:text="Send" />
 
 
     <TextView
-        android:text="fridgeid"
+        android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendbutton"
-        android:id = "@+id/text1"/>
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="157dp"
+        android:text="fridgeid" />
 
     <EditText
+        android:id="@+id/sendfridgeid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendbutton"
-        android:id="@+id/sendfridgeid" />
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="166dp" />
 
     <TextView
-        android:text="role"
+        android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendfridgeid"
-        android:id="@+id/text2"/>
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="210dp"
+        android:text="role" />
 
     <EditText
+        android:id="@+id/sendrole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendfridgeid"
-        android:id="@+id/sendrole"/>
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="220dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:background="@color/colorAccent"
+        android:clickable="true"
+        android:tint="@color/colorAccent"
+        app:fabSize="normal"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/baseline_add_white_18dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

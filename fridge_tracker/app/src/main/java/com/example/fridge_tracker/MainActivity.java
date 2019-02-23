@@ -1,5 +1,6 @@
 package com.example.fridge_tracker;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     Button sendButton, getButton;
-
+    FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
 
     @Override
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         getUserInfo = (EditText) findViewById(R.id.sendtext);
         sendRole = (EditText) findViewById(R.id.sendrole);
         sendID = (EditText) findViewById(R.id.sendfridgeid);
-
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     void getJson(String userID)
