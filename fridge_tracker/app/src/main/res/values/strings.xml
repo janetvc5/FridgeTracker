@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">fridge_tracker</string>
+    <string name="my_fridge">My Fridge</string>
+    <string name="grocery_list">Grocery List</string>
+    <string name="recipes">Recipes</string>
+    <string name="settings">Settings</string>
 </resources>

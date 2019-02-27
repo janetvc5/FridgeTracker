@@ -1,5 +1,7 @@
 package com.example.fridge_tracker;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +33,28 @@ public class MainActivity extends AppCompatActivity {
     Button sendButton, getButton;
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
+
+    /* Bottom Navigation */
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_myfridge:
+                    return true;
+                case R.id.navigation_grocerylist:
+                    return true;
+                case R.id.navigation_recipes:
+                    return true;
+                case R.id.navigation_settings:
+                    return true;
+            }
+            return false;
+        }
+
+    };
+    /*End Bottom Navigation*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +111,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        // bottom nav
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        // end bottom nav
+
     }
+
+
+
 
     void getJson(String userID)
     {

@@ -72,15 +72,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="60dp"
         android:background="@color/colorAccent"
         android:clickable="true"
         android:tint="@color/colorAccent"
         app:fabSize="normal"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         app:srcCompat="@drawable/baseline_add_white_18dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimaryDark"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/navigation" />
 
 
 </android.support.design.widget.CoordinatorLayout>
