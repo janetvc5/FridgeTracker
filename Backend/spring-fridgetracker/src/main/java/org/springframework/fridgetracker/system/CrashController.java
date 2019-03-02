@@ -1,8 +1,11 @@
 package org.springframework.fridgetracker.system;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -12,30 +15,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class CrashController implements ErrorController {
-	private final Logger logger = LoggerFactory.getLogger(CrashController.class);
+public class CrashController extends ResponseEntityExceptionHandler {
 	 
-	@RequestMapping("/error")
-	public String handleError(HttpServletRequest r) {
-		logger.info("Error thrown: "+r.toString());
-	    return "Error thrown: "+r.toString();
-	}
-	
-	//For throws defined by us
-	@ExceptionHandler(APIException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public APIException handleAPIException(APIException e) {
-        APIException response = new APIException(e.getErrorCode(),e.getMessage());
-        return response;
-    }
-	 
-	 
-	@Override
-	public String getErrorPath() {
-	    return "/error";
+	/*
+	 * Sends the time of request, message from exception, and details of the request.
+	 * 
+	 * The default throw returns internal server error, but this can be customized
+	 */
+	@ExceptionHandler(Throwable.class)
+	@ResponseBody
+	public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, WebRequest r) {
+		ErrorResponse err = new ErrorResponse(new Date(), ex.getMessage(), r.getDescription(false));
+		return new ResponseEntity<ErrorResponse>(err,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
