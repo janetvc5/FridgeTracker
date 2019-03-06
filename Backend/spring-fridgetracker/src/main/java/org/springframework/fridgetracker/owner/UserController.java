@@ -1,6 +1,5 @@
 package org.springframework.fridgetracker.owner;
 
-import org.springframework.fridgetracker.system.NotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ class UserController {
 	@RequestMapping(method = RequestMethod.GET, path = "/user")
 	public List<User> getAllUsers() {
         List<User> results = userRepository.findAll();
-        logger.info("Number of users Fetched:" + results.size());
+        logger.info("Number of owners Fetched:" + results.size());
         return results;
     }
 	
@@ -43,7 +42,8 @@ class UserController {
 	public Optional<User> findUserById(@PathVariable("id") Integer id) {
 		logger.info("Entered into Controller Layer");
 		Optional<User> results = userRepository.findById(id);
-		if(!results.isPresent()) throw new <Integer> NotFoundException(id,"user");
 		return results;
 	}
+	
+
 }
