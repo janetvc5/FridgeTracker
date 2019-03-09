@@ -14,27 +14,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.fridgetracker.fridge.FridgeRepository;
+import org.springframework.fridgetracker.fridge.Fridge;
 
 @RestController
 class UserController {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private FridgeRepository fridgeRepository;
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(method = RequestMethod.POST, path = "/user/new")
-	public Map<String,String> saveUser(@RequestBody User user) {
-		userRepository.save(user);
+	public Map<String,String> saveUser(@RequestBody UserCreationStatement UCS) {
+		User user = UCS.getUser();
+		Fridge fridge = UCS.getFridge();
+		user = userRepository.save(user);
+		if(fridge==null) {
+			fridge = new Fridge();
+		}
+		fridge.setUserid(user.getId());
+		fridgeRepository.save(fridge);
 		HashMap<String,String> map = new HashMap<>();
 		map.put("login success","true");
-		//return "New User " + user.getId() + " Saved";
 		return map;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/user")
 	public List<User> getAllUsers() {
         List<User> results = userRepository.findAll();
-        logger.info("Number of owners Fetched:" + results.size());
+        logger.info("Number of users Fetched:" + results.size());
         return results;
     }
 	

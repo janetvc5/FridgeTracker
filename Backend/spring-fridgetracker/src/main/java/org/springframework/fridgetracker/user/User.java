@@ -32,10 +32,11 @@ public class User {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer role;
 
+	/*
 	// @OneToMany(targetEntity = Fridge.class)
 	@Column(name = "fridgeid")
 	@NotFound(action = NotFoundAction.IGNORE)
-	private Integer fridgeid;
+	private Integer fridgeid;*/
 
 	@Column(name = "firstname")
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -67,12 +68,13 @@ public class User {
 		this.role = newRole;
 	}
 
+	/*
 	public Integer getFridgeid() {
 		return this.fridgeid;
 	}
 	public void setFridgeid(Integer fridgeId) {
 		this.fridgeid = fridgeId;
-	}
+	}*/
 
 	public String getFirstName() {
 		return this.firstname;
@@ -97,6 +99,14 @@ public class User {
 	public Integer getId() {
 		return this.id;
 	}
+	/*
+	public User(String username, String password, Integer role, String firstname, String lastname) {
+		this.username=username;
+		this.password=password;
+		this.role=role;
+		this.firstname=firstname;
+		this.lastname=lastname;
+	}*/
 
 	@Override
 	public String toString() {
@@ -104,7 +114,7 @@ public class User {
 				.append("username", this.getUserName())
 				.append("password", this.getPassword())
 				.append("role", this.getRole())
-				.append("fridgeid", this.getFridgeid())
+				//.append("fridgeid", this.getFridgeid())
 				.append("firstname", this.getFirstName())
 				.append("lastname", this.getLastName())
 				.append("id",this.getId())

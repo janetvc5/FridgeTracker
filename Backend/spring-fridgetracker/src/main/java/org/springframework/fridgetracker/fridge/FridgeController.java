@@ -30,7 +30,7 @@ public class FridgeController {
 	@RequestMapping(method = RequestMethod.GET, path = "/fridge")
 	public List<Fridge> getAllFridgeUsers() {
         List<Fridge> results = fridgeRepository.findAll();
-        logger.info("Number of owners Fetched:" + results.size());
+        logger.info("Number of fridges Fetched:" + results.size());
         return results;
     }
 	
