@@ -5,11 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.fridgetracker.fridge.Fridge;
 
 @Entity
 @Table(name = "users")
@@ -32,7 +35,8 @@ public class User {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer role;
 
-	// @OneToMany(targetEntity = Fridge.class)
+	//@ManyToOne(targetEntity = Fridge.class)
+	//@JoinColumn
 	@Column(name = "fridgeid")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer fridgeid;

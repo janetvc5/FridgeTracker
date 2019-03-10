@@ -19,10 +19,6 @@ public class Fridge {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer id;
 
-	@Column(name = "fridgeid")
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Integer fridgeid;
-
 
 	public Integer getId() {
 		return id;
@@ -30,14 +26,6 @@ public class Fridge {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getFridgeid() {
-		return fridgeid;
-	}
-
-	public void setFridgeid(Integer fridgeid) {
-		this.fridgeid = fridgeid;
 	}
 
 	@Override
