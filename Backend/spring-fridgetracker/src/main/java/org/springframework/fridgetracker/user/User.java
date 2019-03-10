@@ -46,10 +46,10 @@ public class User {
 	private String lastname;
 
 	
-	public String getUserName() {
+	public String getUsername() {
 		return this.username;
 	}
-	public void setUserName(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
@@ -74,17 +74,17 @@ public class User {
 		this.fridgeid = fridgeId;
 	}
 
-	public String getFirstName() {
+	public String getFirstname() {
 		return this.firstname;
 	}
-	public void setFirstName(String firstname) {
+	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
 
-	public String getLastName() {
+	public String getLastname() {
 		return this.lastname;
 	}
-	public void setLastName(String lastname) {
+	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
 
@@ -101,13 +101,14 @@ public class User {
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
-				.append("username", this.getUserName())
+				.append("username", this.getUsername())
 				.append("password", this.getPassword())
 				.append("role", this.getRole())
 				.append("fridgeid", this.getFridgeid())
-				.append("firstname", this.getFirstName())
-				.append("lastname", this.getLastName())
+				.append("firstname", this.getFirstname())
+				.append("lastname", this.getLastname())
 				.append("id",this.getId())
 				.append("new", this.isNew()).toString();
+
 	}
 }
