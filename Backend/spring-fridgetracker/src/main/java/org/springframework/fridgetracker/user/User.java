@@ -5,11 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.fridgetracker.fridge.Fridge;
 
 @Entity
 @Table(name = "users")
@@ -32,11 +35,11 @@ public class User {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer role;
 
-	/*
-	// @OneToMany(targetEntity = Fridge.class)
+	//@ManyToOne(targetEntity = Fridge.class)
+	//@JoinColumn
 	@Column(name = "fridgeid")
 	@NotFound(action = NotFoundAction.IGNORE)
-	private Integer fridgeid;*/
+	private Integer fridgeid;
 
 	@Column(name = "firstname")
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -47,10 +50,10 @@ public class User {
 	private String lastname;
 
 	
-	public String getUserName() {
+	public String getUsername() {
 		return this.username;
 	}
-	public void setUserName(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
@@ -68,25 +71,24 @@ public class User {
 		this.role = newRole;
 	}
 
-	/*
 	public Integer getFridgeid() {
 		return this.fridgeid;
 	}
 	public void setFridgeid(Integer fridgeId) {
 		this.fridgeid = fridgeId;
-	}*/
+	}
 
-	public String getFirstName() {
+	public String getFirstname() {
 		return this.firstname;
 	}
-	public void setFirstName(String firstname) {
+	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
 
-	public String getLastName() {
+	public String getLastname() {
 		return this.lastname;
 	}
-	public void setLastName(String lastname) {
+	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
 
@@ -103,13 +105,14 @@ public class User {
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
-				.append("username", this.getUserName())
+				.append("username", this.getUsername())
 				.append("password", this.getPassword())
 				.append("role", this.getRole())
-				//.append("fridgeid", this.getFridgeid())
-				.append("firstname", this.getFirstName())
-				.append("lastname", this.getLastName())
+				.append("fridgeid", this.getFridgeid())
+				.append("firstname", this.getFirstname())
+				.append("lastname", this.getLastname())
 				.append("id",this.getId())
 				.append("new", this.isNew()).toString();
+
 	}
 }
