@@ -4,18 +4,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.fridgetracker.fridge.Fridge;
 
+/*
+ * This object is used in the creation statement of a User.
+ * 
+ * If a user is not provided, an error will be thrown. A fridge can be provided,
+ * but if one is not provided, one will be created for this user.
+ */
 public class UserCreationStatement {
 	private User user;
 	private Fridge fridge;
-	/*
-	public UserCreationStatement(User user, Fridge fridge) {
-		this.user = user;
-		this.fridge = fridge;
-	}
-	public UserCreationStatement(User user) {
-		this.user = user;
-		this.fridge = new Fridge(user.getId());
-	}*/
+	
 	public User getUser() {
 		return user;
 	}

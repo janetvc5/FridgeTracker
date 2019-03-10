@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FridgeRepository extends JpaRepository<Fridge, Integer>{
 	public Optional<Fridge> findByFridgeid(Integer fridgeid);
+	public Optional<Fridge> findByUserid(Integer userid);
 
 }

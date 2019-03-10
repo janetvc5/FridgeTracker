@@ -1,6 +1,7 @@
 package org.springframework.fridgetracker.fridge;
 
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,11 +24,11 @@ public class Fridge {
 	private Integer id;
 
 	@Column(name = "userid")
-	@NotFound(action = NotFoundAction.EXCEPTION)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer userid;
 	
-	@Generated(GenerationTime.INSERT)
-	@Column(insertable = false, name = "fridgeid")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "fridgeid")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer fridgeid;
 

@@ -99,14 +99,6 @@ public class User {
 	public Integer getId() {
 		return this.id;
 	}
-	/*
-	public User(String username, String password, Integer role, String firstname, String lastname) {
-		this.username=username;
-		this.password=password;
-		this.role=role;
-		this.firstname=firstname;
-		this.lastname=lastname;
-	}*/
 
 	@Override
 	public String toString() {
