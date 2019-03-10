@@ -15,7 +15,6 @@ import org.springframework.core.style.ToStringCreator;
 @Table(name = "fridge")
 public class Fridge {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer id;
@@ -32,6 +31,7 @@ public class Fridge {
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
+				.append("fridgeid", this.getFridgeid())
 				.append("id",this.getId()).toString();
 	}
 	
