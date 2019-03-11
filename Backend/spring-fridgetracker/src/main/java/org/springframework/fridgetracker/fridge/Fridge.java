@@ -31,7 +31,6 @@ public class Fridge {
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
-				.append("fridgeid", this.getFridgeid())
 				.append("id",this.getId()).toString();
 	}
 	
