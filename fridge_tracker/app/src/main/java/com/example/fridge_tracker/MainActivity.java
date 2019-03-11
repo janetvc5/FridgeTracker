@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    Button sendButton, getButton;
+    Button sendButton, getButton, toLoginButton;
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
 
