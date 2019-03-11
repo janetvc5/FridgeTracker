@@ -92,5 +92,12 @@
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="99dp"
+        android:text="go to login" />
+
 
 </android.support.design.widget.CoordinatorLayout>
