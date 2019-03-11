@@ -3,10 +3,15 @@ package org.springframework.fridgetracker.fridge;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.fridgetracker.system.NotFoundException;
+import org.springframework.fridgetracker.user.User;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,10 +38,12 @@ public class FridgeController {
         logger.info("Number of fridges Fetched:" + results.size());
         return results;
     }
-	/*
-	@RequestMapping(method = RequestMethod.GET, path="/fridge/{id}")
-	public List<User> getAllFridgeUsers(@PathVariable("id") Integer id) {
-		
-	}*/
+	
+	@RequestMapping(method = RequestMethod.GET, path="/fridge/{id}/users")
+	public List getAllFridgeUsers(@PathVariable("id") Integer id) {
+		Optional<Fridge> f = fridgeRepository.findById(id);
+		if(!f.isPresent()) throw new NotFoundException(id);
+		return f.get().getUsers();
+	}
 	
 }

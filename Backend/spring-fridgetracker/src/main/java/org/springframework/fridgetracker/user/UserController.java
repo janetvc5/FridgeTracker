@@ -1,11 +1,13 @@
 package org.springframework.fridgetracker.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import org.hibernate.mapping.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,28 @@ class UserController {
 	@RequestMapping(method = RequestMethod.POST, path = "/user/new")
 	public Map<String,String> saveUser(@RequestBody User user) {
 		if(user==null) throw new RuntimeException("User was not provided in creation statement");
-		if(user.getFridgeid()==null) {
+		HashMap<String,String> map = new HashMap<>();
+		if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+			map.put("user creation success","false");
+			map.put("reason","Username already exists");
+			return map;
+		}
+		if(user.getFridge()==null) {
 			// Creates a new fridge, saves to repository, and fetches the id
-			user.setFridgeid(fridgeRepository.save(new Fridge()).getId());
+			Fridge f = fridgeRepository.save(new Fridge());
+			user.setFridge(f);
+		} else if(!fridgeRepository.findById(user.getFridge().getId()).isPresent()) {
+			map.put("user creation success","false");
+			map.put("reason","Fridge does not exist");
+			return map;
 		}
 		user = userRepository.save(user);
-		HashMap<String,String> map = new HashMap<>();
-		map.put("login success","true");
-		map.put("userId",user.getId().toString());
+		Fridge f = fridgeRepository.getOne(user.getFridge().getId());
+		List<User> s = new ArrayList();
+		s.add(user);
+		f.setUsers(s);
+		fridgeRepository.save(f);
+		map.put("user creation success","true");
 		return map;
 	}
 
@@ -54,5 +70,23 @@ class UserController {
 		return results;
 	}
 	
-
+	/*
+	 * Takes a username and password, and gets an optional. If it is not present, or if the password
+	 * is incorrect, a login attempt failure message is returned. Else, it returns a success, and a user
+	 * id.
+	 */
+	@RequestMapping(method = RequestMethod.POST, path = "/user/login")
+	public Map<String,String> login(@RequestBody User loginAttempt) {
+		HashMap<String,String> map = new HashMap<>();
+        Optional<User> u = userRepository.findByUsername(loginAttempt.getUsername());
+        if(!u.isPresent()) {
+        	map.put("login success", "false");
+        } else if(loginAttempt.getPassword()!=u.get().getPassword()) {
+        	map.put("login success", "false");
+        } else {
+        	map.put("login success","true");
+        	map.put("id",u.get().getId().toString());
+        }
+        return map;
+    }
 }

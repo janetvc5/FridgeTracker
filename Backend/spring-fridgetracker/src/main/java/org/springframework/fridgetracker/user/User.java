@@ -16,6 +16,8 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.fridgetracker.fridge.Fridge;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -39,21 +41,11 @@ public class User {
 	@Column(name = "role")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer role;
-
-<<<<<<< HEAD
+	
 	@ManyToOne(targetEntity = Fridge.class)
-	@JoinColumn(name="fridge")
-	//@Column(name = "fridgeid")
-	//@NotFound(action = NotFoundAction.IGNORE)
-	private Integer fridge;
-=======
-	//@ManyToOne(targetEntity = Fridge.class)
-	//@JoinColumn
-	@NotNull
-	@Column(name = "fridgeid")
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Integer fridgeid;
->>>>>>> a3524efe6405999d1f8cac0c9ffc9977a72d218b
+	@JsonIgnoreProperties("users")
+	@JoinColumn
+	private Fridge fridge;
 
 	@Column(name = "firstname")
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -85,11 +77,11 @@ public class User {
 		this.role = newRole;
 	}
 
-	public Integer getFridge() {
+	public Fridge getFridge() {
 		return this.fridge;
 	}
-	public void setFridge(Integer fridgeId) {
-		this.fridge = fridgeId;
+	public void setFridge(Fridge fridge) {
+		this.fridge = fridge;
 	}
 
 	public String getFirstname() {

@@ -16,16 +16,21 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.fridgetracker.user.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "fridge")
 public class Fridge {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer id;
 	
-	@OneToMany(mappedBy="fridge")
-	private Set<User> users;
+	@OneToMany(mappedBy="fridge", targetEntity=User.class)
+	@Column(name="users")
+	@JsonIgnoreProperties("fridge")
+	private List users;
 
 	public Integer getId() {
 		return id;
@@ -33,6 +38,22 @@ public class Fridge {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public List getUsers() {
+		return users;
+	}
+
+	public void setUsers(List users) {
+		this.users = users;
+	}
+	
+	public void addUser(User user) {
+		this.users.add(user);
+	}
+
+	public void removeUser(User user) {
+		this.users.remove(user);
 	}
 
 	@Override
