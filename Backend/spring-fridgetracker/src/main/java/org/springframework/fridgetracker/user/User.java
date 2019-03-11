@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -23,20 +25,24 @@ public class User {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer id;
 
-	@Column(name = "username")
+	@NotNull
+	@Column(name = "username", unique=true)
 	@NotFound(action = NotFoundAction.IGNORE)
 	private String username;
 
+	@NotNull
 	@Column(name = "password")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private String password;
 
+	@NotNull
 	@Column(name = "role")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer role;
 
 	//@ManyToOne(targetEntity = Fridge.class)
 	//@JoinColumn
+	@NotNull
 	@Column(name = "fridgeid")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer fridgeid;
