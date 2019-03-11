@@ -35,11 +35,11 @@ public class User {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer role;
 
-	//@ManyToOne(targetEntity = Fridge.class)
-	//@JoinColumn
-	@Column(name = "fridgeid")
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Integer fridgeid;
+	@ManyToOne(targetEntity = Fridge.class)
+	@JoinColumn(name="fridge")
+	//@Column(name = "fridgeid")
+	//@NotFound(action = NotFoundAction.IGNORE)
+	private Integer fridge;
 
 	@Column(name = "firstname")
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -71,11 +71,11 @@ public class User {
 		this.role = newRole;
 	}
 
-	public Integer getFridgeid() {
-		return this.fridgeid;
+	public Integer getFridge() {
+		return this.fridge;
 	}
-	public void setFridgeid(Integer fridgeId) {
-		this.fridgeid = fridgeId;
+	public void setFridge(Integer fridgeId) {
+		this.fridge = fridgeId;
 	}
 
 	public String getFirstname() {
@@ -108,7 +108,7 @@ public class User {
 				.append("username", this.getUsername())
 				.append("password", this.getPassword())
 				.append("role", this.getRole())
-				.append("fridgeid", this.getFridgeid())
+				.append("fridge", this.getFridge())
 				.append("firstname", this.getFirstname())
 				.append("lastname", this.getLastname())
 				.append("id",this.getId())

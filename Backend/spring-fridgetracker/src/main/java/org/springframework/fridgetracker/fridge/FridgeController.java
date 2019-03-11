@@ -28,10 +28,15 @@ public class FridgeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/fridge")
-	public List<Fridge> getAllFridgeUsers() {
+	public List<Fridge> getAllFridges() {
         List<Fridge> results = fridgeRepository.findAll();
         logger.info("Number of fridges Fetched:" + results.size());
         return results;
     }
+	/*
+	@RequestMapping(method = RequestMethod.GET, path="/fridge/{id}")
+	public List<User> getAllFridgeUsers(@PathVariable("id") Integer id) {
+		
+	}*/
 	
 }
