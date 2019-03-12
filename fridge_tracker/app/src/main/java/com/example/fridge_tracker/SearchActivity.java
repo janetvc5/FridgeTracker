@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
     TextView results;
-    String data = "";
+    String data = "yup";
     EditText search;
     Button searchButton;
 
@@ -81,7 +81,7 @@ public class SearchActivity extends AppCompatActivity {
     void getJsonArr(String itemID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2\n";
+        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2";
 
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
                 url, new JSONArray(),
@@ -91,10 +91,11 @@ public class SearchActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         try {
                             // first json object in outer array
-                            JSONObject foodObj = response.getJSONObject(0);
+                            JSONObject foodObj = response.getJSONObject(2);
 
                             // json array in object
                             JSONArray foodArr = foodObj.getJSONArray("foodArray");
+
 
                             //iterate through
                             for (int i = 0; i < foodArr.length(); i++){
@@ -104,11 +105,13 @@ public class SearchActivity extends AppCompatActivity {
                                 String label = jsonObject.getString("label");
                                 //String category = String.valueOf(response.getInt("category"));
 
+                                Log.d("Found: ", label ); //prints to logcat
+                                //Log.d("Found: ", label + " in category " + category); //prints to logcat
+
                                 data += "Result #" + (i+1) + " Name: " + label + "     ";
                             }
                             results.setText(data);
 
-                            // Log.d("Found: ", label + " in category " + category); //prints to logcat
                         } catch (JSONException e){
                             e.printStackTrace();
                         }
