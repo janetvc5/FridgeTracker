@@ -82,7 +82,7 @@ class UserController {
         Optional<User> u = userRepository.findByUsername(loginAttempt.getUsername());
         if(!u.isPresent()) {
         	map.put("login success", "false");
-        } else if(loginAttempt.getPassword()!=u.get().getPassword()) {
+        } else if(loginAttempt.getPassword().compareTo(u.get().getPassword())!=0) {
         	map.put("login success", "false");
         } else {
         	map.put("login success","true");
