@@ -46,4 +46,11 @@ public class FridgeController {
 		return f.get().getUsers();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, path="/fridge/{id}/contents")
+	public List getAllFridgecontents(@PathVariable("id") Integer id) {
+		Optional<Fridge> f = fridgeRepository.findById(id);
+		if(!f.isPresent()) throw new NotFoundException(id);
+		return f.get().getFridgecontents();
+	}
+	
 }

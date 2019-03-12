@@ -52,6 +52,7 @@ class UserController {
 		List<User> s = new ArrayList();
 		s.add(user);
 		f.setUsers(s);
+		f.setFridgecontents(new ArrayList());
 		fridgeRepository.save(f);
 		map.put("user creation success","true");
 		return map;
