@@ -9,15 +9,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,6 +51,10 @@ public class SearchActivity extends AppCompatActivity {
     };
     /*End Bottom Navigation*/
 
+
+
+    TextView results;
+    String data = "";
     EditText search;
     Button searchButton;
 
@@ -58,39 +65,53 @@ public class SearchActivity extends AppCompatActivity {
 
         search = (EditText) findViewById(R.id.etSearch);
         searchButton = (Button) findViewById(R.id.searchButton);
+        results = (TextView) findViewById(R.id.jsonresponse);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                getJson(search.getText().toString());
+                getJsonArr(search.getText().toString());
 
             }
         });
 
     }
 
-    void getJson(String itemID)
+    void getJsonArr(String itemID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2\n";
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, new JSONObject(),
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
+                url, new JSONArray(),
+                new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try {
-                            String label = response.getString("label");
-                            String category = String.valueOf(response.getInt("category"));
+                            // first json object in outer array
+                            JSONObject foodObj = response.getJSONObject(0);
 
-                            Log.d("Found: ",label + " in category " + category); //prints to logcat
-                        } catch (JSONException e) {
+                            // json array in object
+                            JSONArray foodArr = foodObj.getJSONArray("foodArray");
+
+                            //iterate through
+                            for (int i = 0; i < foodArr.length(); i++){
+                                //get json object from within the array
+                                JSONObject jsonObject = foodArr.getJSONObject(i);
+
+                                String label = jsonObject.getString("label");
+                                //String category = String.valueOf(response.getInt("category"));
+
+                                data += "Result #" + (i+1) + " Name: " + label + "     ";
+                            }
+                            results.setText(data);
+
+                            // Log.d("Found: ", label + " in category " + category); //prints to logcat
+                        } catch (JSONException e){
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -98,24 +119,21 @@ public class SearchActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        }) {
+        }) ;
+        //remove above semicolon if we want to pass the headers in!!
+//        {
+//            /**
+//             * Passing some request headers
+//             * */
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Content-Type", "application/json");
+//                return headers;
+//            }
+//        };
 
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                //headers.put("fridgeid", "role");
-                return headers;
-            }
-
-        };
-
-        mQueue.add(jsonObjReq);
+        mQueue.add(jsonArrReq);
 
     }
-
-
 }
