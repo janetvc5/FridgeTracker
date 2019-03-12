@@ -107,7 +107,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    // What is needed for new food item input???
+                    // set id, expiration, etc....
                     sendJson(String.valueOf(dropdown.getSelectedItem()));
 
                 } catch (JSONException e) {
@@ -192,18 +192,17 @@ public class SearchActivity extends AppCompatActivity {
 
     void sendJson(final String foodName) throws JSONException {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        // update the url for adding a food item ???
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/user/new";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/add";
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, getJs(foodName), // update this if function is updated???
+                url, getJs(foodName),               // update this if function inputs gets updated???
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try
                         {
-                            Log.d("Response from server: ", response.getString("label"));
+                            Log.d("Response from server: ", response.getString("boolean"));
                         }
                         catch (JSONException e)
                         {
@@ -236,7 +235,11 @@ public class SearchActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //add in additional needed params???
-                params.put("label", foodName);
+                params.put("foodname", foodName);
+                params.put("id", "10");
+                params.put("quantity", "3");
+                params.put("expirationdate", "2019-03-29");
+                params.put("fridge", "(\"id\":\"1\")");
 
                 return params;
             }
@@ -252,7 +255,11 @@ public class SearchActivity extends AppCompatActivity {
     protected JSONObject getJs(String foodName) throws JSONException {
         JSONObject params = new JSONObject();
         //add in additional needed params???
-        params.put("label", foodName);
+        params.put("foodname", foodName);
+        params.put("id", "10");
+        params.put("quantity", "3");
+        params.put("expirationdate", "2019-03-29");
+        params.put("fridge", "{\"id\":\"53\"}");
 
         return params;
     }
