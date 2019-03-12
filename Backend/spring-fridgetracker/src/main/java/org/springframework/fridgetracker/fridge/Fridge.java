@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.fridgetracker.fridgecontents.Fridgecontents;
 import org.springframework.fridgetracker.user.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,6 +32,11 @@ public class Fridge {
 	@Column(name="users")
 	@JsonIgnoreProperties("fridge")
 	private List users;
+	
+	@OneToMany(mappedBy="fridge", targetEntity=Fridgecontents.class)
+	@Column(name="fridgecontents")
+	@JsonIgnoreProperties("fridge")
+	private List fridgecontents;
 
 	public Integer getId() {
 		return id;
@@ -56,10 +62,32 @@ public class Fridge {
 		this.users.remove(user);
 	}
 
+	public List getFridgecontents() {
+		return fridgecontents;
+	}
+
+	public void setFridgecontents(List fridgecontents) {
+		this.fridgecontents = fridgecontents;
+	}
+
+	public void addFridgecontents(Fridgecontents fridgecontents) {
+		this.fridgecontents.add(fridgecontents);
+	}
+
+	public void removeFridgecontents(Fridgecontents fridgecontents) {
+		this.fridgecontents.remove(fridgecontents);
+	}
+	
+	public boolean isNew() {
+		return this.id == null;
+	}
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
-				.append("id",this.getId()).toString();
+				.append("id",this.getId())
+				.append("users",this.getUsers())
+				.append("fridgecontents",this.getFridgecontents())
+				.append("new",this.isNew()).toString();
 	}
 	
 }
