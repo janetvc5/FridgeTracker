@@ -1,10 +1,4 @@
-/**
- * 
- */
-/**
- * @author janet
- *
- */
+
 package org.springframework.fridgetracker;
 
 import org.springframework.boot.SpringApplication;
