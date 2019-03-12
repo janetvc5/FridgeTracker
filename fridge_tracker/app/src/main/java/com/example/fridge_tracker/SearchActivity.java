@@ -1,5 +1,7 @@
 package com.example.fridge_tracker;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +28,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -54,10 +70,12 @@ public class SearchActivity extends AppCompatActivity {
     /*End Bottom Navigation*/
 
     EditText search;
-    Button searchButton;
+    Button searchButton, buttonAdd;
     Spinner dropdown;
     private TextView msgResponse;
-    private String tag = SearchActivity.class.getSimpleName();
+    private String foodData;
+    String[] items;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +86,7 @@ public class SearchActivity extends AppCompatActivity {
         searchButton = (Button) findViewById(R.id.searchButton);
         dropdown = (Spinner) findViewById(R.id.dropdown);
         msgResponse = (TextView) findViewById(R.id.msgResponse);
+        buttonAdd = (Button) findViewById(R.id.buttonAdd);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,28 +99,47 @@ public class SearchActivity extends AppCompatActivity {
 
         dropdown.setPrompt("Results:");
 
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(SearchActivity.this, AddScreen.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
-    void getJson(String itemID)
+    private void getJson(String itemID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2\n";
-
-        JsonArrayRequest jsonArReq = new JsonArrayRequest(Request.Method.GET,
-                url, new JSONArray(),
-                new Response.Listener<JSONArray>() {
+        //String url= "http://cs309-af-1.misc.iastate.edu:8080/item";
+        JsonObjectRequest jsonArReq = new JsonObjectRequest(Request.Method.GET,
+                url, new JSONObject(),
+                new Response.Listener<JSONObject>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
 
-                           // String label = response.getString("label");
-                            // String category = String.valueOf(response.getInt("category"));
+                            foodData=response.toString();
 
-                           // Log.d("Found: ",label + " in category " + category); //prints to logcat
-                            Log.d("Response", response.toString());
-                            msgResponse.setText(response.toString());
+                            msgResponse.setText(foodData);
 
+
+
+                           // JSONObject json = readJsonFromUrl(url);
+                           // System.out.println(json.toString());
+                           // System.out.println(json.get("label"));
+
+                        //Log.d("Response", foodData);
+                            //msgResponse.setText(foodData);
+
+                           // Scanner scan=new Scanner(response);
+
+                            //scan.next("foodId");
+                           // msgResponse.setText(food);
 
                     }
                 }, new Response.ErrorListener() {
@@ -126,6 +164,22 @@ public class SearchActivity extends AppCompatActivity {
         };
 
         mQueue.add(jsonArReq);
+
+    }
+
+    private static JSONArray intoArray(String strJSON) throws JSONException{
+        JSONArray jsonarray = new JSONArray(strJSON);
+        for (int i = 0; i < jsonarray.length(); i++) {
+            JSONObject jsonobject = jsonarray.getJSONObject(i);
+            String foodname = jsonobject.getString("food.label");
+            //String url = jsonobject.getString("url");
+
+
+            //items = new String[]{foodname};
+
+        }
+
+        return jsonarray;
 
     }
 
