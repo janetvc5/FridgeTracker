@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -24,7 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
@@ -54,9 +58,11 @@ public class SearchActivity extends AppCompatActivity {
 
 
     TextView results;
+    //String url = "";
     String data = "yup";
     EditText search;
     Button searchButton;
+    Spinner dropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,23 +71,44 @@ public class SearchActivity extends AppCompatActivity {
 
         search = (EditText) findViewById(R.id.etSearch);
         searchButton = (Button) findViewById(R.id.searchButton);
-        results = (TextView) findViewById(R.id.jsonresponse);
+        dropdown = (Spinner) findViewById(R.id.spinner);
+
+
+        //fake item list, search button will do nothing
+        List<String> list = new ArrayList<String>();
+        list.add("full apple");
+        list.add("apple pie");
+        list.add("baked apple");
+        list.add("freeze dried apple");
+        list.add("apple crisp");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(dataAdapter);
+
+
+
+        //end
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                getJsonArr(search.getText().toString());
+                //getJsonArr(search.getText().toString());
+
+
 
             }
         });
 
     }
 
-    void getJsonArr(String itemID)
+    void getJsonArr(String item)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2";
+        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + item + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2";
+        //String url = "http://cs309-af-1.misc.iastate.edu:8080/user";
+
 
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
                 url, new JSONArray(),
@@ -90,11 +117,13 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+                            Log.d("Found: ", response.toString()); //prints to logcat
+
                             // first json object in outer array
-                            JSONObject foodObj = response.getJSONObject(2);
+                            JSONObject foodObj = response.getJSONObject(0);
 
                             // json array in object
-                            JSONArray foodArr = foodObj.getJSONArray("foodArray");
+                            JSONArray foodArr = foodObj.getJSONArray("hints");
 
 
                             //iterate through
@@ -105,12 +134,20 @@ public class SearchActivity extends AppCompatActivity {
                                 String label = jsonObject.getString("label");
                                 //String category = String.valueOf(response.getInt("category"));
 
-                                Log.d("Found: ", label ); //prints to logcat
+                                // putting into a string list
+                                //List<String> list = new ArrayList<String>();
+                                //list.add(label);
+
+                                // ??? option = document.createElement('option');
+                                // option.text = label;
+                                // dropdown.add(option);
+
+
                                 //Log.d("Found: ", label + " in category " + category); //prints to logcat
 
                                 data += "Result #" + (i+1) + " Name: " + label + "     ";
                             }
-                            results.setText(data);
+
 
                         } catch (JSONException e){
                             e.printStackTrace();
