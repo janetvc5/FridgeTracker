@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -28,12 +29,15 @@ public class Fridgecontents {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Integer id;
 
+	@NotNull
 	@Column(name="foodname")
 	private String foodname;
 	
+	@NotNull
 	@Column(name="quantity")
 	private Integer quantity;
 	
+	@NotNull
 	@Column(name="expirationdate")
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date expirationdate;
@@ -78,6 +82,13 @@ public class Fridgecontents {
 	public boolean isNew() {
 		return this.id == null;
 	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 	
 	@Override
 	public String toString() {
@@ -89,13 +100,5 @@ public class Fridgecontents {
 				.append("fridge", this.getFridge())
 				.append("new",this.isNew()).toString();
 
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
 	}
 }
