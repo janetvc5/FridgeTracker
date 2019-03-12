@@ -57,21 +57,23 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
-    TextView results;
-    //String url = "";
-    String data = "yup";
-    EditText search;
-    Button searchButton;
-    Spinner dropdown;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        final TextView results;
+        //String url = "";
+        final EditText search;
+        final Button searchButton, addButton;
+        final Spinner dropdown;
+
         search = (EditText) findViewById(R.id.etSearch);
         searchButton = (Button) findViewById(R.id.searchButton);
         dropdown = (Spinner) findViewById(R.id.spinner);
+        addButton = (Button) findViewById(R.id.addButton);
 
 
         //fake item list, search button will do nothing
@@ -93,11 +95,24 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // uncomment me ???
                 //getJsonArr(search.getText().toString());
 
 
 
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // What is needed for new food item input???
+                    sendJson(String.valueOf(dropdown.getSelectedItem()));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -120,7 +135,7 @@ public class SearchActivity extends AppCompatActivity {
                             Log.d("Found: ", response.toString()); //prints to logcat
 
                             // first json object in outer array
-                            JSONObject foodObj = response.getJSONObject(0);
+                            JSONObject foodObj = response.getJSONObject(2); // it might be 0???
 
                             // json array in object
                             JSONArray foodArr = foodObj.getJSONArray("hints");
@@ -144,8 +159,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
                                 //Log.d("Found: ", label + " in category " + category); //prints to logcat
-
-                                data += "Result #" + (i+1) + " Name: " + label + "     ";
                             }
 
 
@@ -176,4 +189,72 @@ public class SearchActivity extends AppCompatActivity {
         mQueue.add(jsonArrReq);
 
     }
+
+    void sendJson(final String foodName) throws JSONException {
+        RequestQueue mQueue = Volley.newRequestQueue(this);
+        // update the url for adding a food item ???
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/user/new";
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, getJs(foodName), // update this if function is updated???
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try
+                        {
+                            Log.d("Response from server: ", response.getString("label"));
+                        }
+                        catch (JSONException e)
+                        {
+
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }) {
+
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //add in additional needed params???
+                params.put("label", foodName);
+
+                return params;
+            }
+
+
+
+        };
+
+        mQueue.add(jsonObjReq);
+
+    }
+
+    protected JSONObject getJs(String foodName) throws JSONException {
+        JSONObject params = new JSONObject();
+        //add in additional needed params???
+        params.put("label", foodName);
+
+        return params;
+    }
+
 }
