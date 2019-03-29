@@ -15,6 +15,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.fridgetracker.fridgecontents.Fridgecontents;
+import org.springframework.fridgetracker.grocerylist.Grocerylist;
 import org.springframework.fridgetracker.user.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -37,6 +38,11 @@ public class Fridge {
 	@Column(name="fridgecontents")
 	@JsonIgnoreProperties("fridge")
 	private List fridgecontents;
+	
+	@OneToMany(mappedBy="fridge", targetEntity=Fridgecontents.class)
+	@Column(name="grocerylist")
+	@JsonIgnoreProperties("fridge")
+	private List grocerylist;
 
 	public Integer getId() {
 		return id;
@@ -78,6 +84,16 @@ public class Fridge {
 		this.fridgecontents.remove(fridgecontents);
 	}
 	
+
+	public void addGrocerylist(Grocerylist grocerylist) {
+		this.grocerylist.add(grocerylist);
+		
+	}
+	
+	public void removeGrocerylist(Grocerylist grocerylist) {
+		this.grocerylist.remove(grocerylist);
+	}
+	
 	public boolean isNew() {
 		return this.id == null;
 	}
@@ -89,5 +105,6 @@ public class Fridge {
 				.append("fridgecontents",this.getFridgecontents())
 				.append("new",this.isNew()).toString();
 	}
+
 	
 }
