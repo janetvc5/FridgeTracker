@@ -39,7 +39,7 @@ public class Fridge {
 	@JsonIgnoreProperties("fridge")
 	private List fridgecontents;
 	
-	@OneToMany(mappedBy="fridge", targetEntity=Fridgecontents.class)
+	@OneToMany(mappedBy="fridge", targetEntity=Grocerylist.class)
 	@Column(name="grocerylist")
 	@JsonIgnoreProperties("fridge")
 	private List grocerylist;
@@ -94,6 +94,14 @@ public class Fridge {
 		this.grocerylist.remove(grocerylist);
 	}
 	
+	public List getGrocerylist() {
+		return grocerylist;
+	}
+
+	public void setGrocerylist(List grocerylist) {
+		this.grocerylist = grocerylist;
+	}
+
 	public boolean isNew() {
 		return this.id == null;
 	}
@@ -103,6 +111,7 @@ public class Fridge {
 				.append("id",this.getId())
 				.append("users",this.getUsers())
 				.append("fridgecontents",this.getFridgecontents())
+				.append("grocerylist",this.getFridgecontents())
 				.append("new",this.isNew()).toString();
 	}
 
