@@ -59,9 +59,11 @@ public class LoginActivity extends AppCompatActivity {
 }
 
 //test below!!!!
-function getUserByProperty(key, value, strict, multiple, case_insensitive) {
+    private String[] getUserByProperty(String uValue){
+//function getUserByProperty(key, value, strict, multiple, case_insensitive) {
     // prepare a result array
-    var result = [];
+        String[] result;
+    //var result = [];
 
     // loop through all of our users
     for (var index in users) {
@@ -69,22 +71,9 @@ function getUserByProperty(key, value, strict, multiple, case_insensitive) {
         var user = users[index];
 
         // check if the user has the specified property
-        if (typeof user[key] != 'undefined') {
+        if (user[propertyName] != "undefined") {
             // get the property value
-            var compare = user[key];
-
-            // doing something case insensitive
-            if (case_insensitive) {
-                // if the property value is a string
-                if (typeof compare == 'string')
-                // we want to turn it to lower case
-                compare = compare.toLowerCase();
-
-                // if the specified value is a string
-                if (typeof value == 'string')
-                // we want to turn it to lower case
-                value = value.toLowerCase();
-            }
+            String compare = user[propertyValue];
 
             // if specified value is not defined, or values match
             if (typeof value == 'undefined' || ((strict && compare === value) || (!strict && compare == value))) {
@@ -104,46 +93,7 @@ function getUserByProperty(key, value, strict, multiple, case_insensitive) {
     return multiple ? result : null;
 }
 
-    /**
-     * null|Object getUserById ( number id )
-     *
-     * Gets a user with the specified ID.
-     *
-     * @param number id ID of user to get.
-     *
-     * @return null|Object Returns the user object, or null, if not found.
-     */
-    function getUserById(id) {
-        return getUserByProperty('id', id);
-    }
 
-    /**
-     * null|Object getUserByUsername ( string username [ , boolean case_insensitive = false ] )
-     *
-     * Gets a user with the specified username.
-     *
-     * @param string username Username of user to get.
-     * @param boolean case_insensitive Should character case be ignored?
-     *
-     * @return null|Object Returns the user object, or null, if not found.
-     */
-    function getUserByUsername(username, case_insensitive) {
-        return getUserByProperty('username', username, false, false, case_insensitive);
-    }
-
-    /**
-     * boolean|array getUsersByType ( string type [ , boolean case_insensitive = false ] )
-     *
-     * Gets all users with the specified type.
-     *
-     * @param string type Type of user to look for.
-     * @param boolean case_insensitive Should character case be ignored?
-     *
-     * @return array Returns the an array of user objects.
-     */
-    function getUsersByType(type, case_insensitive) {
-        return getUserByProperty('type', type, false, true, case_insensitive);
-    }
 
     /**
      * boolean|Object login ( string username, string password )
@@ -155,9 +105,9 @@ function getUserByProperty(key, value, strict, multiple, case_insensitive) {
      *
      * @return boolean|Object Returns the user object, or false, if login was not successful.
      */
-    function login(username, password) {
+    function login(String username, String password) {
         // checks whether username and password have been filled in
-        if (typeof username == 'string' && typeof password == 'string' && username.length > 0 && password.length > 0) {
+        if (username.length() > 0 && password.length() > 0) {
             // prepare a variable to store the user object, if any is received
             var loggeduser;
 
