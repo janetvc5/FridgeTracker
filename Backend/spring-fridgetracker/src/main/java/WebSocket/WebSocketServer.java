@@ -15,15 +15,21 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.fridgetracker.user.User;
+import org.springframework.fridgetracker.user.UserRepository;
 import org.springframework.stereotype.Component;
 
 @ServerEndpoint("/websocket/{username}")
 @Component
 public class WebSocketServer {
+	// Gets users for sockets
+	@Autowired
+	private UserRepository userRepository;
 	
 	// Store all socket session and their corresponding username.
-    private static Map<Session, String> sessionUsernameMap = new HashMap<>();
-    private static Map<String, Session> usernameSessionMap = new HashMap<>();
+    private static Map<Session, User> sessionUsernameMap = new HashMap<>();
+    private static Map<User, Session> usernameSessionMap = new HashMap<>();
     
     private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
     
@@ -34,11 +40,13 @@ public class WebSocketServer {
     {
         logger.info("Entered into Open");
         
-        sessionUsernameMap.put(session, username);
-        usernameSessionMap.put(username, session);
+        User u = userRepository.findByUsername(username).get();
         
-        String message="User:" + username + " has Joined the Chat";
-        	broadcast(message);
+        sessionUsernameMap.put(session, u);
+        usernameSessionMap.put(u, session);
+        
+        String message="User:" + u.getUsername() + " has Joined the Chat";
+        	fridgeBroadcast(message, u.getFridge().getId());
 		
     }
  
@@ -47,17 +55,17 @@ public class WebSocketServer {
     {
         // Handle new messages
     	logger.info("Entered into Message: Got Message:"+message);
-    	String username = sessionUsernameMap.get(session);
+    	User username = sessionUsernameMap.get(session);
     	
     	if (message.startsWith("@")) // Direct message to a user using the format "@username <message>"
     	{
     		String destUsername = message.split(" ")[0].substring(1); // don't do this in your code!
     		sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
-    		sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
+    		sendMessageToPArticularUser(username.getUsername(), "[DM] " + username.getUsername() + ": " + message);
     	}
     	else // Message to whole chat
     	{
-	    	broadcast(username + ": " + message);
+	    	fridgeBroadcast(username.getUsername() + ": " + message, username.getFridge().getId());
     	}
     }
  
@@ -66,7 +74,7 @@ public class WebSocketServer {
     {
     	logger.info("Entered into Close");
     	
-    	String username = sessionUsernameMap.get(session);
+    	User username = sessionUsernameMap.get(session);
     	sessionUsernameMap.remove(session);
     	usernameSessionMap.remove(username);
         
@@ -101,6 +109,22 @@ public class WebSocketServer {
 	            } catch (IOException e) {
 	                e.printStackTrace();
 	            }
+	        }
+	    });
+	}
+    
+    private static void fridgeBroadcast(String message, Integer Id) 
+    	      throws IOException 
+    {	  
+    	sessionUsernameMap.forEach((session, u) -> {
+    		synchronized (session) {
+    			if(u.getFridge().getId()==Id) {
+		            try {
+		                session.getBasicRemote().sendText(message);
+		            } catch (IOException e) {
+		                e.printStackTrace();
+		            }
+    			}
 	        }
 	    });
 	}
