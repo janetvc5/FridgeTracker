@@ -12,14 +12,9 @@ import java.util.List;
 
 import static org.mockito.Matchers.anyInt;
 
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.fridgetracker.fridge.Fridge;
-import org.springframework.fridgetracker.fridge.FridgeRepository;
 import org.springframework.fridgetracker.fridgecontents.Fridgecontents;
 import org.springframework.fridgetracker.fridgecontents.FridgecontentsController;
 import org.springframework.fridgetracker.grocerylist.Grocerylist;
@@ -64,4 +59,17 @@ public class FridgeTrackerMockitoTests {
 		when(grocerylistCnt.saveGrocerylistItem(grocerylist)).thenReturn(map);
 		assertTrue(grocerylistCnt.saveGrocerylistItem(grocerylist).toString().contains("true"));
 	}
+	
+	@Test
+	public void DeletingItemFromGroceryList() {
+		GrocerylistController grocerylistCnt = mock(GrocerylistController.class);
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("grocery item deleted", "true");
+		
+		when(grocerylistCnt.deleteGrocerylistItem(anyInt())).thenReturn(map);
+		assertTrue(grocerylistCnt.deleteGrocerylistItem(0).toString().contains("true"));
+	}
+	
+	
 }
