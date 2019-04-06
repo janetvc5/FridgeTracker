@@ -10,14 +10,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.mockito.Matchers.anyInt;
+
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.fridgetracker.fridge.Fridge;
+import org.springframework.fridgetracker.fridge.FridgeRepository;
 import org.springframework.fridgetracker.fridgecontents.Fridgecontents;
 import org.springframework.fridgetracker.fridgecontents.FridgecontentsController;
+import org.springframework.fridgetracker.grocerylist.Grocerylist;
+import org.springframework.fridgetracker.grocerylist.GrocerylistController;
 import org.springframework.fridgetracker.item.Item;
 import org.springframework.fridgetracker.item.ItemController;
 
@@ -27,7 +33,7 @@ import org.springframework.fridgetracker.item.ItemController;
 public class FridgeTrackerMockitoTests {
 	
 	@Test
-	public void AddingItem() {
+	public void AddingItemToFridgeContent() {
 		List<Item> results = new ArrayList<Item>();
 		Item redApple = new Item(); 
 		redApple.setId(50); redApple.setItemname("Red Apple"); redApple.setTags("Fruit");
@@ -47,4 +53,15 @@ public class FridgeTrackerMockitoTests {
 		assertTrue(controller.saveFridgecontents(fridgecontent).toString().contains("true"));
 	}
 	
+	@Test
+	public void AddingItemToGroceryList() {
+		Grocerylist grocerylist = mock(Grocerylist.class);
+		GrocerylistController grocerylistCnt = mock(GrocerylistController.class);
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("grocery item added", "true");
+		
+		when(grocerylistCnt.saveGrocerylistItem(grocerylist)).thenReturn(map);
+		assertTrue(grocerylistCnt.saveGrocerylistItem(grocerylist).toString().contains("true"));
+	}
 }
