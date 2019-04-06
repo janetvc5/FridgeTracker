@@ -23,23 +23,40 @@ import org.springframework.fridgetracker.item.ItemController;
 @RunWith(MockitoJUnitRunner.class)
 public class FridgeContentsTests {
 	@Mock 
-	ItemController itemController;
+	ItemController itemController = new ItemController();
 
-	@InjectMocks
+	@Mock
 	FridgecontentsController fridgeContentsController;
 	
-	@SuppressWarnings("null")
 	@Test 
 	public void FridgeContentAdd() {
 		List<Item> results = new ArrayList<Item>();
-		Item redApple = null; redApple.setId(50); redApple.setItemname("Red Apple"); redApple.setTags("Fruit");
-		Item greenApple = null; greenApple.setId(51); greenApple.setItemname("Green Apple"); greenApple.setTags("Fruit");
+		Item redApple = new Item(); 
+		redApple.setId(50); redApple.setItemname("Red Apple"); redApple.setTags("Fruit");
+		Item greenApple = new Item();
+		greenApple.setId(51); greenApple.setItemname("Green Apple"); greenApple.setTags("Fruit");
 		results.add(redApple); results.add(greenApple);
 		when(itemController.getItemByName("Apple")).thenReturn(results);
-		Fridgecontents fridgecontent = null; 
+		Fridgecontents fridgecontent = new Fridgecontents(); 
 		fridgecontent.setFoodname(results.get(0).getItemname()); 
 		fridgecontent.setQuantity(1);
 		fridgecontent.setId(results.get(0).getId());
-		assertNotEquals(null, fridgeContentsController.getAllFridgecontents());
+		assertNotEquals("Number of fridges Fetched: 0", fridgeContentsController.getAllFridgecontents());
+	}
+	
+	@Test
+	public void FridgeContentView() {
+		List<Item> results = new ArrayList<Item>();
+		Item redApple = new Item(); 
+		redApple.setId(50); redApple.setItemname("Red Apple"); redApple.setTags("Fruit");
+		results.add(redApple);
+		Fridgecontents fridgecontent = new Fridgecontents(); 
+		fridgecontent.setFoodname(results.get(0).getItemname()); 
+		fridgecontent.setQuantity(1);
+		fridgecontent.setId(results.get(0).getId());
+		List<Fridgecontents> listReturn = new ArrayList<Fridgecontents>();
+		listReturn.add(fridgecontent);
+		when(fridgeContentsController.getAllFridgecontents()).thenReturn(listReturn);
+		assertNotEquals("Number of fridges Fetched: 0", fridgeContentsController.getAllFridgecontents());
 	}
 }
