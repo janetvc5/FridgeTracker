@@ -23,6 +23,9 @@ import org.springframework.stereotype.Component;
 @ServerEndpoint("/websocket/{username}")
 @Component
 public class WebSocketServer {
+	// Gets users for sockets
+	@Autowired
+	private UserRepository userRepository;
 	
 	// Store all socket session and their corresponding username.
     private static Map<Session, User> sessionUserMap = new HashMap<>();
