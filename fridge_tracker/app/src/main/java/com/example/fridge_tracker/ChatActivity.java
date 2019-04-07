@@ -16,9 +16,6 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
-
 public class ChatActivity extends AppCompatActivity {
     Button  b1,b2;
     EditText e1,e2;

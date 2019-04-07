@@ -23,8 +23,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".GroceryListActivity" />
-        <activity android:name=".MockitoTest" />
+        <!--<activity android:name=".GroceryListActivity" />-->
+        <!--<activity android:name=".MockitoTest" />-->
 
     </application>
 
