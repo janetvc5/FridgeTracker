@@ -28,25 +28,33 @@ public class WebSocketServer {
 	private UserRepository userRepository;
 	
 	// Store all socket session and their corresponding username.
-    private static Map<Session, User> sessionUsernameMap = new HashMap<>();
-    private static Map<User, Session> usernameSessionMap = new HashMap<>();
+    private static Map<Session, User> sessionUserMap = new HashMap<>();
+    private static Map<User, Session> userSessionMap = new HashMap<>();
+    private static Map<String, Session> usernameSessionMap = new HashMap<>();
+    private static Map<Session, String> sessionUsernameMap = new HashMap<>();
     
     private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
+    
+    @Autowired
+    UserRepository userRepo;
     
     @OnOpen
     public void onOpen(
     	      Session session, 
     	      @PathParam("username") String username) throws IOException 
     {
+    	
         logger.info("Entered into Open");
         
-        User u = userRepository.findByUsername(username).get();
+        User user = userRepo.findByUsername(username).get();
+
+        sessionUsernameMap.put(session, username);
+        sessionUserMap.put(session, user);
+        userSessionMap.put(user, session);
+        usernameSessionMap.put(username, session);
         
-        sessionUsernameMap.put(session, u);
-        usernameSessionMap.put(u, session);
-        
-        String message="User:" + u.getUsername() + " has Joined the Chat";
-        	fridgeBroadcast(message, u.getFridge().getId());
+        String message="User:" + username + " has Joined the Chat";
+        	fridgeBroadcast(message, user.getFridge().getId());
 		
     }
  
@@ -55,17 +63,17 @@ public class WebSocketServer {
     {
         // Handle new messages
     	logger.info("Entered into Message: Got Message:"+message);
-    	User username = sessionUsernameMap.get(session);
+    	User user = sessionUserMap.get(session);
     	
     	if (message.startsWith("@")) // Direct message to a user using the format "@username <message>"
     	{
     		String destUsername = message.split(" ")[0].substring(1); // don't do this in your code!
-    		sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
-    		sendMessageToPArticularUser(username.getUsername(), "[DM] " + username.getUsername() + ": " + message);
+    		sendMessageToPArticularUser(destUsername, "[DM] " + user.getUsername() + ": " + message);
+    		sendMessageToPArticularUser(user.getUsername(), "[DM] " + user.getUsername() + ": " + message);
     	}
     	else // Message to whole chat
     	{
-	    	fridgeBroadcast(username.getUsername() + ": " + message, username.getFridge().getId());
+	    	fridgeBroadcast(user.getUsername() + ": " + message, user.getFridge().getId());
     	}
     }
  
@@ -73,13 +81,16 @@ public class WebSocketServer {
     public void onClose(Session session) throws IOException
     {
     	logger.info("Entered into Close");
-    	
-    	User username = sessionUsernameMap.get(session);
+
+    	String username = sessionUsernameMap.get(session);
+    	User user = sessionUserMap.get(session);
     	sessionUsernameMap.remove(session);
+    	sessionUserMap.remove(session);
     	usernameSessionMap.remove(username);
+    	userSessionMap.remove(user);
         
     	String message= username + " disconnected";
-        broadcast(message);
+        fridgeBroadcast(message, user.getFridge().getId());
     }
  
     @OnError
@@ -98,7 +109,7 @@ public class WebSocketServer {
             e.printStackTrace();
         }
     }
-    
+
     private static void broadcast(String message) 
     	      throws IOException 
     {	  
@@ -112,13 +123,13 @@ public class WebSocketServer {
 	        }
 	    });
 	}
-    
-    private static void fridgeBroadcast(String message, Integer Id) 
+
+    private static void fridgeBroadcast(String message, Integer fridgeId) 
     	      throws IOException 
     {	  
-    	sessionUsernameMap.forEach((session, u) -> {
+    	sessionUserMap.forEach((session, user) -> {
     		synchronized (session) {
-    			if(u.getFridge().getId()==Id) {
+    			if(fridgeId==user.getFridge().getId()) {
 		            try {
 		                session.getBasicRemote().sendText(message);
 		            } catch (IOException e) {
