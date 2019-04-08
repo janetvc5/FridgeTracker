@@ -160,9 +160,9 @@ public class LoginActivity extends AppCompatActivity {
 
             // server should handle everything below...
             // iterate through all users in the 'users' array (or database table perhaps, on server-side)
-            for (int i=0; i<result.length; i++){
+            for (int i=0; i<userResult.length; i++){
                 // grab the property value with the property
-                String user = result[i];
+                String user = userResult[i];
 
                 // check if username and password match
                 if (username == user && password == = user.password)
