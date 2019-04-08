@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView title;
     TextView attempts;
     int counter = 5;
+    String[] loggedInUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +68,15 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    String[] userResult;
+    String[] passResult;
+
 
     //test below!!!!
-    private void getUser(String uValue) {
+    private void getUser(String uValue, String pValue) {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         // prepare a result array
-        final String[] result;
+
         String url="http://cs309-af-1.misc.iastate.edu:8080/user";
         JsonArrayRequest userArrayReq=new JsonObjectRequest(Request.Method.GET,
                 url, new JSONObject(),
@@ -81,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        result=response.getJSONArray("username");
+                        userResult=response.getJSONArray("username");
 
                     }
                 }, new Response.ErrorListener() {
@@ -96,27 +100,46 @@ public class LoginActivity extends AppCompatActivity {
         int i=0;
 
         // loop through all of our users
-        while(result[i]!=null){
+        while(userResult[i]!=null){
             // get the user we are iterating through now
-            String user = result[i];
+            String user = userResult[i];
 
             // check if the user has the specified property
-            if (user != "undefined") {
-                // get the property value
-                //String compare = user[propertyValue];
+            if (user == uValue) {
+                JsonArrayRequest passArrayReq=new JsonObjectRequest(Request.Method.GET,
+                        url, new JSONObject(),
+                        new Response.Listener<JSONObject>() {
 
-                // if specified value is not defined, or values match
-                if (user == uValue)
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                                passResult=response.getJSONArray("password");
+
+                            }
+                        }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+                int j=0;
+                while(j<passResult.length)
                 {
-
+                    String pass=passResult[j];
+                    if (pass==pValue);
                 }
+                mQueue.add(passArrayReq);
             }
         }
 
         // return the results or null, if nothing was found (for single match search)
+
         return ;
 
-        mQueue.add(jsonArReq);
+        mQueue.add(userArrayReq);
+
     }
 
 
@@ -137,12 +160,12 @@ public class LoginActivity extends AppCompatActivity {
 
             // server should handle everything below...
             // iterate through all users in the 'users' array (or database table perhaps, on server-side)
-            for (var index in users){
+            for (int i=0; i<result.length; i++){
                 // grab the property value with the property
-                var user = users[index];
+                String user = result[i];
 
                 // check if username and password match
-                if (username == = user.username && password == = user.password)
+                if (username == user && password == = user.password)
                     // set value of 'loggeduser' to the property value (user)
                     loggeduser = user;
             }
@@ -153,9 +176,6 @@ public class LoginActivity extends AppCompatActivity {
             if (typeof loggeduser != 'undefined'){
                 // save the ID of the user to the 'loggedusers' array
                 loggedusers[loggeduser.id] = true;
-
-                // update the logged in list
-                updatelist();
 
                 // return the received user object
                 return loggeduser;
