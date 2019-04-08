@@ -43,7 +43,7 @@ public class User {
 	private Integer role;
 	
 	@ManyToOne(targetEntity = Fridge.class)
-	@JsonIgnoreProperties({"users","fridgecontents"})
+	@JsonIgnoreProperties({"users","fridgecontents","grocerylist"})
 	@JoinColumn
 	private Fridge fridge;
 
