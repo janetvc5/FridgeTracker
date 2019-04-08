@@ -64,6 +64,7 @@ class UserController {
         logger.info("Number of users Fetched:" + results.size());
         return results;
     }
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/user/{userId}")
 	public Optional<User> findUserByUserName(@PathVariable("userId") Integer userId) {
 		logger.info("Entered into Controller Layer");
