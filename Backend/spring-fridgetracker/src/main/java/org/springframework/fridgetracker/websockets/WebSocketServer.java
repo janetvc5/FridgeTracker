@@ -1,9 +1,10 @@
-package WebSocket;
+package org.springframework.fridgetracker.websockets;
 
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -16,45 +17,37 @@ import javax.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.fridgetracker.system.NotFoundException;
 import org.springframework.fridgetracker.user.User;
 import org.springframework.fridgetracker.user.UserRepository;
 import org.springframework.stereotype.Component;
 
-@ServerEndpoint("/websocket/{username}")
+@ServerEndpoint("/websocket/{fridgeId}/{username}")
 @Component
 public class WebSocketServer {
-	// Gets users for sockets
-	@Autowired
-	private UserRepository userRepository;
 	
 	// Store all socket session and their corresponding username.
-    private static Map<Session, User> sessionUserMap = new HashMap<>();
-    private static Map<User, Session> userSessionMap = new HashMap<>();
+    private static Map<String, Integer> usernameFridgeMap = new HashMap<>();
     private static Map<String, Session> usernameSessionMap = new HashMap<>();
     private static Map<Session, String> sessionUsernameMap = new HashMap<>();
     
     private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
     
-    @Autowired
-    UserRepository userRepo;
-    
     @OnOpen
     public void onOpen(
     	      Session session, 
-    	      @PathParam("username") String username) throws IOException 
+    	      @PathParam("username") String username,
+    	      @PathParam("fridgeId") Integer id) throws IOException 
     {
     	
         logger.info("Entered into Open");
-        
-        User user = userRepo.findByUsername(username).get();
 
         sessionUsernameMap.put(session, username);
-        sessionUserMap.put(session, user);
-        userSessionMap.put(user, session);
+        usernameFridgeMap.put(username, id);
         usernameSessionMap.put(username, session);
         
-        String message="User:" + username + " has Joined the Chat";
-        	fridgeBroadcast(message, user.getFridge().getId());
+        String message="User: " + username + " has Joined the Chat";
+        	fridgeBroadcast(message, id);
 		
     }
  
@@ -63,17 +56,17 @@ public class WebSocketServer {
     {
         // Handle new messages
     	logger.info("Entered into Message: Got Message:"+message);
-    	User user = sessionUserMap.get(session);
+    	String user = sessionUsernameMap.get(session);
     	
     	if (message.startsWith("@")) // Direct message to a user using the format "@username <message>"
     	{
-    		String destUsername = message.split(" ")[0].substring(1); // don't do this in your code!
-    		sendMessageToPArticularUser(destUsername, "[DM] " + user.getUsername() + ": " + message);
-    		sendMessageToPArticularUser(user.getUsername(), "[DM] " + user.getUsername() + ": " + message);
+    		String destUsername = message.split(" ")[0].substring(1);
+    		sendMessageToPArticularUser(destUsername, "[DM] " + user + ": " + message);
+    		sendMessageToPArticularUser(user, "[DM] " + user + ": " + message);
     	}
     	else // Message to whole chat
     	{
-	    	fridgeBroadcast(user.getUsername() + ": " + message, user.getFridge().getId());
+	    	fridgeBroadcast(user + ": " + message, usernameFridgeMap.get(user));
     	}
     }
  
@@ -83,14 +76,13 @@ public class WebSocketServer {
     	logger.info("Entered into Close");
 
     	String username = sessionUsernameMap.get(session);
-    	User user = sessionUserMap.get(session);
+    	Integer id = usernameFridgeMap.get(username);
     	sessionUsernameMap.remove(session);
-    	sessionUserMap.remove(session);
     	usernameSessionMap.remove(username);
-    	userSessionMap.remove(user);
+    	
         
     	String message= username + " disconnected";
-        fridgeBroadcast(message, user.getFridge().getId());
+        fridgeBroadcast(message, id);
     }
  
     @OnError
@@ -127,9 +119,9 @@ public class WebSocketServer {
     private static void fridgeBroadcast(String message, Integer fridgeId) 
     	      throws IOException 
     {	  
-    	sessionUserMap.forEach((session, user) -> {
+    	sessionUsernameMap.forEach((session, user) -> {
     		synchronized (session) {
-    			if(fridgeId==user.getFridge().getId()) {
+    			if(fridgeId==usernameFridgeMap.get(user)) {
 		            try {
 		                session.getBasicRemote().sendText(message);
 		            } catch (IOException e) {

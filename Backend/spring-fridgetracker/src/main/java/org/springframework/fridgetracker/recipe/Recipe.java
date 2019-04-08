@@ -23,7 +23,7 @@ public class Recipe {
 	private String name;
 	@Column(name = "directions")
 	private String directions;
-	@OneToMany(mappedBy="fridge", targetEntity=Recipeitem.class)
+	@OneToMany(mappedBy="recipe", targetEntity=Recipeitem.class)
 	@Column(name = "items")
 	private List items;
 	
