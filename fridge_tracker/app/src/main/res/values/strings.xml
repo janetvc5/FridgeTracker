@@ -4,13 +4,5 @@
     <string name="grocery_list">Grocery List</string>
     <string name="recipes">Recipes</string>
     <string name="settings">Settings</string>
-
-    <string-array name="apple_arrays">
-        <item>full apple</item>
-        <item>apple pie</item>
-        <item>baked apple</item>
-        <item>freeze dried apple</item>
-        <item>apple crisp</item>
-    </string-array>
-
+    <string name="chat">Chat</string>
 </resources>
