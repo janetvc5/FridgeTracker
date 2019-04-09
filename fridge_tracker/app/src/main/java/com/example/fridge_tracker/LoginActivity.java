@@ -72,8 +72,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    String[] userResult;
-    String[] passResult;
+    JSONArray userResult;
+    JSONArray passResult;
 
 
     //test below!!!!
@@ -82,14 +82,14 @@ public class LoginActivity extends AppCompatActivity {
         // prepare a result array
 
         String url="http://cs309-af-1.misc.iastate.edu:8080/user";
-        JsonArrayRequest userArrayReq=new JsonObjectRequest(Request.Method.GET,
-                url, new JSONObject(),
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest userArrayReq=new JsonArrayRequest(Request.Method.GET,
+                url, new JSONArray(),
+                new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
 
-                        userResult=response.getJSONArray("username");
+                        userResult=response;
 
                     }
                 }, new Response.ErrorListener() {
@@ -105,20 +105,20 @@ public class LoginActivity extends AppCompatActivity {
         int i=0;
 
         // loop through all of our users
-        while(userResult[i]!=null){
+        while(userResult.get(i)!=null){
             // get the user we are iterating through now
-            String user = userResult[i];
+            String user = userResult.get(i).toString();
 
             // check if the user has the specified property
             if (user == uValue) {
-                JsonArrayRequest passArrayReq=new JsonObjectRequest(Request.Method.GET,
-                        url, new JSONObject(),
-                        new Response.Listener<JSONObject>() {
+                JsonArrayRequest passArrayReq=new JsonArrayRequest(Request.Method.GET,
+                        url, new JSONArray(),
+                        new Response.Listener<JSONArray>() {
 
                             @Override
-                            public void onResponse(JSONObject response) {
+                            public void onResponse(JSONArray response) {
 
-                                passResult=response.getJSONArray("password");
+                                passResult=response;
 
                             }
                         }, new Response.ErrorListener() {
@@ -130,9 +130,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
                 int j=0;
-                while(j<passResult.length)
+                while(j<passResult.length())
                 {
-                    String pass=passResult[j];
+                    String pass=passResult.get(i).toString();
                     if (pass==pValue);
                 }
                 mQueue.add(passArrayReq);
@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param password Password of the user to log in on.
      * @return boolean|Object Returns the user object, or false, if login was not successful.
      */
-    private void login(String username, String password) {
+    private void login(String username, String password) throws JSONException{
         // checks whether username and password have been filled in
         if (username.length() > 0 && password.length() > 0) {
             // prepare a variable to store the user object, if any is received
@@ -163,17 +163,17 @@ public class LoginActivity extends AppCompatActivity {
 
             // server should handle everything below...
             // iterate through all users in the 'users' array (or database table perhaps, on server-side)
-            for (int i=0; i<userResult.length; i++){
+            for (int i=0; i<userResult.length(); i++){
                 // grab the property value with the property
-                String user = userResult[i];
+                String user = userResult.get(i).toString();
 
                 // check if username and password match
                 if (username == user && password == password)
                     // set value of 'loggeduser' to the property value (user)
                     loggeduser = user;
             }
-                //add user to the arraylist of logged in users
-                loggedInUsers.add(loggeduser);
+            //add user to the arraylist of logged in users
+            loggedInUsers.add(loggeduser);
 
         }
 
@@ -189,31 +189,31 @@ public class LoginActivity extends AppCompatActivity {
      * @return boolean Returns a boolean representing whether the log out was successful or not.
      *
     function logout(userid) {
-        // check whether the ID is actually logged in
-        if (loggedusers[userid]) {
-            // temporary array, which we will be filling
-            var temporary = [];
+    // check whether the ID is actually logged in
+    if (loggedusers[userid]) {
+    // temporary array, which we will be filling
+    var temporary = [];
 
-            // let's loop through logged users
-            for (var id in loggedusers)
-            // ignore our user
-            if (id != userid)
-                // let's put this user to the array
-                temporary[id] = true;
+    // let's loop through logged users
+    for (var id in loggedusers)
+    // ignore our user
+    if (id != userid)
+    // let's put this user to the array
+    temporary[id] = true;
 
-            // we replace the 'loggedusers' array with our new array
-            loggedusers = temporary;
+    // we replace the 'loggedusers' array with our new array
+    loggedusers = temporary;
 
-            // update the logged in list
-            updatelist();
+    // update the logged in list
+    updatelist();
 
-            // we have successfully logged out
-            return true;
-        }
-
-        // we have not successfully logged out
-        return false;
+    // we have successfully logged out
+    return true;
     }
-*/
+
+    // we have not successfully logged out
+    return false;
+    }
+     */
 
 }

@@ -114,18 +114,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    // set id, expiration, etc....
-                    sendJson(String.valueOf(dropdown.getSelectedItem()));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         dropdown.setPrompt("Results:");
 
@@ -141,7 +129,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
+
     void getJsonArr(String item)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
@@ -215,24 +203,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     void sendJson(final String foodName) throws JSONException {
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/add";
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, getJs(foodName),               // update this if function inputs gets updated???
-                new Response.Listener<JSONObject>() {
+    }
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try
-                        {
-                            Log.d("Response from server: ", response.getString("boolean"));
-                        }
-                        catch (JSONException e)
-                        {
 
-                        }
-=======
     private void getJson(String itemID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
@@ -245,24 +219,23 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                            foodData=response.toString();
+                        foodData=response.toString();
 
-                            msgResponse.setText(foodData);
+                        msgResponse.setText(foodData);
 
 
 
-                           // JSONObject json = readJsonFromUrl(url);
-                           // System.out.println(json.toString());
-                           // System.out.println(json.get("label"));
+                        // JSONObject json = readJsonFromUrl(url);
+                        // System.out.println(json.toString());
+                        // System.out.println(json.get("label"));
 
                         //Log.d("Response", foodData);
-                            //msgResponse.setText(foodData);
+                        //msgResponse.setText(foodData);
 
-                           // Scanner scan=new Scanner(response);
+                        // Scanner scan=new Scanner(response);
 
-                            //scan.next("foodId");
-                           // msgResponse.setText(food);
->>>>>>> fridge_list
+                        //scan.next("foodId");
+                        // msgResponse.setText(food);
 
                     }
 
@@ -290,6 +263,7 @@ public class SearchActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 //add in additional needed params???
+                String foodName = "";
                 params.put("foodname", foodName);
                 params.put("id", "10");
                 params.put("quantity", "3");

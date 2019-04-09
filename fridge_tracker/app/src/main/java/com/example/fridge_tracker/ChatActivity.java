@@ -1,6 +1,7 @@
 package com.example.fridge_tracker;
 
 import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +43,7 @@ public class ChatActivity extends AppCompatActivity {
                  * computer, and change the ip address to that of your computer.
                  * If running on the emulator, you can use localhost.
                  */
-                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/" + e1.getText().toString();
+                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/user2";
 
                 try {
                     Log.d("Socket:", "Trying socket");
