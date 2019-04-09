@@ -29,14 +29,14 @@ public class FridgecontentsController {
 	private final Logger logger = LoggerFactory.getLogger(FridgecontentsController.class);
 
 	@RequestMapping(method = RequestMethod.GET, path = "/fridgecontents")
-	public List<Fridgecontents> getAllFridgecontents() {
+	public List<Fridgecontents> getAllContents() {
         List<Fridgecontents> results = fridgecontentsRepository.findAll();
-        logger.info("Number of fridges Fetched:" + results.size());
+        logger.info("Number Contents Fetched:" + results.size());
         return results;
     }
 
 	@RequestMapping(method = RequestMethod.GET, path="/fridgecontents/{id}")
-	public Optional<Fridgecontents> getAllFridgeUsers(@PathVariable("id") Integer id) {
+	public Optional<Fridgecontents> getContentsById(@PathVariable("id") Integer id) {
 		Optional<Fridgecontents> f = fridgecontentsRepository.findById(id);
 		return f;
 	}

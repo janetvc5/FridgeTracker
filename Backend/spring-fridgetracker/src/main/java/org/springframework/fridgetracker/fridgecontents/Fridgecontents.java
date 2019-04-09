@@ -43,7 +43,7 @@ public class Fridgecontents {
 	private Date expirationdate;
 	
 	@ManyToOne(targetEntity = Fridge.class)
-	@JsonIgnoreProperties({"users","fridgecontents"})
+	@JsonIgnoreProperties({"users","fridgecontents","grocerylist"})
 	@JoinColumn
 	private Fridge fridge;
 
