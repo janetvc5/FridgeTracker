@@ -16,7 +16,8 @@ public class MockitoTest {
     // @Mock
     //    MyDatabase databaseMock;    //Tells Mockito to mock the databaseMock instance
 
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule(); // Tells Mockito to create the mocks based on the @Mock annotation
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule(); // Tells Mockito to create the mocks based on the @Mock annotation
 
     @Test
     public void testSearch() {
@@ -26,16 +27,15 @@ public class MockitoTest {
 
         String searchInput = "apple"
         JSONObject response = new JSONObject();
-        try{
-            response.put("Apple",79);
-            response.put("Freeze Dried Apple",110);
-            response.put("Apple Pie",220);
-        }
-        catch(JSONException e){
+        try {
+            response.put("Apple", 79);
+            response.put("Freeze Dried Apple", 110);
+            response.put("Apple Pie", 220);
+        } catch (JSONException e) {
 
         }
 
         when(t.getResponse("apple")).thenReturn(response);
-        Assert.assertEquals(testItemReturnSuccess.)
+        Assert.assertEquals(testItemReturnSuccess.getJsonArr("apple"), response.get("{\"Apple\":79,\"Freeze Dried Apple\":110,\"Apple Pie\":230}"));
     }
 }
