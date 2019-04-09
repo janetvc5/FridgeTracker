@@ -141,7 +141,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
+
     void getJsonArr(String item)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);

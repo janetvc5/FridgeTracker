@@ -1,19 +1,41 @@
 package com.example.fridge_tracker;
 
-//import static org.mockito.Mockito.*;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MockitoTest {
 
-//    @Mock
-//    MyDatabase databaseMock;    //Tells Mockito to mock the databaseMock instance
-//
-//    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule(); // Tells Mockito to create the mocks based on the @Mock annotation
-//
-//    @Test
-//    public void testQuery(){
-//        ClassToTest t = new ClassToTest(databaseMock);  // Instantiates the class under test using the created mock
-//        boolean check = t.query("* from t");            // Executes some code of the class under test
-//        assertTrue(check);                              // Asserts that the method call returned true
-//        verify(databaseMock).query("* from t");         // Verify that the query method was called on the MyDatabase mock
-//    }
+    // @Mock
+    //    MyDatabase databaseMock;    //Tells Mockito to mock the databaseMock instance
+
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule(); // Tells Mockito to create the mocks based on the @Mock annotation
+
+    @Test
+    public void testSearch() {
+        // Creates Mock object of the class that isn't fully implemented
+        SearchReturn t = mock(SearchReturn.class);
+        SearchActivity testItemReturnSuccess = new SearchActivity();
+
+        String searchInput = "apple"
+        JSONObject response = new JSONObject();
+        try{
+            response.put("Apple",79);
+            response.put("Freeze Dried Apple",110);
+            response.put("Apple Pie",220);
+        }
+        catch(JSONException e){
+
+        }
+
+        when(t.getResponse("apple")).thenReturn(response);
+        Assert.assertEquals(testItemReturnSuccess.)
+    }
 }
