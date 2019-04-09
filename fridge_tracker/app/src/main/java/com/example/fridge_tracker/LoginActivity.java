@@ -193,6 +193,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param number userid ID of the user to log out of.
      * @return boolean Returns a boolean representing whether the log out was successful or not.
      */
+    /**
     function logout(userid) {
         // check whether the ID is actually logged in
         if (loggedusers[userid]) {
@@ -219,6 +220,6 @@ public class LoginActivity extends AppCompatActivity {
         // we have not successfully logged out
         return false;
     }
-
+**/
 
 }
