@@ -25,7 +25,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
         b1 = (Button) findViewById(R.id.bt1);
         b2 = (Button) findViewById(R.id.bt2);
         e1 = (EditText) findViewById(R.id.et1);
@@ -55,7 +55,7 @@ public class ChatActivity extends AppCompatActivity {
                             //Log.d("first", "run() returned: " + s);
                             //s=t1.getText().toString();
                             //Log.d("second", "run() returned: " + s);
-                            t1.setText(s + " Server:" + message);
+                            t1.setText(s + "\n " + message);
                         }
 
                         @Override
