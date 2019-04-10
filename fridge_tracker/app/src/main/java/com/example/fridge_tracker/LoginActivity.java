@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validate(String username, String password) {
 
         if ((username.equals("user2")) && (password.equals("pass"))) {
-            Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
+            Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
             startActivity(intent);
         } else {
             counter--;
@@ -73,117 +73,117 @@ public class LoginActivity extends AppCompatActivity {
 
 
     //test below!!!!
-    private void getUser(String uValue, String pValue) {
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        // prepare a result array
-
-        String url="http://cs309-af-1.misc.iastate.edu:8080/user";
-        JsonArrayRequest userArrayReq=new JsonObjectRequest(Request.Method.GET,
-                url, new JSONObject(),
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        userResult=response.getJSONArray("username");
-
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-
-        int i=0;
-
-        // loop through all of our users
-        while(userResult[i]!=null){
-            // get the user we are iterating through now
-            String user = userResult[i];
-
-            // check if the user has the specified property
-            if (user == uValue) {
-                JsonArrayRequest passArrayReq=new JsonObjectRequest(Request.Method.GET,
-                        url, new JSONObject(),
-                        new Response.Listener<JSONObject>() {
-
-                            @Override
-                            public void onResponse(JSONObject response) {
-
-                                passResult=response.getJSONArray("password");
-
-                            }
-                        }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-                int j=0;
-                while(j<passResult.length)
-                {
-                    String pass=passResult[j];
-                    if (pass==pValue);
-                }
-                mQueue.add(passArrayReq);
-            }
-        }
-
-        // return the results or null, if nothing was found (for single match search)
-
-        return ;
-
-        mQueue.add(userArrayReq);
-
-    }
-
-
-    /**
-     * boolean|Object login ( string username, string password )
-     * <p>
-     * Provides the functionality to be able to log in on a user.
-     *
-     * @param string username Username of the user to log in on.
-     * @param string password Password of the user to log in on.
-     * @return boolean|Object Returns the user object, or false, if login was not successful.
-     */
-    private void login(String username, String password) {
-        // checks whether username and password have been filled in
-        if (username.length() > 0 && password.length() > 0) {
-            // prepare a variable to store the user object, if any is received
-            JSONObject loggeduser;
-
-            // server should handle everything below...
-            // iterate through all users in the 'users' array (or database table perhaps, on server-side)
-            for (int i=0; i<userResult.length; i++){
-                // grab the property value with the property
-                String user = userResult[i];
-
-                // check if username and password match
-                if (username == user && password == = user.password)
-                    // set value of 'loggeduser' to the property value (user)
-                    loggeduser = user;
-            }
-            // ... up to this point, and the user returned from the server should be set in to 'loggeduser'
-            // make sure highly sensitive information is not returned, such as hash, salt or anything
-
-            // check whether the user is set
-            if (typeof loggeduser != 'undefined'){
-                // save the ID of the user to the 'loggedusers' array
-                loggedusers[loggeduser.id] = true;
-
-                // return the received user object
-                return loggeduser;
-            }
-        }
-
-        return false;
-    }
+//    private void getUser(String uValue, String pValue) {
+//        RequestQueue mQueue = Volley.newRequestQueue(this);
+//        // prepare a result array
+//
+//        String url="http://cs309-af-1.misc.iastate.edu:8080/user";
+//        JsonArrayRequest userArrayReq=new JsonObjectRequest(Request.Method.GET,
+//                url, new JSONObject(),
+//                new Response.Listener<JSONObject>() {
+//
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//
+//                        userResult=response.getJSONArray("username");
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//
+//
+//        int i=0;
+//
+//        // loop through all of our users
+//        while(userResult[i]!=null){
+//            // get the user we are iterating through now
+//            String user = userResult[i];
+//
+//            // check if the user has the specified property
+//            if (user == uValue) {
+//                JsonArrayRequest passArrayReq=new JsonObjectRequest(Request.Method.GET,
+//                        url, new JSONObject(),
+//                        new Response.Listener<JSONObject>() {
+//
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//
+//                                passResult=response.getJSONArray("password");
+//
+//                            }
+//                        }, new Response.ErrorListener() {
+//
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        error.printStackTrace();
+//                    }
+//                });
+//
+//                int j=0;
+//                while(j<passResult.length)
+//                {
+//                    String pass=passResult[j];
+//                    if (pass==pValue);
+//                }
+//                mQueue.add(passArrayReq);
+//            }
+//        }
+//
+//        // return the results or null, if nothing was found (for single match search)
+//
+//        return ;
+//
+//        mQueue.add(userArrayReq);
+//
+//    }
+//
+//
+//    /**
+//     * boolean|Object login ( string username, string password )
+//     * <p>
+//     * Provides the functionality to be able to log in on a user.
+//     *
+//     * @param string username Username of the user to log in on.
+//     * @param string password Password of the user to log in on.
+//     * @return boolean|Object Returns the user object, or false, if login was not successful.
+//     */
+//    private void login(String username, String password) {
+//        // checks whether username and password have been filled in
+//        if (username.length() > 0 && password.length() > 0) {
+//            // prepare a variable to store the user object, if any is received
+//            JSONObject loggeduser;
+//
+//            // server should handle everything below...
+//            // iterate through all users in the 'users' array (or database table perhaps, on server-side)
+//            for (int i=0; i<userResult.length; i++){
+//                // grab the property value with the property
+//                String user = userResult[i];
+//
+//                // check if username and password match
+//                if (username == user && password == = user.password)
+//                    // set value of 'loggeduser' to the property value (user)
+//                    loggeduser = user;
+//            }
+//            // ... up to this point, and the user returned from the server should be set in to 'loggeduser'
+//            // make sure highly sensitive information is not returned, such as hash, salt or anything
+//
+//            // check whether the user is set
+//            if (typeof loggeduser != 'undefined'){
+//                // save the ID of the user to the 'loggedusers' array
+//                loggedusers[loggeduser.id] = true;
+//
+//                // return the received user object
+//                return loggeduser;
+//            }
+//        }
+//
+//        return false;
+//    }
 
     /**
      * boolean logout ( number userid )
