@@ -42,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
                  * computer, and change the ip address to that of your computer.
                  * If running on the emulator, you can use localhost.
                  */
-                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/" + e1.getText().toString();
+                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/" + String.valueOf(e1.getText());
 
                 try {
                     Log.d("Socket:", "Trying socket");
@@ -86,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    cc.send(e2.getText().toString());
+                    cc.send(String.valueOf(e2.getText()));
                 }
                 catch (Exception e)
                 {
