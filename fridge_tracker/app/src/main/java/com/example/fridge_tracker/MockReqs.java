@@ -7,7 +7,7 @@ public interface MockReqs {
     //create object
      ArrayList<String> getAllFridges();
 
-     String displayGroceryShopper();
+     String displayGroceryShopper(String fridgeID);
 
      boolean checkLoggedIn(String user);
 

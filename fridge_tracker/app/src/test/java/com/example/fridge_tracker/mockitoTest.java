@@ -26,8 +26,6 @@ public class mockitoTest {
 
     @Test
     public void GetFridgesTest_returnsTrue() {
-        //The sorter we are trying to test
-        Sorter sorter = new Sorter();
 
         //The mocked (unimplemented) class that has a non-functional method (.getEventList())
         MockReqs m = mock(MockReqs.class);
@@ -47,26 +45,30 @@ public class mockitoTest {
         simulatedResponse.addAll(m.getAllFridges());
 
         for (int i = 0; i < sortedResponse.size(); i++) {
-            assertSame(expectedResponse.get(i).getEventTime(), sortedResponse.get(i).getEventTime());
+            assertSame(expectedResponse.get(i), sortedResponse.get(i));
         }
 
     }
 
     @Test
-    public void displayGroceryShopper_returnTrue() {
+    public void displayGroceryShopper_returnTrue() throws JSONException {
+        MockReqs m = mock(MockReqs.class);
 
+        JSONObject response = new JSONObject();
 
+        String fridgeID = "fridge123";
 
+        response.put("shopper", "Hailey");
 
+        when(m.displayGroceryShopper(fridgeID).thenReturn(response);
 
-
+        Assert.assertEquals(response, "Hailey");
 
     }
 
     @Test
     public void checkLoggedIn_returnTrue() throws JSONException {
         MockReqs m = mock(MockReqs.class);
-        MainActivity testLoggedIn = new MainActivity();
 
         JSONObject response = new JSONObject();
 
@@ -76,7 +78,7 @@ public class mockitoTest {
 
         when(m.checkLoggedIn(loggedInUser)).thenReturn(response);
 
-        Assert.assertEquals(testLoggedIn.)
+        Assert.assertEquals(response, true);
 
     }
 }
