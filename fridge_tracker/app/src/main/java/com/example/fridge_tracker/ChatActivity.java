@@ -1,7 +1,6 @@
 package com.example.fridge_tracker;
 
 import android.support.v7.app.AppCompatActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +25,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
         b1 = (Button) findViewById(R.id.bt1);
         b2 = (Button) findViewById(R.id.bt2);
         e1 = (EditText) findViewById(R.id.et1);
@@ -43,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
                  * computer, and change the ip address to that of your computer.
                  * If running on the emulator, you can use localhost.
                  */
-                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/user2";
+                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/" + String.valueOf(e1.getText());
 
                 try {
                     Log.d("Socket:", "Trying socket");
@@ -56,7 +55,7 @@ public class ChatActivity extends AppCompatActivity {
                             //Log.d("first", "run() returned: " + s);
                             //s=t1.getText().toString();
                             //Log.d("second", "run() returned: " + s);
-                            t1.setText(s + " Server:" + message);
+                            t1.setText(s + "\n " + message);
                         }
 
                         @Override
@@ -87,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    cc.send(e2.getText().toString());
+                    cc.send(String.valueOf(e2.getText()));
                 }
                 catch (Exception e)
                 {
