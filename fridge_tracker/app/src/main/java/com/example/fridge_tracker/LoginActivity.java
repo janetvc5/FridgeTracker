@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     
     String loggeduser;
     ArrayList<String> loggedInUsers;
-    String[] loggedInUsers;
+    //String[] loggedInUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
