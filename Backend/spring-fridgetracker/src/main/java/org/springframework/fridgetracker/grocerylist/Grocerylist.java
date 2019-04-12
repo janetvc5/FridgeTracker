@@ -39,6 +39,14 @@ public class Grocerylist {
 	@JoinColumn
 	private Fridge fridge;
 
+	public Grocerylist(String foodName, Fridge f, int Id, int Quantity) {
+		// TODO Auto-generated constructor stub
+		setFoodname(foodName);
+		setFridge(f);
+		setId(Id);
+		setQuantity(Quantity);
+	}
+
 	public Integer getId() {
 		return id;
 	}
