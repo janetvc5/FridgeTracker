@@ -23,6 +23,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class LoginActivity extends AppCompatActivity {
 
     Button login;
@@ -50,6 +53,11 @@ public class LoginActivity extends AppCompatActivity {
         attempts.setText("Login attempts remaining: 5");
 
         login.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 validate(user.getText().toString(), pass.getText().toString());

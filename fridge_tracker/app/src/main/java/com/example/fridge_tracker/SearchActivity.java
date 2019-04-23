@@ -45,12 +45,19 @@ import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ *
+ */
 public class SearchActivity extends AppCompatActivity {
 
     /* Bottom Navigation */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
+        /**
+         *
+         * @param item
+         * @return
+         */
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -89,6 +96,11 @@ public class SearchActivity extends AppCompatActivity {
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
 
@@ -100,6 +112,11 @@ public class SearchActivity extends AppCompatActivity {
         dropdown.setPrompt("Results:");
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
 
@@ -120,6 +137,10 @@ public class SearchActivity extends AppCompatActivity {
                 url, new JSONObject(),
                 new Response.Listener<JSONObject>() {
 
+                    /**
+                     *
+                     * @param response
+                     */
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -144,6 +165,10 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
 
+            /**
+             *
+             * @param error
+             */
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
