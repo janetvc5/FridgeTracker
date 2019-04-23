@@ -117,11 +117,6 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent3);
                         }
 
-                        //Toast.makeText(
-                        //        MainActivity.this,
-                        //        "You Clicked : " + item.getTitle(),
-                        //        Toast.LENGTH_SHORT
-                        //).show();
                         return true;
 
                     }
