@@ -39,9 +39,9 @@ autoDeploy:
   script:
     - cd Backend/spring-fridgetracker
     - mvn package
-    - sudo mv target/*.jar /target/web-demo.jar 
-    - sudo systemctl stop systemd-web-demo
-    - sudo systemctl start systemd-web-demo
+    - sudo mv target/*.jar /target/spring-fridgetracker-0.0.1-SNAPSHOT.jar
+    - sudo systemctl stop systemd-spring-fridgetracker-0.0.1-SNAPSHOT
+    - sudo systemctl start systemd-spring-fridgetracker-0.0.1-SNAPSHOT
 
     
 # To build android projects
@@ -57,11 +57,11 @@ android-build:
   tags:
    - android_tag
   script:
-    - cd Android_test
+    - cd Backend/spring-fridge-tracker
     - ./gradlew assemble
   artifacts:
     paths:
-    - Android_test/app/build/outputs/
+    - Backend/spring-fridge-tracker/app/build/outputs/
     
 # To run Android unit tests.   
 unitTests:
@@ -73,5 +73,5 @@ unitTests:
   tags:
    - android_tag
   script:
-    - cd Android_test
+    - cd Backend/spring-fridge-tracker
     - ./gradlew test
