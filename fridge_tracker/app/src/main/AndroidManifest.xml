@@ -31,7 +31,7 @@
             </intent-filter>-->
         <activity android:name=".SearchActivity" />
         <activity android:name=".ChatActivity" />
-        <!--<activity android:name=".GroceryListActivity" />-->
+        <activity android:name=".GroceryListActivity" />
         <!--<activity android:name=".MockitoTest" />-->
 
     </application>
