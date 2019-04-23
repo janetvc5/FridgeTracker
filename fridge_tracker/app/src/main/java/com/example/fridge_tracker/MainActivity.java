@@ -1,6 +1,7 @@
 package com.example.fridge_tracker;
 
 
+import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -105,12 +106,24 @@ public class MainActivity extends AppCompatActivity {
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(
-                                MainActivity.this,
-                                "You Clicked : " + item.getTitle(),
-                                Toast.LENGTH_SHORT
-                        ).show();
-                      return true;
+                        if (item.getTitle().equals("Grocery List")) {
+                             Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
+                             startActivity(intent1);
+                        } else if (item.getTitle().equals("Fridge View")) {
+                            Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
+                            startActivity(intent2);
+                        } else if (item.getTitle().equals("Chat")) {
+                            Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
+                            startActivity(intent3);
+                        }
+
+                        //Toast.makeText(
+                        //        MainActivity.this,
+                        //        "You Clicked : " + item.getTitle(),
+                        //        Toast.LENGTH_SHORT
+                        //).show();
+                        return true;
+
                     }
                 });
 

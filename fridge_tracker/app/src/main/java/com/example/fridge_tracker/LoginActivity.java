@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView title;
     TextView attempts;
     int counter = 5;
-    
+
     String loggeduser;
     ArrayList<String> loggedInUsers;
     //String[] loggedInUsers;
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validate(String username, String password) {
 
         if ((username.equals("user2")) && (password.equals("pass"))) {
-            Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         } else {
             counter--;
