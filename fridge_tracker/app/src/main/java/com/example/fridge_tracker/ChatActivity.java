@@ -116,6 +116,12 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         b2.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Takes the value typed in by user and sends it across the web socket.
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 try {

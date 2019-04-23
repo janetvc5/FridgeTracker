@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- *
+ * Log in page, the first page seen by a user and a correct username and password must be entered.
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
 
             /**
+             * Verifies that the username and password are valid and correct.
              *
              * @param v
              */

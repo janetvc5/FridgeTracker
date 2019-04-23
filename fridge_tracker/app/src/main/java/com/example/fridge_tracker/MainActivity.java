@@ -34,6 +34,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is the user's list of items in their fridge.
+ */
 public class MainActivity extends AppCompatActivity {
     Button sendButton, getButton;
     FloatingActionButton floatingActionButton;
@@ -77,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 try {

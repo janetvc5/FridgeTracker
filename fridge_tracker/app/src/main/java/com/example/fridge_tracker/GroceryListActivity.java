@@ -22,7 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 
 /**
- * 
+ * Grocery list displays the user's list of needed groceries
  */
 public class GroceryListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
