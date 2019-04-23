@@ -19,7 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-
+/**
+ * Grocery list displays the user's list of needed groceries
+ */
 public class GroceryListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -47,6 +49,7 @@ public class GroceryListActivity extends AppCompatActivity {
         list.setAdapter(mAdapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroceryListActivity.this, AddScreen.class);

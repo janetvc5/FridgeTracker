@@ -23,6 +23,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Log in page, the first page seen by a user and a correct username and password must be entered.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     Button login;
@@ -50,6 +53,12 @@ public class LoginActivity extends AppCompatActivity {
         attempts.setText("Login attempts remaining: 5");
 
         login.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Verifies that the username and password are valid and correct.
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 validate(user.getText().toString(), pass.getText().toString());

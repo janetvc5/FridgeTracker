@@ -19,6 +19,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A page to add a food item to the user's fridge
+ */
 public class AddScreen extends AppCompatActivity {
 
     TextView tvName, tvQuantity, tvExpiration, tvFridge, response;
@@ -45,6 +48,12 @@ public class AddScreen extends AppCompatActivity {
         response = (TextView) findViewById(R.id.response);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Sends a post json request
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
 
@@ -62,6 +71,12 @@ public class AddScreen extends AppCompatActivity {
         JsonObjectRequest jsonPostReq = new JsonObjectRequest(Request.Method.POST,
                 url, null,
                 new Response.Listener<JSONObject>() {
+
+                    /**
+                     * Shows the response from the server on the screen
+                     *
+                     * @param jsonresponse
+                     */
                     @Override
                     public void onResponse(JSONObject jsonresponse) {
 
@@ -69,7 +84,11 @@ public class AddScreen extends AppCompatActivity {
 
                     }
                 },new Response.ErrorListener() {
-
+            /**
+             * Error report
+             *
+             * @param error
+             */
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();

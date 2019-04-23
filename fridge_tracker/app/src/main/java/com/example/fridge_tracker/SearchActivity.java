@@ -45,29 +45,32 @@ import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * The user searches for a specific food item, the back end returns a json array, front end displays it as a list for the user to select
+ */
 public class SearchActivity extends AppCompatActivity {
 
     /* Bottom Navigation */
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_myfridge:
-                    return true;
-                case R.id.navigation_grocerylist:
-                    return true;
-                case R.id.navigation_recipes:
-                    return true;
-                case R.id.navigation_settings:
-                    return true;
-            }
-            return false;
-        }
-
-    };
-    /*End Bottom Navigation*/
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.navigation_myfridge:
+//                    return true;
+//                case R.id.navigation_grocerylist:
+//                    return true;
+//                case R.id.navigation_recipes:
+//                    return true;
+//                case R.id.navigation_settings:
+//                    return true;
+//            }
+//            return false;
+//        }
+//
+//    };
+//    /*End Bottom Navigation*/
 
     EditText search;
     Button searchButton, buttonAdd;
@@ -89,6 +92,12 @@ public class SearchActivity extends AppCompatActivity {
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * takes in the user's input and requests a json array from the back end.
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
 
@@ -100,6 +109,12 @@ public class SearchActivity extends AppCompatActivity {
         dropdown.setPrompt("Results:");
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Opens a new page for the user to enter more information about the searched for item
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
 
@@ -120,6 +135,11 @@ public class SearchActivity extends AppCompatActivity {
                 url, new JSONObject(),
                 new Response.Listener<JSONObject>() {
 
+                    /**
+                     * Takes the response from back end and prints it onto the screen.
+                     *
+                     * @param response
+                     */
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -144,6 +164,11 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
 
+            /**
+             * Error catcher
+             *
+             * @param error
+             */
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();

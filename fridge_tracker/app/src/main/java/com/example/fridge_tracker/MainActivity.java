@@ -34,6 +34,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is the user's list of items in their fridge.
+ */
 public class MainActivity extends AppCompatActivity {
     Button sendButton, getButton;
     FloatingActionButton floatingActionButton;
@@ -77,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 try {
@@ -137,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    void getJson(String userID)
+    private void getJson(String userID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/user/" + userID;
@@ -146,6 +155,10 @@ public class MainActivity extends AppCompatActivity {
                 url, new JSONObject(),
                 new Response.Listener<JSONObject>() {
 
+                    /**
+                     *
+                     * @param response
+                     */
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -162,6 +175,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
 
+            /**
+             *
+             * @param error
+             */
             @Override
             public void onErrorResponse(VolleyError error) {
               error.printStackTrace();
@@ -170,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
             /**
              * Passing some request headers
-             * */
+             **/
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -195,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void sendJson(final String userID, final String userRole) throws JSONException {
+    private void sendJson(final String userID, final String userRole) throws JSONException {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/user/new";
 
@@ -203,6 +220,10 @@ public class MainActivity extends AppCompatActivity {
                 url, getJs(userRole, userID),
                 new Response.Listener<JSONObject>() {
 
+                    /**
+                     *
+                     * @param response
+                     */
                     @Override
                     public void onResponse(JSONObject response) {
                         try
@@ -218,6 +239,10 @@ public class MainActivity extends AppCompatActivity {
 
                 }, new Response.ErrorListener() {
 
+            /**
+             *
+             * @param error
+             */
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
@@ -235,7 +260,10 @@ public class MainActivity extends AppCompatActivity {
                 return headers;
             }
 
-
+            /**
+             *
+             * @return
+             */
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();

@@ -16,6 +16,10 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+
+/**
+ * Using web sockets, this is a live chat between fridge users
+ */
 public class ChatActivity extends AppCompatActivity {
     Button  b1,b2;
     EditText e1,e2;
@@ -33,6 +37,12 @@ public class ChatActivity extends AppCompatActivity {
         t1 = (TextView) findViewById(R.id.tx1);
 
         b1.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * This is the encasement for the chat, holding the code for opening the socket, and sending and receiving messages
+             *
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Draft[] drafts = {new Draft_6455()};
@@ -47,6 +57,12 @@ public class ChatActivity extends AppCompatActivity {
                 try {
                     Log.d("Socket:", "Trying socket");
                     cc = new WebSocketClient(new URI(w), (Draft) drafts[0]) {
+
+                        /**
+                         * When a message is received, show on screen
+                         *
+                         * @param message
+                         */
                         @Override
                         public void onMessage(String message) {
                             Log.d("", "run() returned: " + message);
@@ -58,16 +74,33 @@ public class ChatActivity extends AppCompatActivity {
                             t1.setText(s + "\n " + message);
                         }
 
+                        /**
+                         *  Opening a web socket
+                         *
+                         * @param handshake
+                         */
                         @Override
                         public void onOpen(ServerHandshake handshake) {
                             Log.d("OPEN", "run() returned: " + "is connecting");
                         }
 
+                        /**
+                         * Close the web socket, show on log
+                         *
+                         * @param code
+                         * @param reason
+                         * @param remote
+                         */
                         @Override
                         public void onClose(int code, String reason, boolean remote) {
                             Log.d("CLOSE", "onClose() returned: " + reason);
                         }
 
+                        /**
+                         * Show the error on the log
+                         *
+                         * @param e
+                         */
                         @Override
                         public void onError(Exception e) {
                             Log.d("Exception:", e.toString());
@@ -83,6 +116,12 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         b2.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Takes the value typed in by user and sends it across the web socket.
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 try {
