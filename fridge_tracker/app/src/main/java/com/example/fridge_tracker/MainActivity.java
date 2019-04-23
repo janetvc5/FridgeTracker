@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
 
             /**
-             *
+             * sends the back end the new users ID and Role
              *
              * @param v
              */
@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * requests the user's information
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 getJson(String.valueOf(getUserInfo.getText()));
@@ -104,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * A pop up menu linking to the separate pages of the app
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
@@ -114,6 +126,13 @@ public class MainActivity extends AppCompatActivity {
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    /**
+                     * Switches pages when a link is clicked.
+                     *
+                     * @param item
+                     * @return
+                     */
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getTitle().equals("Grocery List")) {
                              Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
@@ -156,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
 
                     /**
+                     * Back end returns different values for role and fridge id per user
                      *
                      * @param response
                      */
@@ -176,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
 
             /**
+             * Error catcher
              *
              * @param error
              */
@@ -221,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
 
                     /**
+                     * prints on log for testing
                      *
                      * @param response
                      */
@@ -240,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
 
             /**
+             * Error catcher
              *
              * @param error
              */
@@ -261,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             /**
+             * passing some params
              *
              * @return
              */
