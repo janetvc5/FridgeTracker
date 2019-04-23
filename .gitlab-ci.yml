@@ -13,7 +13,7 @@ maven-build:
   tags:
     - spring_tag
   script:
-    - cd spring-fridgetracker
+    - cd Backend/spring-fridgetracker/
     - mvn package -B
   
 # artifacts are created when job executes successfully, and can be manually downloaded from GitLab GUI.
@@ -23,7 +23,7 @@ maven-test:
   tags:
     - spring_tag
   script:
-    - cd spring-fridgetracker
+    - cd Backend/spring-fridgetracker/
     - mvn test
   artifacts:
     paths:
@@ -36,7 +36,7 @@ autoDeploy:
   tags:
    - spring_tag
   script:
-    - cd spring-fridgetracker
+    - cd Backend/spring-fridgetracker/
     - mvn package
     - sudo mv target/*.jar /target/spring-fridgetracker-0.0.1-SNAPSHOT.jar
     - sudo systemctl stop systemd-spring-fridgetracker-0.0.1-SNAPSHOT
