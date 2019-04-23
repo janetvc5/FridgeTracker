@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/one"
-        android:title="One"/>
+        android:title="Grocery List"/>
 
     <item
         android:id="@+id/two"
-        android:title="Two"/>
+        android:title="Fridge View"/>
 
     <item
         android:id="@+id/three"
-        android:title="Three"/>
+        android:title="Chat"/>
 
 </menu>
