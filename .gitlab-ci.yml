@@ -14,7 +14,7 @@ maven-build:
   tags:
     - spring_tag
   script:
-    - cd Spring
+    - cd Backend/spring-fridgetracker
     - mvn package -B
   
 # artifacts are created when job executes successfully, and can be manually downloaded from GitLab GUI.
@@ -24,7 +24,7 @@ maven-test:
   tags:
     - spring_tag
   script:
-    - cd Spring
+    - cd Backend/spring-fridgetracker
     - mvn test
   artifacts:
     paths:
@@ -37,7 +37,7 @@ autoDeploy:
   tags:
    - spring_tag
   script:
-    - cd Spring
+    - cd Backend/spring-fridgetracker
     - mvn package
     - sudo mv target/*.jar /target/web-demo.jar 
     - sudo systemctl stop systemd-web-demo
@@ -49,7 +49,7 @@ autoDeploy:
 # Ensure the tag matches with the tag created for Android runner
 # Android runner should have docker as executor.
 android-build:
-  image: javiersantos/android-ci:latest
+  image: android-ci:latest
   stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
@@ -65,7 +65,7 @@ android-build:
     
 # To run Android unit tests.   
 unitTests:
-  image: javiersantos/android-ci:latest
+  image: android-ci:latest
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
