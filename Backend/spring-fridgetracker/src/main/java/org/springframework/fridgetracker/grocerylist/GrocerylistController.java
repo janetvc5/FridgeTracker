@@ -26,6 +26,10 @@ public class GrocerylistController {
 
 	private final Logger logger = LoggerFactory.getLogger(GrocerylistController.class);
 
+	/**
+	 * Method to return all grocery list entries
+	 * @return List<Grocerylist>
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/grocerylist")
 	public List<Grocerylist> getAllGrocerylists() {
 		List<Grocerylist> results = grocerylistRepository.findAll();
@@ -33,12 +37,22 @@ public class GrocerylistController {
 		return results;
 	}
 
+	/**
+	 * Method to return a grocery list for a Fridge found by ID
+	 * @param id
+	 * @return Optional<Grocerylist>
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/grocerylist/{id}")
 	public Optional<Grocerylist> getGroceryListByFridge(@PathVariable("id") Integer id) {
 		Optional<Grocerylist> list = grocerylistRepository.findById(id);
 		return list;
 	}
 
+	/**
+	 * Method to save Grocerylist item to repository 
+	 * @param grocerylist
+	 * @return JSON Object response
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/grocerylist/new")
 	public Map<String, String> saveGrocerylistItem(@RequestBody Grocerylist grocerylist) {
 		if (grocerylist == null)
@@ -58,6 +72,11 @@ public class GrocerylistController {
 		return map;
 	}
 
+	/**
+	 * Method to delete grocery list item by ID
+	 * @param id
+	 * @return JSON Obejct response 
+	 */
 	@RequestMapping(method = RequestMethod.DELETE, path = "/grocerylist/delete/{id}")
 	public Map<String, String> deleteGrocerylistItem(@PathVariable("id") Integer id) {
 		if (id == null)
