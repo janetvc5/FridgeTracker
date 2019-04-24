@@ -1,6 +1,7 @@
 package com.example.fridge_tracker;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -29,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,57 +44,46 @@ import java.util.Map;
  * This is the user's list of items in their fridge.
  */
 public class MainActivity extends AppCompatActivity {
+    TextView pageTitle;
     Button sendButton, getButton;
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
+    RecyclerView fridgeList;
+    //ArrayList<String> myDataset;
+    String food;
+    String quan;
+    String exp;
 
-//    /* Bottom Navigation */
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.navigation_myfridge:
-//                    return true;
-//                case R.id.navigation_grocerylist:
-//                    return true;
-//                case R.id.navigation_recipes:
-//                    return true;
-//                case R.id.navigation_settings:
-//                    return true;
-//                case R.id.navigation_chat:
-//            }
-//            return false;
-//        }
-//
-//    };
-//    /*End Bottom Navigation*/
+    ArrayList<FoodItem> fridgeContents=new ArrayList<FoodItem>();
+
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private static final String URL_DATA="http://cs309-af-1.misc.iastate.edu:8080/fridge/2/contents";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        pageTitle = (TextView) findViewById(R.id.pageTitle);
         sendButton = (Button) findViewById(R.id.sendbutton);
         getButton = (Button) findViewById(R.id.getbutton);
         getUserInfo = (EditText) findViewById(R.id.sendtext);
         sendRole = (EditText) findViewById(R.id.sendrole);
         sendID = (EditText) findViewById(R.id.sendfridgeid);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fridgeList = (RecyclerView) findViewById(R.id.fridgeList);
 
-        list = (RecyclerView) findViewById(R.id.groceryList);
-        myDataset = new ArrayList<String>();
+        loadFoodData();
 
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
-        list.setLayoutManager(layoutManager);
+        fridgeList.setLayoutManager(layoutManager);
 
         // specify an adapter
-        mAdapter = new MyAdapter(myDataset);
-        list.setAdapter(mAdapter);
+        mAdapter = new MyAdapter(fridgeContents);
+        fridgeList.setAdapter(mAdapter);
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                              Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
                              startActivity(intent1);
                         } else if (item.getTitle().equals("Fridge View")) {
-                            Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
+                            Intent intent2 = new Intent(MainActivity.this, MainActivity.class);
                             startActivity(intent2);
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
@@ -151,15 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // bottom nav
-        BottomNavigationView navigation = findViewById(R.id.navigationView);
-            //navigation.setOnNavigationItemSelectedListener(OnNavigationItemSelectedListener);
-        // end bottom nav
-
     }
-
-
-
 
     private void getJson(String userID)
     {
@@ -287,15 +271,46 @@ public class MainActivity extends AppCompatActivity {
 
                 return params;
             }
-
-
-
         };
 
         mQueue.add(jsonObjReq);
 
     }
 
+    private void loadFoodData(){
+        //StringRequest stringRequest = new StringRequest(URL_DATA, Response.Listener<String>(), Response.ErrorListener<>()){
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                URL_DATA, new JSONObject(),
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                           // JSONObject jsonObject = new JSONObject(response);
+                            JSONArray array = response.getJSONArray("items");
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject jo = array.getJSONObject(i);
+                                //ArrayList<String> food=new ArrayList<String>();
+                                food=(jo.getString("foodname"));
+                                quan=(jo.getString("quantity"));
+                                exp=(jo.getString("expirationdate"));
+                                fridgeContents.add(new FoodItem(food, quan, exp));
+                            }
+                            } catch(Exception e){
+
+                            }
+                    }
+        }, new Response.ErrorListener() {
+
+            /**
+             * @param error
+             */
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+    }
 
     protected JSONObject getJs(String role, String id) throws JSONException {
         JSONObject params = new JSONObject();

@@ -129,7 +129,7 @@ public class SearchActivity extends AppCompatActivity {
     private void getJson(String itemID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2\n";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/search?ingr="+itemID;
         //String url= "http://cs309-af-1.misc.iastate.edu:8080/item";
         JsonObjectRequest jsonArReq = new JsonObjectRequest(Request.Method.GET,
                 url, new JSONObject(),
