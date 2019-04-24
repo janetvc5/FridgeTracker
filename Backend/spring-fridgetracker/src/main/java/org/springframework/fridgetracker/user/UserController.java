@@ -30,14 +30,14 @@ class UserController {
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	/**
-	 * Adds a user on a POST call to "<url>/user/new"
+	 * Adds a user on a POST call to "{url}/user/new"
 	 * @param user - User to add to the record (in request body)
-	 * @return - Returns a Map<String, String> with a creation status (true or false) and reason
+	 * @return - Returns a Map with a creation status (true or false) and reason
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/user/new")
-	public Map<String,String> saveUser(@RequestBody User user) {
+	public Map saveUser(@RequestBody User user) {
 		if(user==null) throw new RuntimeException("User was not provided in creation statement");
-		HashMap<String,String> map = new HashMap<>();
+		HashMap map = new HashMap<>();
 		if(userRepository.findByUsername(user.getUsername()).isPresent()) {
 			map.put("user creation success","false");
 			map.put("reason","Username already exists");
@@ -64,7 +64,7 @@ class UserController {
 	}
 
 	/**
-	 * Returns all users on a GET call to "<url>/user"
+	 * Returns all users on a GET call to "{url}/user"
 	 * @return - List of Users
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/user")
@@ -75,7 +75,7 @@ class UserController {
     }
 	
 	/**
-	 * Gets a user by the given ID on a GET call to "<url>/user/{userId}"
+	 * Gets a user by the given ID on a GET call to "{url}/user/{userId}"
 	 * @param userId - ID of user to get (part of url)
 	 * @return - Optional (if user is in, it will have a value)
 	 */
@@ -97,8 +97,8 @@ class UserController {
 	 * @return - a map with a login success key, false if login was unsuccessful, true if successful, and if successful, key "id" will have the user id
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/user/login")
-	public Map<String,String> login(@RequestBody User loginAttempt) {
-		HashMap<String,String> map = new HashMap<>();
+	public Map login(@RequestBody User loginAttempt) {
+		HashMap map = new HashMap<>();
         Optional<User> u = userRepository.findByUsername(loginAttempt.getUsername());
         if(!u.isPresent()) {
         	map.put("login success", "false");

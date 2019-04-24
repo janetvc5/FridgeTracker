@@ -28,7 +28,7 @@ public class GrocerylistController {
 
 	/**
 	 * Method to return all grocery list entries
-	 * @return List<Grocerylist>
+	 * @return List of items
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/grocerylist")
 	public List<Grocerylist> getAllGrocerylists() {
@@ -39,8 +39,8 @@ public class GrocerylistController {
 
 	/**
 	 * Method to return a grocery list for a Fridge found by ID
-	 * @param id
-	 * @return Optional<Grocerylist>
+	 * @param id ID of fridge to be found (in url)
+	 * @return Optional
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/grocerylist/{id}")
 	public Optional<Grocerylist> getGroceryListByFridge(@PathVariable("id") Integer id) {
@@ -50,7 +50,7 @@ public class GrocerylistController {
 
 	/**
 	 * Method to save Grocerylist item to repository 
-	 * @param grocerylist
+	 * @param grocerylist Grocerylist item to add (in request body)
 	 * @return JSON Object response
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/grocerylist/new")
@@ -74,7 +74,7 @@ public class GrocerylistController {
 
 	/**
 	 * Method to delete grocery list item by ID
-	 * @param id
+	 * @param id Id of grocery item to delete (in url)
 	 * @return JSON Obejct response 
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, path = "/grocerylist/delete/{id}")

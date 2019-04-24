@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StringToJson {
 	/**
-	 * Converts a string to a HashMap<String, Object>, akin to a JSON object. Can be recursive
+	 * Converts a string to a HashMap, akin to a JSON object. Can be recursive
 	 * @param s - String to convert
-	 * @return - HashMap<String, Object> representing all keys and values in the object
+	 * @return - HashMap representing all keys and values in the object
 	 */
 	public static Map<String, Object> stringToJsonObject(String s) {
 		s=s.substring(s.indexOf('{')+1,s.lastIndexOf('}'));
@@ -190,7 +190,7 @@ public class StringToJson {
 	 * Takes a search term, and runs it through the EDAMAM search Api, then converts the string to HashMap
 	 * @param searchTerm - Term to look up
 	 * @param session - Optional, used if this is not the first page of results
-	 * @return - Returns a HashMap<Object> with search results from the API
+	 * @return - Returns a HashMap with search results from the API
 	 * @throws IOException - Thrown if connection to the search URL fails
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/search")

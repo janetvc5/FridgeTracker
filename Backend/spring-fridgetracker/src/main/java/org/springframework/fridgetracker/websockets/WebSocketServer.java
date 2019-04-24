@@ -36,7 +36,7 @@ public class WebSocketServer {
     /**
      * Handles new sessions, and adds all relevant information to Websocket Server
 	 *
-	 * Connections are established when a new websocket connects to "<url>/websocket/{fridgeId}/{username}"
+	 * Connections are established when a new websocket connects to "{url}/websocket/{fridgeId}/{username}"
      * @param session - session being created
      * @param username - Username for the user connecting
      * @param id - fridge to send messages to
@@ -106,8 +106,9 @@ public class WebSocketServer {
     }
  
     /**
-     * @param session
-     * @param throwable
+     * Handles websocket errors
+     * @param session - connection that has an error
+     * @param throwable - what error was thrown
      */
     @OnError
     public void onError(Session session, Throwable throwable) 
