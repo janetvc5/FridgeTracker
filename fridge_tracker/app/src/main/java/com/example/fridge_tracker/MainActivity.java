@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,6 +81,18 @@ public class MainActivity extends AppCompatActivity {
         sendRole = (EditText) findViewById(R.id.sendrole);
         sendID = (EditText) findViewById(R.id.sendfridgeid);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+
+        list = (RecyclerView) findViewById(R.id.groceryList);
+        myDataset = new ArrayList<String>();
+
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        list.setLayoutManager(layoutManager);
+
+        // specify an adapter
+        mAdapter = new MyAdapter(myDataset);
+        list.setAdapter(mAdapter);
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 

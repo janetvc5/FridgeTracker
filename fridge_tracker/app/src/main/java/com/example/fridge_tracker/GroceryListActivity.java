@@ -44,7 +44,7 @@ public class GroceryListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(layoutManager);
 
-        // specify an adapter (see also next example)
+        // specify an adapter
         mAdapter = new MyAdapter(myDataset);
         list.setAdapter(mAdapter);
 
