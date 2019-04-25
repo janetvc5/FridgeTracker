@@ -42,29 +42,6 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
 
-//    /* Bottom Navigation */
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.navigation_myfridge:
-//                    return true;
-//                case R.id.navigation_grocerylist:
-//                    return true;
-//                case R.id.navigation_recipes:
-//                    return true;
-//                case R.id.navigation_settings:
-//                    return true;
-//                case R.id.navigation_chat:
-//            }
-//            return false;
-//        }
-//
-//    };
-//    /*End Bottom Navigation*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

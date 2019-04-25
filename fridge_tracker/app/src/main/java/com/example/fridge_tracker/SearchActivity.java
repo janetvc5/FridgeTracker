@@ -50,28 +50,6 @@ import org.json.JSONObject;
  */
 public class SearchActivity extends AppCompatActivity {
 
-    /* Bottom Navigation */
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.navigation_myfridge:
-//                    return true;
-//                case R.id.navigation_grocerylist:
-//                    return true;
-//                case R.id.navigation_recipes:
-//                    return true;
-//                case R.id.navigation_settings:
-//                    return true;
-//            }
-//            return false;
-//        }
-//
-//    };
-//    /*End Bottom Navigation*/
-
     EditText search;
     Button searchButton, buttonAdd;
     Spinner dropdown;

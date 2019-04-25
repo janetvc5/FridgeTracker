@@ -35,7 +35,7 @@ public class AddScreen extends AppCompatActivity {
 
         tvName = (TextView) findViewById(R.id.tvName);
         tvQuantity = (TextView) findViewById(R.id.tvQuantity);
-        tvExpiration = (TextView) findViewById(R.id.tvQuantity);
+        tvExpiration = (TextView) findViewById(R.id.tvExpiration);
         tvFridge = (TextView) findViewById(R.id.tvFridge);
 
         etName = (EditText) findViewById(R.id.etName);
