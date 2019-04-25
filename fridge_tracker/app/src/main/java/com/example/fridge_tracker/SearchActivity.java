@@ -3,6 +3,7 @@ package com.example.fridge_tracker;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,11 +84,86 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    private void getJson(String itemID)
+    private void getJson(String item)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2\n";
+        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + item + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2";
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONObject>() {
+
+                    /**
+                     * api returns the values for each food item
+                     *
+                     * @param response
+                     */
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray hints = response.getJSONArray("hints");
+
+
+                            for (int i = 0; i < hints.length(); i++){
+                                JSONObject food = hints.getJSONObject(i);
+
+
+                                String foodname = food.getString("label");
+                                Log.d("tag","response from api:" + foodname);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            /**
+             * Error catcher
+             *
+             * @param error
+             */
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             **/
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("fridgeid", "36");
+//                params.put("role", "abc@androidhive.info");
+//
+//
+//                return params;
+//            }
+
+        };
+
+        mQueue.add(jsonObjReq);
+
+    }
+
+    private void getJson1(String itemID)
+    {
+        RequestQueue mQueue = Volley.newRequestQueue(this);
+        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2";
         //String url= "http://cs309-af-1.misc.iastate.edu:8080/item";
+
+
         JsonObjectRequest jsonArReq = new JsonObjectRequest(Request.Method.GET,
                 url, new JSONObject(),
                 new Response.Listener<JSONObject>() {

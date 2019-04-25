@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         sendButton = (Button) findViewById(R.id.sendbutton);
         getButton = (Button) findViewById(R.id.getbutton);
         getUserInfo = (EditText) findViewById(R.id.sendtext);
@@ -113,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent3);
+                        } else if (item.getTitle().equals("Search")) {
+                            Intent intent4 = new Intent(MainActivity.this, SearchActivity.class);
+                            startActivity(intent4);
                         }
 
                         return true;
@@ -124,12 +125,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        // bottom nav
-        BottomNavigationView navigation = findViewById(R.id.navigationView);
-            //navigation.setOnNavigationItemSelectedListener(OnNavigationItemSelectedListener);
-        // end bottom nav
-
     }
 
 

@@ -13,4 +13,8 @@
         android:id="@+id/three"
         android:title="Chat"/>
 
+    <item
+        android:id="@+id/four"
+        android:title="Search"/>
+
 </menu>
