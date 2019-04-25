@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -50,35 +52,15 @@ import org.json.JSONObject;
  */
 public class SearchActivity extends AppCompatActivity {
 
-    /* Bottom Navigation */
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.navigation_myfridge:
-//                    return true;
-//                case R.id.navigation_grocerylist:
-//                    return true;
-//                case R.id.navigation_recipes:
-//                    return true;
-//                case R.id.navigation_settings:
-//                    return true;
-//            }
-//            return false;
-//        }
-//
-//    };
-//    /*End Bottom Navigation*/
-
     EditText search;
     Button searchButton, buttonAdd;
     Spinner dropdown;
     private TextView msgResponse;
     private String foodData;
-    String[] items;
-
+    String calories;
+    String food;
+    ArrayList<FoodItem> results;
+    RecyclerView resultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +69,10 @@ public class SearchActivity extends AppCompatActivity {
 
         search = (EditText) findViewById(R.id.etSearch);
         searchButton = (Button) findViewById(R.id.searchButton);
-        dropdown = (Spinner) findViewById(R.id.dropdown);
-        msgResponse = (TextView) findViewById(R.id.msgResponse);
+        //dropdown = (Spinner) findViewById(R.id.dropdown);
+        //msgResponse = (TextView) findViewById(R.id.msgResponse);
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
+        resultList = (RecyclerView) findViewById(R.id.results);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
 
@@ -106,7 +89,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        dropdown.setPrompt("Results:");
+        //dropdown.setPrompt("Results:");
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
 
@@ -142,24 +125,24 @@ public class SearchActivity extends AppCompatActivity {
                      */
                     @Override
                     public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray array = response.getJSONArray("food");
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject jo = array.getJSONObject(i);
+                                //ArrayList<String> food=new ArrayList<String>();
+                                food = (jo.getString("label"));
+                                calories = (jo.getString("ENERC_KCAL"));
+                                results.add(new FoodItem(food, "1", "0"));
+                            }
 
-                        foodData=response.toString();
+                        } catch(Exception e){
 
-                        msgResponse.setText(foodData);
+                        }
 
 
+                        //foodData=response.toString();
 
-                        // JSONObject json = readJsonFromUrl(url);
-                        // System.out.println(json.toString());
-                        // System.out.println(json.get("label"));
-
-                        //Log.d("Response", foodData);
                         //msgResponse.setText(foodData);
-
-                        // Scanner scan=new Scanner(response);
-
-                        //scan.next("foodId");
-                        // msgResponse.setText(food);
 
                     }
                 }, new Response.ErrorListener() {

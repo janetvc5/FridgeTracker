@@ -51,7 +51,6 @@ public class GroceryListActivity extends AppCompatActivity {
         list.setAdapter(mAdapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroceryListActivity.this, SearchActivity.class);

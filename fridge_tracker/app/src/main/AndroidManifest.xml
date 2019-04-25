@@ -24,14 +24,31 @@
               <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-            <!--<intent-filter>
+        <activity android:name=".MainActivity" >
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".GroceryListActivity" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SearchActivity" >
+             <intent-filter>
+                 <action android:name="android.intent.action.VIEW" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+        <activity android:name=".ChatActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".GroceryListActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!--<activity android:name=".MockitoTest" />-->
 
     </application>

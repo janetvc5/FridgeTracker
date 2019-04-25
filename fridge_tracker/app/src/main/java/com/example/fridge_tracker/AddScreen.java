@@ -124,7 +124,7 @@ public class AddScreen extends AppCompatActivity {
 
     private void postJsonToGrocery() {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/item/new";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/add";
 
         JsonObjectRequest jsonPostReq = new JsonObjectRequest(Request.Method.POST,
                 url, null,
