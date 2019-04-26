@@ -1,6 +1,7 @@
 package com.example.fridge_tracker;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -110,12 +111,15 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("login", "valid value: " + valid);
 
 
-                            if ( valid == true ) {
+                            if ( valid ) {
+                                String userID = response.getString("id");
+                                ((GlobalVariables) getApplication()).setUserID(userID);
+                                //user userID to get other values
+
+
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
-
-                                //TODO set the global variables like userid, fridgeid, role, etc
-
                             } else {
                                 counter--;
 

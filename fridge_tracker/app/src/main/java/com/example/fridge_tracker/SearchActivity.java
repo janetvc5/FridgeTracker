@@ -107,14 +107,21 @@ public class SearchActivity extends AppCompatActivity {
 
                             for (int i = 0; i < hints.length(); i++){
                                 JSONObject hintItem = hints.getJSONObject(i);
-                                JSONObject foodInIndex = hintItem.getJSONObject("food");
+                                // JSONObject foodInIndex = hintItem.getJSONObject("label");
+                                // String stuff2 = hintItem.getString("food");
 
-                                items[i]= foodInIndex.getString("label");
-                                ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
-                                list.setAdapter(adapter);
+                                Log.d("hintitem", "hint index: " + hintItem.getString("food"));
+                                // Log.d("hintItem", "hints individual response" + stuff2);
+                                // Log.d("fooditem", "food label" + foodInIndex);
+                                //String stuff3 = foodInIndex.getString("food");
+
+
+//                                items[i]= foodInIndex.getString("label");
+//                                ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
+//                                list.setAdapter(adapter);
 
                                 //msgResponse.setText("\n" + foodName);
-                                Log.d("tag","food item added to list: " + items[i]);
+                                //Log.d("tag","food item added to list: " + items[i]);
                             }
 
                         } catch (JSONException e) {

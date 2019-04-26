@@ -10,9 +10,9 @@ public class GlobalVariables extends Application {
 
     // TO USE
 
-//    ((GlobalVariables) this.getApplication()).setSomeVariable("foo");
+//    ((GlobalVariables) getApplication()).setSomeVariable("foo");
 //    or
-//    String s = ((GlobalVariables) this.getApplication()).getSomeVariable();
+//    String s = ((GlobalVariables) getApplication()).getSomeVariable();
 
     public String getUserID() {
         return userID;

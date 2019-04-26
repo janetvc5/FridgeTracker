@@ -5,7 +5,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
+
     <application
+
+        android:name=".GlobalVariables"
         tools:ignore="GoogleAppIndexingWarning"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,9 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddScreen">
 
-        </activity>
+        <activity android:name=".AddScreen" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -24,6 +27,7 @@
               <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity" />
             <!--<intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -35,5 +39,7 @@
         <!--<activity android:name=".MockitoTest" />-->
 
     </application>
+
+
 
 </manifest>
