@@ -14,7 +14,7 @@ maven-build:
   tags:
     - spring_tag
   script:
-    - cd Backend/spring-fridgetracker
+    - cd /home/Backend/spring-fridgetracker
     - mvn package -B
   
 # artifacts are created when job executes successfully, and can be manually downloaded from GitLab GUI.
@@ -55,7 +55,7 @@ android-build:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Android_test/gradlew
   tags:
-   - android_tag1
+   - android_tag
   script:
     - cd Android_test
     - ./gradlew assemble
@@ -71,7 +71,7 @@ unitTests:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Android_test/gradlew
   tags:
-   - android_tag1
+   - android_tag
   script:
     - cd Android_test
     - ./gradlew test
