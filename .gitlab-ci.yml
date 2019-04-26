@@ -14,7 +14,7 @@ maven-build:
   tags:
     - spring_tag
   script:
-    - cd Backend/spring-fridgetracker
+    - cd /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/Backend/spring-fridgetracker
     - mvn package -B
   
 # artifacts are created when job executes successfully, and can be manually downloaded from GitLab GUI.
