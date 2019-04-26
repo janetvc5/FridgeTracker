@@ -67,15 +67,19 @@ public class LoginActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                validate(user.getText().toString(), pass.getText().toString());
+                try{
+                    sendJsonLogin(user.getText().toString(), pass.getText().toString());
+                } catch (JSONException e){
+
+                }
+
             }
         });
 
     }
 
     private void validate(String username, String password) {
-        try{
-            if ( sendJsonLogin(username,password) ) {
+            if ( true ) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             } else {
@@ -87,13 +91,11 @@ public class LoginActivity extends AppCompatActivity {
                     login.setEnabled(false);
                 }
             }
-        } catch (JSONException e){
 
-        }
 
     }
 
-    private boolean sendJsonLogin(final String username, final String password) throws JSONException {
+    private void sendJsonLogin(final String username, final String password) throws JSONException {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/user/login";
 
@@ -104,11 +106,26 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                             boolean valid = response.getBoolean("login success");
+                            boolean valid = response.getBoolean("login success");
+                            Log.d("login", "valid value: " + valid);
 
-                             if (valid){
-                                 //then set the global variables like userid, fridgeid, role, etc
-                             }
+
+                            if ( valid == true ) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+
+                                //TODO set the global variables like userid, fridgeid, role, etc
+
+                            } else {
+                                counter--;
+
+                                attempts.setText("Login attempts remaining: " + String.valueOf(counter));
+
+                                if (counter == 0) {
+                                    login.setEnabled(false);
+                                }
+                            }
+
 
                         } catch (JSONException e) {
 
@@ -159,10 +176,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         mQueue.add(jsonObjReq);
-        return valid; //UNCOMMENT ME
-        //return true; //CHANGE ME TO THE CORRECT VALUE or delete me
     }
-
 
     protected JSONObject getJs(String username, String password) throws JSONException {
         JSONObject params = new JSONObject();
