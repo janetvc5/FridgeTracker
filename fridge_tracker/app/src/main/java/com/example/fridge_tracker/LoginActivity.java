@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Log in page, the first page seen by a user and a correct username and password must be entered.
@@ -33,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText pass;
     TextView title;
     TextView attempts;
+    boolean valid;
     int counter = 5;
 
     String loggeduser;
@@ -68,24 +74,103 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void validate(String username, String password) {
+        try{
+            if ( sendJsonLogin(username,password) ) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                counter--;
 
-        if ((username.equals("user2")) && (password.equals("pass"))) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            counter--;
+                attempts.setText("Login attempts remaining: " + String.valueOf(counter));
 
-            attempts.setText("Login attempts remaining: " + String.valueOf(counter));
-
-            if (counter == 0) {
-                login.setEnabled(false);
+                if (counter == 0) {
+                    login.setEnabled(false);
+                }
             }
+        } catch (JSONException e){
+
         }
+
     }
 
-    String[] userResult;
-    String[] passResult;
+    private boolean sendJsonLogin(final String username, final String password) throws JSONException {
+        RequestQueue mQueue = Volley.newRequestQueue(this);
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/user/login";
 
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, getJs(username, password),
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                             boolean valid = response.getBoolean("login success");
+
+                             if (valid){
+                                 //then set the global variables like userid, fridgeid, role, etc
+                             }
+
+                        } catch (JSONException e) {
+
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+
+            /**
+             * Error catcher
+             *
+             * @param error
+             */
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }) {
+
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            /**
+             * passing some params
+             *
+             * @return
+             */
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("password", password);
+
+                return params;
+            }
+
+
+
+        };
+
+        mQueue.add(jsonObjReq);
+        return valid; //UNCOMMENT ME
+        //return true; //CHANGE ME TO THE CORRECT VALUE or delete me
+    }
+
+
+    protected JSONObject getJs(String username, String password) throws JSONException {
+        JSONObject params = new JSONObject();
+        params.put("username", username);
+        params.put("password", password);
+
+        return params;
+    }
 
     //test below!!!!
 //    private void getUser(String uValue, String pValue) {
