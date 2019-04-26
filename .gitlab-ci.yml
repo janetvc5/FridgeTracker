@@ -39,7 +39,7 @@ autoDeploy:
   script:
     - cd Backend/spring-fridgetracker
     - mvn package
-    - sudo mv /target/spring-fridgetracker-0.0.1-SNAPSHOT.jar /target/spring-fridgetracker-0.0.1-SNAPSHOT.jar
+    - sudo mv /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/Backend/spring-fridgetracker/target/spring-fridgetracker-0.0.1-SNAPSHOT.jar /target/spring-fridgetracker-0.0.1-SNAPSHOT.jar
     - sudo systemctl stop systemd-web-demo
     - sudo systemctl start systemd-web-demo
 
