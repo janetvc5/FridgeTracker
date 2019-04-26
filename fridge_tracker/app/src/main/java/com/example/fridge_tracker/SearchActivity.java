@@ -87,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
     private void getJson(String item)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + item + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/search?ingr=" + item;
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
@@ -102,13 +102,18 @@ public class SearchActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray hints = response.getJSONArray("hints");
+                            String stuff = hints.getString(1);
+                            Log.d("hints", "hints response " + stuff);
 
 
                             for (int i = 0; i < hints.length(); i++){
-                                JSONObject food = hints.getJSONObject(i);
+                                JSONObject hintItem = hints.getJSONObject(i);
+                                JSONObject foodInIndex = hintItem.getJSONObject("food");
 
 
-                                String foodname = food.getString("label");
+                                String foodname = foodInIndex.getString("label");
+
+                                msgResponse.setText("\n" + foodname);
                                 Log.d("tag","response from api:" + foodname);
                             }
 
