@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,7 +34,7 @@ public class SearchActivity extends AppCompatActivity {
 
     EditText search;
     Button searchButton, buttonAdd;
-    Spinner dropdown;
+    ListView list;
     private TextView msgResponse;
     private String foodData;
     String[] items;
@@ -45,8 +47,7 @@ public class SearchActivity extends AppCompatActivity {
 
         search = (EditText) findViewById(R.id.etSearch);
         searchButton = (Button) findViewById(R.id.searchButton);
-        dropdown = (Spinner) findViewById(R.id.dropdown);
-        msgResponse = (TextView) findViewById(R.id.msgResponse);
+        list = (ListView) findViewById(R.id.list);
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +64,6 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-
-        dropdown.setPrompt("Results:");
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
 
@@ -110,11 +109,12 @@ public class SearchActivity extends AppCompatActivity {
                                 JSONObject hintItem = hints.getJSONObject(i);
                                 JSONObject foodInIndex = hintItem.getJSONObject("food");
 
+                                items[i]= foodInIndex.getString("label");
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
+                                list.setAdapter(adapter);
 
-                                String foodname = foodInIndex.getString("label");
-
-                                msgResponse.setText("\n" + foodname);
-                                Log.d("tag","response from api:" + foodname);
+                                //msgResponse.setText("\n" + foodName);
+                                Log.d("tag","food item added to list: " + items[i]);
                             }
 
                         } catch (JSONException e) {
@@ -159,74 +159,6 @@ public class SearchActivity extends AppCompatActivity {
         };
 
         mQueue.add(jsonObjReq);
-
-    }
-
-    private void getJson1(String itemID)
-    {
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "https://api.edamam.com/api/food-database/parser?ingr=" + itemID + "&app_id=cabafde8&app_key=302c40ba00505410d9b0e8e9bf7ca8e2";
-        //String url= "http://cs309-af-1.misc.iastate.edu:8080/item";
-
-
-        JsonObjectRequest jsonArReq = new JsonObjectRequest(Request.Method.GET,
-                url, new JSONObject(),
-                new Response.Listener<JSONObject>() {
-
-                    /**
-                     * Takes the response from back end and prints it onto the screen.
-                     *
-                     * @param response
-                     */
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        foodData=response.toString();
-
-                        msgResponse.setText(foodData);
-
-
-
-                        // JSONObject json = readJsonFromUrl(url);
-                        // System.out.println(json.toString());
-                        // System.out.println(json.get("label"));
-
-                        //Log.d("Response", foodData);
-                        //msgResponse.setText(foodData);
-
-                        // Scanner scan=new Scanner(response);
-
-                        //scan.next("foodId");
-                        // msgResponse.setText(food);
-
-                    }
-                }, new Response.ErrorListener() {
-
-            /**
-             * Error catcher
-             *
-             * @param error
-             */
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }) {
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                //headers.put("fridgeid", "role");
-                return headers;
-            }
-
-        };
-
-        mQueue.add(jsonArReq);
 
     }
 
