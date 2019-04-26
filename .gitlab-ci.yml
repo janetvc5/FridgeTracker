@@ -24,11 +24,11 @@ maven-test:
   tags:
     - spring_tag
   script:
-    - cd Backend/spring-fridgetracker
+    - cd /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/Backend/spring-fridgetracker
     - mvn test
   artifacts:
     paths:
-      - Backend/spring-fridgetracker/target/*.jar
+      - /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/Backend/spring-fridgetracker/target/*.jar
 # Below stage builds, deploys and executes the jar as service.
 # Make sure there is /target directory in your server, else script will fail, or use any other folder you like.
 # If you are changing the folder, reflect the change in systemd-web-demo service too.
@@ -39,7 +39,7 @@ autoDeploy:
   script:
     - cd Backend/spring-fridgetracker
     - mvn package
-    - sudo mv target/*.jar /target/web-demo.jar 
+    - sudo mv /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/Backend/spring-fridgetracker*.jar /target/*.jar 
     - sudo systemctl stop systemd-web-demo
     - sudo systemctl start systemd-web-demo
 
