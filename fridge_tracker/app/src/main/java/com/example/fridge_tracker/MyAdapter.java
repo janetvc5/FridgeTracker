@@ -11,7 +11,9 @@ import java.util.ArrayList;
  * An adapter used by the RecyclerView elements in GroceryListActivity and MainActivity
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-        private ArrayList<FoodItem> mDataset;
+        private ArrayList<String> mDataset;
+
+    //
 
     /**
      * Provide a reference to the views for each data item (each data item is just a string in this case). You provide access to all the views for a data item in a view holder.
@@ -31,7 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
      * @param myDataset
      */
 
-        public MyAdapter(ArrayList<FoodItem> myDataset) {
+        public MyAdapter(ArrayList<String> myDataset) {
             mDataset = myDataset;
         }
 
@@ -60,7 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public void onBindViewHolder(MyViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            holder.textView.setText(mDataset.get(position).toString());
+            holder.textView.setText(mDataset.get(position));
 
         }
 

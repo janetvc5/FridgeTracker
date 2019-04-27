@@ -28,7 +28,7 @@ public class GroceryListActivity extends AppCompatActivity {
     TextView title;
     Button addButton;
     RecyclerView list;
-    ArrayList<FoodItem> groceries;
+    ArrayList<String> myDataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +38,27 @@ public class GroceryListActivity extends AppCompatActivity {
         addButton = (Button) findViewById(R.id.buttonAdd);
         title = (TextView) findViewById(R.id.title);
         list = (RecyclerView) findViewById(R.id.groceryList);
-        groceries = new ArrayList<FoodItem>();
-
-
+        myDataset = new ArrayList<String>();
 
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(layoutManager);
 
-        // specify an adapter
-        mAdapter = new MyAdapter(groceries);
+        // specify an adapter (see also next example)
+        mAdapter = new MyAdapter(myDataset);
         list.setAdapter(mAdapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroceryListActivity.this, SearchActivity.class);
+                Intent intent = new Intent(GroceryListActivity.this, AddScreen.class);
                 startActivity(intent);
             }
         });
+
+
+
 
         }
     }

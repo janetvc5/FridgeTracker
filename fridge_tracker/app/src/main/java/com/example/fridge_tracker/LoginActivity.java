@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    Button login, newUser;
+    Button login;
     EditText user;
     EditText pass;
     TextView title;
@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String loggeduser;
     ArrayList<String> loggedInUsers;
+    //String[] loggedInUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         login = (Button) findViewById(R.id.buttonLogin);
-        newUser = (Button) findViewById(R.id.buttonNew);
         user = (EditText) findViewById(R.id.etUsername);
         pass = (EditText) findViewById(R.id.etPassword);
         title = (TextView) findViewById(R.id.titleLogin);
@@ -74,14 +74,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
 
-            }
-        });
-
-        newUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, AddUser.class);
-                startActivity(intent);
             }
         });
 
@@ -344,6 +336,9 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
 
+        // we have not successfully logged out
+        return false;
     }
+    */
 
 }

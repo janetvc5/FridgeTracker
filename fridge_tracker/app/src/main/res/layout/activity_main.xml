@@ -6,6 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/getbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="GET" />
+
+    <EditText
+        android:id="@+id/sendtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/getbutton"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="60dp" />
+
+
+    <Button
+        android:id="@+id/sendbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendtext"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="110dp"
+        android:text="Send" />
+
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendbutton"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="157dp"
+        android:text="fridgeid" />
+
+    <EditText
+        android:id="@+id/sendfridgeid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendbutton"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="166dp" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendfridgeid"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="210dp"
+        android:text="role" />
+
+    <EditText
+        android:id="@+id/sendrole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendfridgeid"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="220dp" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
@@ -21,18 +82,11 @@
         app:srcCompat="@drawable/baseline_add_white_18dp"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fridgeList"
-        android:layout_width="395dp"
-        android:layout_height="541dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigationView"
@@ -48,26 +102,6 @@
         app:itemIconTint="@color/colorPrimaryDark"
         app:itemTextColor="@color/colorPrimaryDark"
         app:menu="@menu/navigation"/>
-
-    <TextView
-        android:id="@+id/pageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="14dp"
-        android:text="My Fridge"
-        android:textColor="@color/TextColor"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:typeface="normal" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="131dp"
-        android:layout_height="8dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="55dp"
-        android:background="@color/colorPrimary" />
 
     <!--<Button-->
         <!--android:id="@+id/button"-->

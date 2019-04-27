@@ -6,135 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
-    <TextView
-        android:id="@+id/pageTitle3"
-        android:layout_width="105dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:text="Chat Log:"
-        android:textColor="@color/TextColor"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt2" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="97dp"
-        android:layout_height="5dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt2" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="63dp"
-        android:layout_height="6dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/pageTitle2"
+    <EditText
+        android:id="@+id/et1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Chat"
-        android:textColor="@color/TextColor"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et1"
-        android:layout_width="115dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Your User ID"
-        android:inputType="text"
-        android:textSize="18sp"
+        android:layout_marginBottom="8dp"
+        android:hint="USER ID"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.66"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/bt1"
-        android:layout_width="70dp"
-        android:layout_height="26dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/et1"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="117dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
+        android:layout_marginBottom="8dp"
         android:text="Connect"
+        app:layout_constraintBottom_toTopOf="@+id/et2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.028"
-        app:layout_constraintStart_toEndOf="@+id/et1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/et2"
-        android:layout_width="380dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/bt1"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Enter your message..."
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="181dp"
+        android:hint="message"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et1" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/bt2"
-        android:layout_width="73dp"
-        android:layout_height="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/et2"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
+        android:layout_marginBottom="8dp"
         android:text="Send"
+        app:layout_constraintBottom_toTopOf="@+id/tx1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et2" />
+        app:layout_constraintTop_toBottomOf="@+id/et2"
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
         android:id="@+id/tx1"
-        android:layout_width="356dp"
-        android:layout_height="346dp"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
         android:layout_below="@+id/bt2"
+        android:layout_marginTop="332dp"
+        android:layout_marginBottom="372dp"
         android:text="Chat Log:"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="300dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
 
 
 </android.support.constraint.ConstraintLayout>
