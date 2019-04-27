@@ -29,15 +29,10 @@ class UserController {
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	/**
-	 * Adds a user on a POST call to "{url}/user/new"
-	 * @param user - User to add to the record (in request body)
-	 * @return - Returns a Map with a creation status (true or false) and reason
-	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/user/new")
-	public Map saveUser(@RequestBody User user) {
+	public Map<String,String> saveUser(@RequestBody User user) {
 		if(user==null) throw new RuntimeException("User was not provided in creation statement");
-		HashMap map = new HashMap<>();
+		HashMap<String,String> map = new HashMap<>();
 		if(userRepository.findByUsername(user.getUsername()).isPresent()) {
 			map.put("user creation success","false");
 			map.put("reason","Username already exists");
@@ -63,10 +58,6 @@ class UserController {
 		return map;
 	}
 
-	/**
-	 * Returns all users on a GET call to "{url}/user"
-	 * @return - List of Users
-	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/user")
 	public List<User> getAllUsers() {
         List<User> results = userRepository.findAll();
@@ -74,13 +65,8 @@ class UserController {
         return results;
     }
 	
-	/**
-	 * Gets a user by the given ID on a GET call to "{url}/user/{userId}"
-	 * @param userId - ID of user to get (part of url)
-	 * @return - Optional (if user is in, it will have a value)
-	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/user/{userId}")
-	public Optional<User> findUserById(@PathVariable("userId") Integer userId) {
+	public Optional<User> findUserByUserName(@PathVariable("userId") Integer userId) {
 		logger.info("Entered into Controller Layer");
 		Optional<User> results = userRepository.findById(userId);
 		return results;
@@ -91,14 +77,9 @@ class UserController {
 	 * is incorrect, a login attempt failure message is returned. Else, it returns a success, and a user
 	 * id.
 	 */
-	/**
-	 * Takes a username and password, and verifies if they are correct
-	 * @param loginAttempt - User object with just Username and Password values (part of request body)
-	 * @return - a map with a login success key, false if login was unsuccessful, true if successful, and if successful, key "id" will have the user id
-	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/user/login")
-	public Map login(@RequestBody User loginAttempt) {
-		HashMap map = new HashMap<>();
+	public Map<String,String> login(@RequestBody User loginAttempt) {
+		HashMap<String,String> map = new HashMap<>();
         Optional<User> u = userRepository.findByUsername(loginAttempt.getUsername());
         if(!u.isPresent()) {
         	map.put("login success", "false");

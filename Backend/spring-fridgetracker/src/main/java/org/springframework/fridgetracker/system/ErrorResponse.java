@@ -10,12 +10,6 @@ public class ErrorResponse {
 	private String message;
 	private String details;
 	
-	/**
-	 * Acts as an XML object containing exception information
-	 * @param timestamp - time of the exception
-	 * @param message - exception message
-	 * @param details - further error details
-	 */
 	public ErrorResponse(Date timestamp, String message, String details) {
 		super();
 		this.timestamp = timestamp;

@@ -4,6 +4,7 @@ package com.example.fridge_tracker;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -13,12 +14,14 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.support.v7.app.AppCompatActivity;
 
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -78,12 +81,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * A pop up menu linking to the separate pages of the app
-             *
-             * @param v
-             */
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
@@ -94,13 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    /**
-                     * Switches pages when a link is clicked.
-                     *
-                     * @param item
-                     * @return
-                     */
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getTitle().equals("Grocery List")) {
                              Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
@@ -111,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent3);
-                        } else if (item.getTitle().equals("Search")) {
-                            Intent intent4 = new Intent(MainActivity.this, SearchActivity.class);
-                            startActivity(intent4);
                         }
 
                         return true;
