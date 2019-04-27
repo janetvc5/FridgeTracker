@@ -25,14 +25,23 @@ public class FridgeController {
 
 	private final Logger logger = LoggerFactory.getLogger(FridgeController.class);
 
+	/**
+	 * Makes a new fridge
+	 * @param fridge fridge to save (in request body)
+	 * @return Map
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/fridge/new")
-	public Map<String,String> saveFridge(@RequestBody Fridge fridge) {
+	public Map saveFridge(@RequestBody Fridge fridge) {
 		fridgeRepository.save(fridge);
-		HashMap<String,String> map = new HashMap<>();
+		HashMap map = new HashMap<>();
 		map.put("login success","true");
 		return map;
 	}
 	
+	/**
+	 * Gets all fridges
+	 * @return List of fridges
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/fridge")
 	public List<Fridge> getAllFridges() {
         List<Fridge> results = fridgeRepository.findAll();
@@ -40,6 +49,11 @@ public class FridgeController {
         return results;
     }
 	
+	/**
+	 * Gets all users in a specific fridge
+	 * @param id ID of fridge (in URL)
+	 * @return List of users
+	 */
 	@RequestMapping(method = RequestMethod.GET, path="/fridge/{id}/users")
 	public List getAllFridgeUsers(@PathVariable("id") Integer id) {
 		Optional<Fridge> f = fridgeRepository.findById(id);
@@ -47,6 +61,11 @@ public class FridgeController {
 		return f.get().getUsers();
 	}
 	
+	/**
+	 * Gets all fridge contents of a specified fridge
+	 * @param id ID of fridge (in url)
+	 * @return List of fridgecontents
+	 */
 	@RequestMapping(method = RequestMethod.GET, path="/fridge/{id}/contents")
 	public List getAllFridgecontents(@PathVariable("id") Integer id) {
 		Optional<Fridge> f = fridgeRepository.findById(id);

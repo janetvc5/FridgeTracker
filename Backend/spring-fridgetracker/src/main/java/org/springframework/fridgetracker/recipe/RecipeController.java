@@ -18,12 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecipeController {
 	private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 	
+	/**
+	 * Returns all recipes in the database on a GET call to "{url}/recipes"
+	 * @return ArrayList of recipes
+	 */
 	@RequestMapping(method= RequestMethod.GET, path="/recipes")
 	public List<Recipe> getAllRecipes() {
 		//Returning this for mockito test
 		return new ArrayList();
 	}
 	
+	/**
+	 * Returns a recipe with the given ID on a GET call to "{url}/recipes/{id}"
+	 * @param id - The id of the Recipe being retrieved (part of url)
+	 * @return An optional - If the recipe exists, it will have a value. Else, it will have nothing
+	 */
 	@RequestMapping(method=RequestMethod.GET, path="/recipes/{id}")
 	public Optional<Recipe> getRecipeById(@PathParam("id") Integer id) {
 		// return this for mockito

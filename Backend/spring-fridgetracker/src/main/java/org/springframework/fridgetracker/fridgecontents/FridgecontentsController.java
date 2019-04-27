@@ -28,6 +28,10 @@ public class FridgecontentsController {
 
 	private final Logger logger = LoggerFactory.getLogger(FridgecontentsController.class);
 
+	/**
+	 * Gets all fridge contents
+	 * @return List of Fridge contents
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/fridgecontents")
 	public List<Fridgecontents> getAllContents() {
         List<Fridgecontents> results = fridgecontentsRepository.findAll();
@@ -35,16 +39,26 @@ public class FridgecontentsController {
         return results;
     }
 
+	/**
+	 * Gets an item of a fridge item
+	 * @param id id of item to get (in url)
+	 * @return Optional of Fridge contents
+	 */
 	@RequestMapping(method = RequestMethod.GET, path="/fridgecontents/{id}")
 	public Optional<Fridgecontents> getContentsById(@PathVariable("id") Integer id) {
 		Optional<Fridgecontents> f = fridgecontentsRepository.findById(id);
 		return f;
 	}
 	
+	/**
+	 * Adds an item to a fridge
+	 * @param fridgecontents Item to add (in request body)
+	 * @return Map
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/fridgecontents/new")
-	public Map<String,String> saveFridgecontents(@RequestBody Fridgecontents fridgecontents) {
+	public Map saveFridgecontents(@RequestBody Fridgecontents fridgecontents) {
 		if(fridgecontents==null) throw new RuntimeException("Item was not provided in creation statement");
-		HashMap<String,String> map = new HashMap<>();
+		HashMap map = new HashMap<>();
 		if(fridgecontents.getFridge()==null) {
 			map.put("fridge item added", "false");
 			map.put("reason", "Fridge does not exist");
@@ -59,10 +73,15 @@ public class FridgecontentsController {
 		return map;
 	}
 	
+	/**
+	 * Deletes a fridgecontents item by id
+	 * @param id Id of item to delete (in URL)
+	 * @return Map
+	 */
 	@RequestMapping(method = RequestMethod.DELETE, path = "/fridgecontents/delete/{id}")
-	public Map<String,String> deleteFridgecontents(@PathVariable("id") Integer id) {
+	public Map deleteFridgecontents(@PathVariable("id") Integer id) {
 		if(id==null)  throw new RuntimeException("ID was not provided in delete statement");
-		HashMap<String,String> map = new HashMap<>();
+		HashMap map = new HashMap<>();
 		if(!fridgecontentsRepository.findById(id).isPresent()) {
 			map.put("fridge item deleted", "false");
 			map.put("reason", "Item does not exist");

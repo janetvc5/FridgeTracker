@@ -22,21 +22,21 @@ public class ItemController {
 
 	/**
 	 * Method to save item
-	 * @param item
+	 * @param item Item to add (in request body)
 	 * @return JSON Object Response 
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/item/new")
-	public Map<String,String> saveItem(@RequestBody Item item) {
+	public Map saveItem(@RequestBody Item item) {
 		
 		itemRepository.save(item);
-		HashMap<String,String> map = new HashMap<>();
+		HashMap map = new HashMap<>();
 		map.put("Item Saved","true");
 		return map;
 	}
 	
 	/**
 	 * Method to return list of items in repository 
-	 * @return List<Item>
+	 * @return List of items
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/item")
 	public List<Item> getItemList() {
@@ -47,8 +47,8 @@ public class ItemController {
 	
 	/**
 	 * Method to return item found by name
-	 * @param itemname
-	 * @return List<Item>
+	 * @param itemname name of item
+	 * @return List of items
 	 */
 	@SuppressWarnings("null")
 	@RequestMapping(method = RequestMethod.GET, path = "/item/{itemname}")

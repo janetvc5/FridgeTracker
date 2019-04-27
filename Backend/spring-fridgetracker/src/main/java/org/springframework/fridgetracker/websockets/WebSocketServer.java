@@ -33,6 +33,15 @@ public class WebSocketServer {
     
     private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
     
+    /**
+     * Handles new sessions, and adds all relevant information to Websocket Server
+	 *
+	 * Connections are established when a new websocket connects to "{url}/websocket/{fridgeId}/{username}"
+     * @param session - session being created
+     * @param username - Username for the user connecting
+     * @param id - fridge to send messages to
+     * @throws IOException - On unexpected communication errors, this is thrown
+     */
     @OnOpen
     public void onOpen(
     	      Session session, 
@@ -51,6 +60,12 @@ public class WebSocketServer {
 		
     }
  
+    /**
+     * Handles messages from users, and directs them to users inside the given fridge
+     * @param session - Session that is sending the message
+     * @param message - Message being sent by the session
+     * @throws IOException - If communication is broken unexpectedly, this error is thrown
+     */
     @OnMessage
     public void onMessage(Session session, String message) throws IOException 
     {
@@ -70,6 +85,11 @@ public class WebSocketServer {
     	}
     }
  
+    /**
+     * Handles a connection closing, and deletes all variables applicable to the disconnecting user
+     * @param session - Session that the user
+     * @throws IOException - Thrown if connection is lost or interrupted
+     */
     @OnClose
     public void onClose(Session session) throws IOException
     {
@@ -85,6 +105,11 @@ public class WebSocketServer {
         fridgeBroadcast(message, id);
     }
  
+    /**
+     * Handles websocket errors
+     * @param session - connection that has an error
+     * @param throwable - what error was thrown
+     */
     @OnError
     public void onError(Session session, Throwable throwable) 
     {

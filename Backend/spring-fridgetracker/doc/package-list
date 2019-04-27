@@ -1,0 +1,10 @@
+org.springframework.fridgetracker
+org.springframework.fridgetracker.fridge
+org.springframework.fridgetracker.fridgecontents
+org.springframework.fridgetracker.grocerylist
+org.springframework.fridgetracker.item
+org.springframework.fridgetracker.recipe
+org.springframework.fridgetracker.recipeitem
+org.springframework.fridgetracker.system
+org.springframework.fridgetracker.user
+org.springframework.fridgetracker.websockets

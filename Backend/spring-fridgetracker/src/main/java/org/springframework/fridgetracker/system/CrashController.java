@@ -28,6 +28,12 @@ public class CrashController extends ResponseEntityExceptionHandler {
 	 * 
 	 * The default throw returns internal server error, but this can be customized
 	 */
+	/**
+	 * Acts as an exception handler, uses new ErrorResponse class to make exception messages easier for the frontend to read
+	 * @param ex - The exception thrown
+	 * @param r - The web request called by user
+	 * @return - Returns an ErrorResponse type ResponseEntity
+	 */
 	@ExceptionHandler(Throwable.class)
 	@ResponseBody
 	public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, WebRequest r) {

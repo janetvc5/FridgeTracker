@@ -1,12 +1,10 @@
 package com.example.fridge_tracker;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +33,7 @@ import java.util.Map;
 public class SearchActivity extends AppCompatActivity {
 
     EditText search;
-    Button searchButton;
+    Button searchButton, buttonAdd;
     ListView list;
     private TextView msgResponse;
     private String foodData;
@@ -79,6 +77,7 @@ public class SearchActivity extends AppCompatActivity {
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/search?ingr=" + item;
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONObject>() {
