@@ -1,11 +1,14 @@
 package com.example.fridge_tracker;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Switch;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,9 +27,12 @@ import java.util.Map;
  */
 public class AddScreen extends AppCompatActivity {
 
-    TextView tvName, tvQuantity, tvExpiration, tvFridge, response;
-    EditText etName, etQuantity, etExpiration, etFridge;
+    TextView tvName, tvQuantity, tvExpiration, response;
+    EditText etName, etQuantity, etExpiration;
     Button buttonAdd;
+    Switch location;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +41,17 @@ public class AddScreen extends AppCompatActivity {
 
         tvName = (TextView) findViewById(R.id.tvName);
         tvQuantity = (TextView) findViewById(R.id.tvQuantity);
-        tvExpiration = (TextView) findViewById(R.id.tvExpiration);
-        tvFridge = (TextView) findViewById(R.id.tvFridge);
+        tvExpiration = (TextView) findViewById(R.id.tvQuantity);
 
         etName = (EditText) findViewById(R.id.etName);
         etQuantity = (EditText) findViewById(R.id.etQuantity);
         etExpiration = (EditText) findViewById(R.id.etExpiration);
-        etFridge = (EditText) findViewById(R.id.etFridge);
 
-        buttonAdd = (Button) findViewById(R.id.buttonAdd);
+        buttonAdd = (Button) findViewById(R.id.button2);
 
+        location = (Switch) findViewById(R.id.switch1);
         response = (TextView) findViewById(R.id.response);
+
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
 
@@ -57,16 +63,79 @@ public class AddScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                postJson();
-
+                if(location.isChecked())
+                {
+                    postJsonToFridge();
+                    Intent intentF = new Intent(AddScreen.this, MainActivity.class);
+                    //based on item add info to intent
+                    startActivity(intentF);
+                }
+                else
+                {
+                    postJsonToGrocery();
+                    Intent intentG = new Intent(AddScreen.this, GroceryListActivity.class);
+                    //based on item add info to intent
+                    startActivity(intentG);
+                }
             }
         });
 
+        etName.setText((String)SearchActivity.carryOverName);
+
     }
 
-    private void postJson() {
+    private void postJsonToFridge() {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/new";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/add";
+
+        JsonObjectRequest jsonPostReq = new JsonObjectRequest(Request.Method.POST,
+                url, null,
+                new Response.Listener<JSONObject>() {
+
+                    /**
+                     * Shows the response from the server on the screen
+                     *
+                     * @param jsonresponse
+                     */
+                    @Override
+                    public void onResponse(JSONObject jsonresponse) {
+
+                        response.setText(jsonresponse.toString());
+
+                    }
+                },new Response.ErrorListener() {
+            /**
+             * Error report
+             *
+             * @param error
+             */
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<>();
+                params.put("foodname","apple");
+                params.put("quantity", etQuantity.getText().toString());
+                params.put("expiration", etExpiration.getText().toString());
+                params.put("fridge", "id:1");
+                return params;
+            }
+        };
+
+
+        Volley.newRequestQueue(this).add(jsonPostReq);
+    }
+
+
+    private void postJsonToGrocery() {
+        RequestQueue mQueue = Volley.newRequestQueue(this);
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/add";
 
         JsonObjectRequest jsonPostReq = new JsonObjectRequest(Request.Method.POST,
                 url, null,
@@ -112,4 +181,6 @@ public class AddScreen extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonPostReq);
     }
 }
+
+
 

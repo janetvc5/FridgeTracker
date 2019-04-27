@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="Food Item"
+        android:hint="Search for Food Item..."
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/searchButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,10 +24,11 @@
     <Button
         android:id="@+id/searchButton"
         android:layout_width="395dp"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_marginStart="286dp"
         android:layout_marginTop="84dp"
         android:layout_marginEnd="37dp"
+        android:background="@color/colorPrimary"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.905"
@@ -39,21 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="494dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
         app:layout_constraintTop_toBottomOf="@+id/searchButton"
         tools:layout_editor_absoluteX="0dp" />
-
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="395dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="36dp"
-        android:text="Add Food"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.Barrier
         android:id="@+id/barrier"

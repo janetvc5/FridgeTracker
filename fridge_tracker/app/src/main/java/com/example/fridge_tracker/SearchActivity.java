@@ -38,7 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     private TextView msgResponse;
     private String foodData;
     String[] items = new String[40];
-
+    static Object carryOverName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,6 @@ public class SearchActivity extends AppCompatActivity {
         search = (EditText) findViewById(R.id.etSearch);
         searchButton = (Button) findViewById(R.id.searchButton);
         list = (ListView) findViewById(R.id.list);
-        buttonAdd = (Button) findViewById(R.id.buttonAdd);
-
         searchButton.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -59,28 +57,20 @@ public class SearchActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-
                 getJson(search.getText().toString());
-
             }
         });
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * Opens a new page for the user to enter more information about the searched for item
-             *
-             * @param v
-             */
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onClick(View v) {
-
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long row){
+                Object item = adapter.getItemAtPosition(position);
+                carryOverName = (String) item;
                 Intent intent = new Intent(SearchActivity.this, AddScreen.class);
+                //based on item add info to intent
                 startActivity(intent);
-
             }
         });
-
     }
 
     private void getJson(String item)
@@ -104,25 +94,18 @@ public class SearchActivity extends AppCompatActivity {
                             String stuff = hints.getString(1);
                             Log.d("hints", "hints response " + stuff);
 
-
                             for (int i = 0; i < hints.length(); i++){
                                 JSONObject hintItem = hints.getJSONObject(i).getJSONObject("food");
                                 Log.d("hintitem", "hint index: " + hintItem);
-
                                 String foodInIndex = hintItem.getString("label");
                                 Log.d("fooditem", "food label" + foodInIndex);
-
                                 items[i]= foodInIndex;
                                 ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                 list.setAdapter(adapter);
-
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -146,21 +129,8 @@ public class SearchActivity extends AppCompatActivity {
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("fridgeid", "36");
-//                params.put("role", "abc@androidhive.info");
-//
-//
-//                return params;
-//            }
-
         };
-
         mQueue.add(jsonObjReq);
-
     }
 
     private static JSONArray intoArray(String strJSON) throws JSONException{
@@ -168,16 +138,7 @@ public class SearchActivity extends AppCompatActivity {
         for (int i = 0; i < jsonarray.length(); i++) {
             JSONObject jsonobject = jsonarray.getJSONObject(i);
             String foodname = jsonobject.getString("food.label");
-            //String url = jsonobject.getString("url");
-
-
-            //items = new String[]{foodname};
-
         }
-
         return jsonarray;
-
     }
-
-
 }
