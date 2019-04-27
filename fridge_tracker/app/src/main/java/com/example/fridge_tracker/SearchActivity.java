@@ -2,16 +2,15 @@ package com.example.fridge_tracker;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -20,32 +19,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.Charset;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * The user searches for a specific food item, the back end returns a json array, front end displays it as a list for the user to select
@@ -53,14 +35,12 @@ import org.json.JSONObject;
 public class SearchActivity extends AppCompatActivity {
 
     EditText search;
-    Button searchButton, buttonAdd;
-    Spinner dropdown;
+    Button searchButton;
+    ListView list;
     private TextView msgResponse;
     private String foodData;
-    String calories;
-    String food;
-    ArrayList<FoodItem> results;
-    RecyclerView resultList;
+    String[] items = new String[40];
+    static Object carryOverName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +49,7 @@ public class SearchActivity extends AppCompatActivity {
 
         search = (EditText) findViewById(R.id.etSearch);
         searchButton = (Button) findViewById(R.id.searchButton);
-        //dropdown = (Spinner) findViewById(R.id.dropdown);
-        //msgResponse = (TextView) findViewById(R.id.msgResponse);
-        buttonAdd = (Button) findViewById(R.id.buttonAdd);
-        resultList = (RecyclerView) findViewById(R.id.results);
-
+        list = (ListView) findViewById(R.id.list);
         searchButton.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -83,67 +59,54 @@ public class SearchActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-
                 getJson(search.getText().toString());
-
             }
         });
 
-        //dropdown.setPrompt("Results:");
-
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * Opens a new page for the user to enter more information about the searched for item
-             *
-             * @param v
-             */
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onClick(View v) {
-
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long row){
+                Object item = adapter.getItemAtPosition(position);
+                carryOverName = (String) item;
                 Intent intent = new Intent(SearchActivity.this, AddScreen.class);
+                //based on item add info to intent
                 startActivity(intent);
-
             }
         });
-
     }
 
-    private void getJson(String itemID)
+    private void getJson(String item)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/search?ingr="+itemID;
-        //String url= "http://cs309-af-1.misc.iastate.edu:8080/item";
-        JsonObjectRequest jsonArReq = new JsonObjectRequest(Request.Method.GET,
-                url, new JSONObject(),
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/search?ingr=" + item;
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url, null,
                 new Response.Listener<JSONObject>() {
 
                     /**
-                     * Takes the response from back end and prints it onto the screen.
+                     * api returns the values for each food item
                      *
                      * @param response
                      */
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray array = response.getJSONArray("food");
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject jo = array.getJSONObject(i);
-                                //ArrayList<String> food=new ArrayList<String>();
-                                food = (jo.getString("label"));
-                                calories = (jo.getString("ENERC_KCAL"));
-                                results.add(new FoodItem(food, "1", "0"));
+                            JSONArray hints = response.getJSONArray("hints");
+                            String stuff = hints.getString(1);
+                            Log.d("hints", "hints response " + stuff);
+
+                            for (int i = 0; i < hints.length(); i++){
+                                JSONObject hintItem = hints.getJSONObject(i).getJSONObject("food");
+                                Log.d("hintitem", "hint index: " + hintItem);
+                                String foodInIndex = hintItem.getString("label");
+                                Log.d("fooditem", "food label" + foodInIndex);
+                                items[i]= foodInIndex;
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
+                                list.setAdapter(adapter);
                             }
-
-                        } catch(Exception e){
-
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
-
-                        //foodData=response.toString();
-
-                        //msgResponse.setText(foodData);
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -160,19 +123,15 @@ public class SearchActivity extends AppCompatActivity {
 
             /**
              * Passing some request headers
-             * */
+             **/
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                //headers.put("fridgeid", "role");
                 return headers;
             }
-
         };
-
-        mQueue.add(jsonArReq);
-
+        mQueue.add(jsonObjReq);
     }
 
     private static JSONArray intoArray(String strJSON) throws JSONException{
@@ -180,16 +139,7 @@ public class SearchActivity extends AppCompatActivity {
         for (int i = 0; i < jsonarray.length(); i++) {
             JSONObject jsonobject = jsonarray.getJSONObject(i);
             String foodname = jsonobject.getString("food.label");
-            //String url = jsonobject.getString("url");
-
-
-            //items = new String[]{foodname};
-
         }
-
         return jsonarray;
-
     }
-
-
 }

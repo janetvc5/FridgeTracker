@@ -6,67 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/getbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="75dp"
-        android:text="GET" />
-
-    <EditText
-        android:id="@+id/sendtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/getbutton"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="140dp" />
-
-
-    <Button
-        android:id="@+id/sendbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendtext"
-        android:layout_marginLeft="108dp"
-        android:layout_marginTop="75dp"
-        android:text="Send" />
-
-
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendbutton"
-        android:layout_marginLeft="115dp"
-        android:layout_marginTop="120dp"
-        android:text="fridgeid" />
-
-    <EditText
-        android:id="@+id/sendfridgeid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendbutton"
-        android:layout_marginLeft="115dp"
-        android:layout_marginTop="140dp" />
-
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendfridgeid"
-        android:layout_marginLeft="185dp"
-        android:layout_marginTop="120dp"
-        android:text="role" />
-
-    <EditText
-        android:id="@+id/sendrole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendfridgeid"
-        android:layout_marginLeft="185dp"
-        android:layout_marginTop="140dp" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
@@ -85,9 +24,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fridgeList"
         android:layout_width="395dp"
-        android:layout_height="436dp"
+        android:layout_height="541dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +56,18 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="14dp"
         android:text="My Fridge"
-        android:textSize="24sp" />
+        android:textColor="@color/TextColor"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="131dp"
+        android:layout_height="8dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="55dp"
+        android:background="@color/colorPrimary" />
 
     <!--<Button-->
         <!--android:id="@+id/button"-->

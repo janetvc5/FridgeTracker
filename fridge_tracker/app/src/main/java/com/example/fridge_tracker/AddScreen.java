@@ -1,5 +1,6 @@
 package com.example.fridge_tracker;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,8 @@ public class AddScreen extends AppCompatActivity {
     Button buttonAdd;
     Switch location;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class AddScreen extends AppCompatActivity {
         etQuantity = (EditText) findViewById(R.id.etQuantity);
         etExpiration = (EditText) findViewById(R.id.etExpiration);
 
-        buttonAdd = (Button) findViewById(R.id.buttonAdd);
+        buttonAdd = (Button) findViewById(R.id.button2);
 
         location = (Switch) findViewById(R.id.switch1);
         response = (TextView) findViewById(R.id.response);
@@ -63,13 +66,21 @@ public class AddScreen extends AppCompatActivity {
                 if(location.isChecked())
                 {
                     postJsonToFridge();
+                    Intent intentF = new Intent(AddScreen.this, MainActivity.class);
+                    //based on item add info to intent
+                    startActivity(intentF);
                 }
                 else
                 {
                     postJsonToGrocery();
+                    Intent intentG = new Intent(AddScreen.this, GroceryListActivity.class);
+                    //based on item add info to intent
+                    startActivity(intentG);
                 }
             }
         });
+
+        etName.setText((String)SearchActivity.carryOverName);
 
     }
 

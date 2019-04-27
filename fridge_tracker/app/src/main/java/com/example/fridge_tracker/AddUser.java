@@ -1,8 +1,6 @@
 package com.example.fridge_tracker;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,188 +14,67 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+public class AddUser extends AppCompatActivity {
 
-/**
- * Log in page, the first page seen by a user and a correct username and password must be entered.
- */
-public class LoginActivity extends AppCompatActivity {
-
-    Button login, newUser;
-    EditText user;
-    EditText pass;
-    TextView title;
-    TextView attempts;
-    boolean valid;
-    int counter = 5;
-
-    String loggeduser;
-    ArrayList<String> loggedInUsers;
+    Button sendButton, getButton;
+    FloatingActionButton floatingActionButton;
+    EditText getUserInfo, sendID, sendRole;
+    TextView confirmAdd, viewFridge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_add_user);
 
-        login = (Button) findViewById(R.id.buttonLogin);
-        newUser = (Button) findViewById(R.id.buttonNew);
-        user = (EditText) findViewById(R.id.etUsername);
-        pass = (EditText) findViewById(R.id.etPassword);
-        title = (TextView) findViewById(R.id.titleLogin);
-        attempts = (TextView) findViewById(R.id.tvAttempts);
+        sendButton = (Button) findViewById(R.id.sendbutton);
+        getButton = (Button) findViewById(R.id.getbutton);
+        getUserInfo = (EditText) findViewById(R.id.sendtext);
+        sendRole = (EditText) findViewById(R.id.sendrole);
+        sendID = (EditText) findViewById(R.id.sendfridgeid);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        confirmAdd = (TextView) findViewById(R.id.confirmAdd);
+        viewFridge = (TextView) findViewById(R.id.viewFridge);
 
-        attempts.setText("Login attempts remaining: 5");
-
-        login.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
 
             /**
-             * Verifies that the username and password are valid and correct.
+             * sends the back end the new users ID and Role
              *
              * @param v
              */
             @Override
             public void onClick(View v) {
-                try{
-                    sendJsonLogin(user.getText().toString(), pass.getText().toString());
-                } catch (JSONException e){
-
+                try {
+                    sendJson(String.valueOf(sendID.getText()), String.valueOf(sendRole.getText()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
             }
         });
 
-        newUser.setOnClickListener(new View.OnClickListener() {
+        getButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * requests the user's information
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, AddUser.class);
-                startActivity(intent);
+                getJson(String.valueOf(getUserInfo.getText()));
             }
         });
 
     }
-
-    private void validate(String username, String password) {
-        if ( true ) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            counter--;
-
-            attempts.setText("Login attempts remaining: " + String.valueOf(counter));
-
-            if (counter == 0) {
-                login.setEnabled(false);
-            }
-        }
-
-
-    }
-
-    private void sendJsonLogin(final String username, final String password) throws JSONException {
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/user/login";
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, getJs(username, password),
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            boolean valid = response.getBoolean("login success");
-                            Log.d("login", "valid value: " + valid);
-
-
-                            if ( valid ) {
-                                String userID = response.getString("id");
-                                //((GlobalVariables) getApplication()).setUserID(userID);
-                                //user userID to get other values
-
-
-
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {
-                                counter--;
-
-                                attempts.setText("Login attempts remaining: " + String.valueOf(counter));
-
-                                if (counter == 0) {
-                                    login.setEnabled(false);
-                                }
-                            }
-
-
-                        } catch (JSONException e) {
-
-                        }
-
-                    }
-
-                }, new Response.ErrorListener() {
-
-            /**
-             * Error catcher
-             *
-             * @param error
-             */
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-
-        }) {
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-            /**
-             * passing some params
-             *
-             * @return
-             */
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("password", password);
-
-                return params;
-            }
-
-
-
-        };
-
-        mQueue.add(jsonObjReq);
-    }
-
-    protected JSONObject getJs(String username, String password) throws JSONException {
-        JSONObject params = new JSONObject();
-        params.put("username", username);
-        params.put("password", password);
-
-        return params;
-    }
-
     private void getJson(String userID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
@@ -208,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
 
                     /**
+                     * Back end returns different values for role and fridge id per user
                      *
                      * @param response
                      */
@@ -216,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             String fName = response.getString("role");
                             String lName = String.valueOf(response.getInt("fridgeid"));
-
+                            confirmAdd.setText("Added! Log in now to use MyFridgeTracker!");
 
                             Log.d("Role: ",fName + "  Fridge for user: " + lName);
                         } catch (JSONException e) {
@@ -228,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
 
             /**
+             * Error catcher
              *
              * @param error
              */
@@ -273,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
 
                     /**
+                     * prints on log for testing
                      *
                      * @param response
                      */
@@ -281,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                         try
                         {
                             Log.d("Response from server: ", response.getString("fridgeid"));
+                            viewFridge.setText("Fridge ID: " + response.getString("fridgeid"));
                         }
                         catch (JSONException e)
                         {
@@ -292,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
 
             /**
+             * Error catcher
              *
              * @param error
              */
@@ -313,6 +195,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             /**
+             * passing some params
              *
              * @return
              */
@@ -324,10 +207,22 @@ public class LoginActivity extends AppCompatActivity {
 
                 return params;
             }
+
+
+
         };
 
         mQueue.add(jsonObjReq);
 
+    }
+
+
+    protected JSONObject getJs(String role, String id) throws JSONException {
+        JSONObject params = new JSONObject();
+        params.put("fridgeid", id);
+        params.put("role", role);
+
+        return params;
     }
 
 }
