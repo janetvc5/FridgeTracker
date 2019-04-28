@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:hint="USER ID"
+        android:hint="User"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/bt1"
         app:layout_constraintEnd_toEndOf="parent"

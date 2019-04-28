@@ -323,6 +323,6 @@ public class LoginActivity extends AppCompatActivity {
         // we have not successfully logged out
         return false;
     }
-    */
+
 
 }
