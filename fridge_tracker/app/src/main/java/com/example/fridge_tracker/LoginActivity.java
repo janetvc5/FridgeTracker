@@ -77,6 +77,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        newUser.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Verifies that the username and password are valid and correct.
+             *
+             * @param v
+             */
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, AddUser.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     private void sendJsonLogin(final String username, final String password) throws JSONException {
