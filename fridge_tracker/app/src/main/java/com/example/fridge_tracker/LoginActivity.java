@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         login = (Button) findViewById(R.id.buttonLogin);
-        newUser = (Button) findViewById(R.id.buttonNew);
+        newUser = (Button) findViewById(R.id.buttonNewUser);
         user = (EditText) findViewById(R.id.etUsername);
         pass = (EditText) findViewById(R.id.etPassword);
         title = (TextView) findViewById(R.id.titleLogin);

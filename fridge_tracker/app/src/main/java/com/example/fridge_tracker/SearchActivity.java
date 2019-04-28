@@ -35,7 +35,7 @@ import java.util.Map;
 public class SearchActivity extends AppCompatActivity {
 
     EditText search;
-    Button searchButton;
+    Button searchButton, buttonAdd;
     ListView list;
     private TextView msgResponse;
     private String foodData;
@@ -107,22 +107,16 @@ public class SearchActivity extends AppCompatActivity {
 
 
                             for (int i = 0; i < hints.length(); i++){
-                                JSONObject hintItem = hints.getJSONObject(i);
-                                // JSONObject foodInIndex = hintItem.getJSONObject("label");
-                                // String stuff2 = hintItem.getString("food");
+                                JSONObject hintItem = hints.getJSONObject(i).getJSONObject("food");
+                                Log.d("hintitem", "hint index: " + hintItem);
 
-                                Log.d("hintitem", "hint index: " + hintItem.getString("food"));
-                                // Log.d("hintItem", "hints individual response" + stuff2);
-                                // Log.d("fooditem", "food label" + foodInIndex);
-                                //String stuff3 = foodInIndex.getString("food");
+                                String foodInIndex = hintItem.getString("label");
+                                Log.d("fooditem", "food label" + foodInIndex);
 
+                                items[i]= foodInIndex;
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
+                                list.setAdapter(adapter);
 
-//                                items[i]= foodInIndex.getString("label");
-//                                ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
-//                                list.setAdapter(adapter);
-
-                                //msgResponse.setText("\n" + foodName);
-                                //Log.d("tag","food item added to list: " + items[i]);
                             }
 
                         } catch (JSONException e) {
@@ -169,22 +163,5 @@ public class SearchActivity extends AppCompatActivity {
         mQueue.add(jsonObjReq);
 
     }
-
-    private static JSONArray intoArray(String strJSON) throws JSONException{
-        JSONArray jsonarray = new JSONArray(strJSON);
-        for (int i = 0; i < jsonarray.length(); i++) {
-            JSONObject jsonobject = jsonarray.getJSONObject(i);
-            String foodname = jsonobject.getString("food.label");
-            //String url = jsonobject.getString("url");
-
-
-            //items = new String[]{foodname};
-
-        }
-
-        return jsonarray;
-
-    }
-
 
 }
