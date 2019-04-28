@@ -8,6 +8,7 @@ public class GlobalVariables extends Application {
     private String fridgeID;
     private String role;
     private String username;
+    private String selectedSearchItem;
 
     // TO USE
 
@@ -46,4 +47,13 @@ public class GlobalVariables extends Application {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getSelectedSearchItem() {
+        return selectedSearchItem;
+    }
+
+    public void setSelectedSearchItem(String selectedSearchItem) {
+        this.selectedSearchItem = selectedSearchItem;
+    }
+
 }

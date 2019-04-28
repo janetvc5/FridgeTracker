@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -37,9 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     EditText search;
     Button searchButton, buttonAdd;
     ListView list;
-    private TextView msgResponse;
-    private String foodData;
-    String[] items;
+    String[] items = new String[20];
 
 
     @Override
@@ -106,7 +105,7 @@ public class SearchActivity extends AppCompatActivity {
                             Log.d("hints", "hints response " + stuff);
 
 
-                            for (int i = 0; i < hints.length(); i++){
+                            for (int i = 0; (i < hints.length() && i < 20); i++){
                                 JSONObject hintItem = hints.getJSONObject(i).getJSONObject("food");
                                 Log.d("hintitem", "hint index: " + hintItem);
 
@@ -116,6 +115,30 @@ public class SearchActivity extends AppCompatActivity {
                                 items[i]= foodInIndex;
                                 ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                 list.setAdapter(adapter);
+
+                                list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                                {
+                                    boolean somethingChecked = false;
+                                    int lastChecked;
+                                    public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                                            long arg3) {
+                                        if(somethingChecked){
+//                                            ListView lv = (ListView) arg0;
+//                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
+                                            CheckedTextView cv = (CheckedTextView) arg1;
+                                            cv.setChecked(false);
+                                        }
+//                                        ListView lv = (ListView) arg0;
+//                                        TextView tv = (TextView) lv.getChildAt(arg2);
+                                        CheckedTextView cv = (CheckedTextView) arg1;
+                                        if(!cv.isChecked())
+                                            cv.setChecked(true);
+                                        lastChecked = arg2;
+                                        somethingChecked = true;
+
+                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items[arg2]);
+                                    }
+                                });
 
                             }
 
