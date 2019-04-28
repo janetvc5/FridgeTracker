@@ -34,12 +34,11 @@ import java.util.Map;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    Button login;
+    Button login, newUser;
     EditText user;
     EditText pass;
     TextView title;
     TextView attempts;
-    boolean valid;
     int counter = 5;
 
     String loggeduser;
@@ -52,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         login = (Button) findViewById(R.id.buttonLogin);
+        newUser = (Button) findViewById(R.id.buttonNew);
         user = (EditText) findViewById(R.id.etUsername);
         pass = (EditText) findViewById(R.id.etPassword);
         title = (TextView) findViewById(R.id.titleLogin);
@@ -79,23 +79,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void validate(String username, String password) {
-        if ( true ) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            counter--;
-
-            attempts.setText("Login attempts remaining: " + String.valueOf(counter));
-
-            if (counter == 0) {
-                login.setEnabled(false);
-            }
-        }
-
-
-    }
-
     private void sendJsonLogin(final String username, final String password) throws JSONException {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/user/login";
@@ -113,7 +96,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             if ( valid ) {
                                 String userID = response.getString("id");
-                                //((GlobalVariables) getApplication()).setUserID(userID);
+                                ((GlobalVariables) getApplication()).setUserID(userID);
+                                ((GlobalVariables) getApplication()).setUsername(username);
+
                                 //user userID to get other values
 
 
@@ -122,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                             } else {
                                 counter--;
-
-                                attempts.setText("Login attempts remaining: " + String.valueOf(counter));
+                                String test = "Login attempts remaining: " + String.valueOf(counter);
+                                attempts.setText(test);
 
                                 if (counter == 0) {
                                     login.setEnabled(false);
@@ -319,9 +304,6 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         mQueue.add(jsonObjReq);
-
-        // we have not successfully logged out
-        return false;
     }
 
 
