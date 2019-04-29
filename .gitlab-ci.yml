@@ -48,7 +48,7 @@ android-build:
   stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME='pwd'/.gradle
-    - chmod +x /fridge_tracker/gradlew
+    - chmod +x ./fridge_tracker/gradlew
   tags:
    - android_tag
   script:
