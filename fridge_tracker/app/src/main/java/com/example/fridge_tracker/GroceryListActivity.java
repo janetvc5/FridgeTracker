@@ -1,13 +1,19 @@
 package com.example.fridge_tracker;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import android.widget.CheckedTextView;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -19,7 +25,21 @@ import android.view.View;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Grocery list displays the user's list of needed groceries
@@ -29,9 +49,11 @@ public class GroceryListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     TextView title;
     Button addButton;
-    RecyclerView list;
+    //RecyclerView list;
+    ListView list;
     ArrayList<String> myDataset;
     FloatingActionButton floatingActionButton;
+    String[] items = new String[20];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +62,19 @@ public class GroceryListActivity extends AppCompatActivity {
 
         addButton = (Button) findViewById(R.id.buttonAdd);
         title = (TextView) findViewById(R.id.title);
-        list = (RecyclerView) findViewById(R.id.groceryList);
+        //list = (RecyclerView) findViewById(R.id.groceryList);
+        list = (ListView) findViewById(R.id.list);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
-        myDataset = new ArrayList<String>();
+        //myDataset = new ArrayList<String>();
 
         // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        list.setLayoutManager(layoutManager);
+       // layoutManager = new LinearLayoutManager(this);
+        //list.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        list.setAdapter(mAdapter);
+        //mAdapter = new MyAdapter(myDataset);
+        //list.setAdapter(mAdapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -95,4 +118,97 @@ public class GroceryListActivity extends AppCompatActivity {
         });
 
     }
+
+
+        private void getGroceries()
+        {
+            RequestQueue mQueue = Volley.newRequestQueue(this);
+            String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                    url, null,
+                    new Response.Listener<JSONObject>() {
+
+                        /**
+                         * api returns the list
+                         *
+                         * @param response
+                         */
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray foodNames = response.getJSONArray("itemname");
+                                //String stuff = foodNames.getString(1);
+                                //Log.d("hints", "hints response " + stuff);
+
+
+                                for (int i = 0; (i < foodNames.length() && i < 20); i++){
+                                    JSONObject itemInList= (JSONObject)foodNames.get(i);
+                                    String groceryItem = itemInList.toString();
+                                    //String groceryItem = itemInList.getString("label");
+
+                                    items[i]= groceryItem;
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this,android.R.layout.simple_list_item_single_choice, items);
+                                    list.setAdapter(adapter);
+
+                                    list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                                    {
+                                        boolean somethingChecked = false;
+                                        int lastChecked;
+                                        public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                                                long arg3) {
+                                            if(somethingChecked){
+//                                            ListView lv = (ListView) arg0;
+//                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
+                                                CheckedTextView cv = (CheckedTextView) arg1;
+                                                cv.setChecked(false);
+                                            }
+//                                        ListView lv = (ListView) arg0;
+//                                        TextView tv = (TextView) lv.getChildAt(arg2);
+                                            CheckedTextView cv = (CheckedTextView) arg1;
+                                            if(!cv.isChecked())
+                                                cv.setChecked(true);
+                                            lastChecked = arg2;
+                                            somethingChecked = true;
+
+                                            ((GlobalVariables) getApplication()).setSelectedSearchItem(items[arg2]);
+                                        }
+                                    });
+
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                /**
+                 * Error catcher
+                 *
+                 * @param error
+                 */
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            }) {
+
+                /**
+                 * Passing some request headers
+                 **/
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+
+            };
+
+            mQueue.add(jsonObjReq);
+
+        }
+
 }
