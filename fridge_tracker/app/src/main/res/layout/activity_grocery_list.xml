@@ -61,13 +61,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="60dp"
         android:backgroundTint="@color/colorAccent"
         android:clickable="true"
         android:foreground="@drawable/listicon"
         android:src="@drawable/listicon"
         app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/listicon"
         tools:srcCompat="@tools:sample/avatars" />
 
