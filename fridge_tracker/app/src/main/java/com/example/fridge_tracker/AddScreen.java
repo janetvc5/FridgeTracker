@@ -23,9 +23,9 @@ import java.util.Map;
  * A page to add a food item to the user's fridge
  */
 public class AddScreen extends AppCompatActivity {
-
-    TextView tvName, tvQuantity, tvExpiration, tvFridge, response;
-    EditText etName, etQuantity, etExpiration, etFridge;
+    String itemSelected = ((GlobalVariables) getApplication()).getSelectedSearchItem();
+    TextView tvName, tvQuantity, tvExpiration, tvFridge, response, etName;
+    EditText  etQuantity, etExpiration, etFridge;
     Button buttonAdd;
 
     @Override
@@ -38,7 +38,7 @@ public class AddScreen extends AppCompatActivity {
         tvExpiration = (TextView) findViewById(R.id.tvExpiration);
         tvFridge = (TextView) findViewById(R.id.tvFridge);
 
-        etName = (EditText) findViewById(R.id.etName);
+        etName = (TextView) findViewById(R.id.etName);
         etQuantity = (EditText) findViewById(R.id.etQuantity);
         etExpiration = (EditText) findViewById(R.id.etExpiration);
         etFridge = (EditText) findViewById(R.id.etFridge);
@@ -46,6 +46,8 @@ public class AddScreen extends AppCompatActivity {
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
 
         response = (TextView) findViewById(R.id.response);
+
+        etName.setText(itemSelected);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
 
@@ -100,16 +102,17 @@ public class AddScreen extends AppCompatActivity {
             protected Map<String, String> getParams()
             {
                 Map<String, String> params = new HashMap<>();
-                params.put("foodname","apple");
+                params.put("foodname",itemSelected);
                 params.put("quantity", etQuantity.getText().toString());
                 params.put("expiration", etExpiration.getText().toString());
                 params.put("fridge", "id:1");
+                //params.put("fridge", ((GlobalVariables) getApplication()).getFridgeID());
                 return params;
             }
         };
 
 
-        Volley.newRequestQueue(this).add(jsonPostReq);
+       mQueue.add(jsonPostReq);
     }
 }
 

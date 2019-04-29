@@ -1,6 +1,7 @@
 package com.example.fridge_tracker;
 
 import android.app.Application;
+import android.util.Log;
 
 public class GlobalVariables extends Application {
 
@@ -22,6 +23,7 @@ public class GlobalVariables extends Application {
 
     public void setUserID(String userID) {
         this.userID = userID;
+        Log.d("variable1", "Global Variable UserID set to " + userID);
     }
 
     public String getFridgeID() {
@@ -30,6 +32,7 @@ public class GlobalVariables extends Application {
 
     public void setFridgeID(String fridgeID) {
         this.fridgeID = fridgeID;
+        Log.d("variable2", "Global Variable FridgeID set to " + fridgeID);
     }
 
     public String getRole() {
@@ -38,6 +41,7 @@ public class GlobalVariables extends Application {
 
     public void setRole(String role) {
         this.role = role;
+        Log.d("variable3", "Global Variable Role set to " + role);
     }
 
     public String getUsername() {
@@ -46,6 +50,7 @@ public class GlobalVariables extends Application {
 
     public void setUsername(String username) {
         this.username = username;
+        Log.d("variable4", "Global Variable Username set to " + username);
     }
 
     public String getSelectedSearchItem() {
@@ -54,6 +59,7 @@ public class GlobalVariables extends Application {
 
     public void setSelectedSearchItem(String selectedSearchItem) {
         this.selectedSearchItem = selectedSearchItem;
+        Log.d("variable5", "Global Variable SelectedSearchItem set to " + selectedSearchItem);
     }
 
 }
