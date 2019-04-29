@@ -52,11 +52,11 @@ android-build:
   tags:
    - android_tag
   script:
-    - cd /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/fridge_tracker
+    - cd /fridge_tracker
     - ./gradlew assemble
   artifacts:
     paths:
-    - /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/fridge_tracker/app/build/outputs/
+    - /fridge_tracker/app/build/outputs/
     
 # To run Android unit tests.   
 #unitTests:
