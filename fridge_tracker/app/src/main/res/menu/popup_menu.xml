@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/two"
-        android:title="Fridge View"/>
+        android:title="Search"/>
 
     <item
         android:id="@+id/three"

@@ -9,9 +9,10 @@
     <Button
         android:id="@+id/getbutton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="80dp"
+        android:background="@color/colorPrimary"
         android:text="GET" />
 
     <EditText
@@ -26,10 +27,11 @@
     <Button
         android:id="@+id/sendbutton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:layout_below="@+id/sendtext"
         android:layout_marginLeft="116dp"
         android:layout_marginTop="80dp"
+        android:background="@color/colorPrimary"
         android:text="Send" />
 
 
@@ -70,7 +72,7 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="494dp"
+        android:layout_height="451dp"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
@@ -85,11 +87,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="60dp"
-        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
         android:clickable="true"
-        android:tint="@color/colorAccent"
+        android:foreground="@drawable/listicon"
+        android:src="@drawable/listicon"
         app:fabSize="normal"
-        app:srcCompat="@drawable/baseline_add_white_18dp"
+        app:srcCompat="@drawable/listicon"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -99,6 +102,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="14dp"
         android:text="My Fridge"
+        android:textColor="@color/colorTitles"
         android:textSize="30sp"
         android:textStyle="bold" />
 

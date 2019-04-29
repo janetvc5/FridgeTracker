@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         list = (ListView) findViewById(R.id.list);
 
+        floatingActionButton.setImageResource(R.drawable.listicon);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 

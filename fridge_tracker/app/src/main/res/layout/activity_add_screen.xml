@@ -7,6 +7,21 @@
     tools:context=".AddScreen">
 
     <TextView
+        android:id="@+id/pageTitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
+        android:text="Add Food"
+        android:textColor="@color/colorTitles"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textView6"
         android:layout_width="27dp"
         android:layout_height="wrap_content"
@@ -29,12 +44,13 @@
         android:hint="Name"
         android:inputType="textPersonName"
         android:text="Food"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.818"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.144" />
+        app:layout_constraintTop_toBottomOf="@+id/pageTitle2"
+        app:layout_constraintVertical_bias="0.018" />
 
     <EditText
         android:id="@+id/etQuantity"
@@ -81,14 +97,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Food Name:"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.143"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintTop_toBottomOf="@+id/pageTitle2"
+        app:layout_constraintVertical_bias="0.033" />
 
     <TextView
         android:id="@+id/tvQuantity"
@@ -99,7 +115,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Quantity:"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +133,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Expiration Date:"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,20 +144,21 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="84dp"
-        android:layout_height="43dp"
+        android:layout_width="78dp"
+        android:layout_height="35dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="180dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryAcc"
         android:text="Add"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/destLabel1"
-        app:layout_constraintVertical_bias="0.135" />
+        app:layout_constraintVertical_bias="0.083" />
 
     <TextView
         android:id="@+id/response"
@@ -166,6 +183,7 @@
         android:checked="true"
         android:switchMinWidth="56dp"
         android:text="Destination:"
+        android:textColor="@color/colorText"
         android:textOff="FRIDGE"
         android:textOn="GROCERY"
         android:textSize="18sp"
@@ -184,7 +202,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Add to Grocery List"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -201,7 +219,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Add to Fridge"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
