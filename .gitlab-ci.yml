@@ -42,7 +42,6 @@ autoDeploy:
 
     
 # To build android projects
-
 android-build:
   image: javiersantos/android-ci:latest
   stage: androidbuild
@@ -52,6 +51,7 @@ android-build:
   tags:
    - android_tag
   script:
+    - pwd
     - cd fridge_tracker
     - ./gradlew assemble --stacktrace
   artifacts:
