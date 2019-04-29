@@ -52,7 +52,7 @@ android-build:
   tags:
    - android_tag
   script:
-    - cd /fridge_tracker
+    - cd fridge_tracker
     - ./gradlew assemble
   artifacts:
     paths:
