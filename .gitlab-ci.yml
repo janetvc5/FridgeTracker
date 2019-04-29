@@ -53,20 +53,20 @@ android-build:
    - android_tag
   script:
     - cd fridge_tracker
-    - ./gradlew assemble
+    - ./gradlew assemble --stacktrace
   artifacts:
     paths:
     - /fridge_tracker/app/build/outputs/
     
 # To run Android unit tests.   
-#unitTests:
-  #image: javiersantos/android-ci:latest
-  #stage: androidtest
-  #before_script:
-   # - export GRADLE_USER_HOME=`pwd`/.gradle
-   # - chmod +x ./usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/fridge_tracker/gradlew
-  #tags:
-   #- android_tag
-  #script:
-   # - cd /usr/lib/systemd/system/builds/19beb01f/0/CS309SPRING2019/team_40/fridge_tracker
-   # - ./gradlew test
+unitTests:
+  image: javiersantos/android-ci:latest
+  stage: androidtest
+  before_script:
+    - export GRADLE_USER_HOME='pwd'/.gradle
+    - chmod +x ./fridge_tracker/gradlew
+  tags:
+   - android_tag
+  script:
+    - cd fridge_tracker
+    - ./gradlew test
