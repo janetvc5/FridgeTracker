@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -71,7 +72,7 @@ public class AddScreen extends AppCompatActivity {
         String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/new";
 
         JsonObjectRequest jsonPostReq = new JsonObjectRequest(Request.Method.POST,
-                url, null,
+                url, getJs(itemSelected, quantity, expiration, fridge),
                 new Response.Listener<JSONObject>() {
 
                     /**
@@ -106,13 +107,24 @@ public class AddScreen extends AppCompatActivity {
                 params.put("quantity", etQuantity.getText().toString());
                 params.put("expiration", etExpiration.getText().toString());
                 params.put("fridge", "id:1");
-                //params.put("fridge", ((GlobalVariables) getApplication()).getFridgeID());
+                //params.put("fridge", "id:" + ((GlobalVariables) getApplication()).getFridgeID());
                 return params;
             }
         };
 
 
        mQueue.add(jsonPostReq);
+    }
+
+    protected JSONObject getJs(String foodname, String quantity, String expiration, String fridge) throws JSONException {
+        JSONObject params = new JSONObject();
+        params.put("foodname",foodname);
+        params.put("quantity", quantity;
+        params.put("expiration", expiration;
+        params.put("fridge", "id:" + fridge);
+        //params.put("fridge", ((GlobalVariables) getApplication()).getFridgeID());
+
+        return params;
     }
 }
 
