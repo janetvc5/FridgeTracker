@@ -9,8 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.support.v7.app.AppCompatActivity;
 
@@ -24,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     Button sendButton, getButton;
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
+    ListView list;
+    String[] items=new String[20];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         sendRole = (EditText) findViewById(R.id.sendrole);
         sendID = (EditText) findViewById(R.id.sendfridgeid);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        list = (ListView) findViewById(R.id.list);
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 
@@ -115,7 +124,96 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void getFridge(int idNum)
+    {
+        RequestQueue mQueue = Volley.newRequestQueue(this);
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/"+idNum+"/contents";
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONObject>() {
 
+                    /**
+                     * api returns the list
+                     *
+                     * @param response
+                     */
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray foodNames = response.getJSONArray("foodname");
+                            //String stuff = foodNames.getString(1);
+                            //Log.d("hints", "hints response " + stuff);
+
+
+                            for (int i = 0; (i < foodNames.length() && i < 20); i++){
+                                JSONObject itemInList= (JSONObject)foodNames.get(i);
+                                String fridgeItem = itemInList.toString();
+                                //String groceryItem = itemInList.getString("label");
+
+                                items[i]= fridgeItem;
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_single_choice, items);
+                                list.setAdapter(adapter);
+
+                                list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                                {
+                                    boolean somethingChecked = false;
+                                    int lastChecked;
+                                    public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                                            long arg3) {
+                                        if(somethingChecked){
+//                                            ListView lv = (ListView) arg0;
+//                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
+                                            CheckedTextView cv = (CheckedTextView) arg1;
+                                            cv.setChecked(false);
+                                        }
+//                                        ListView lv = (ListView) arg0;
+//                                        TextView tv = (TextView) lv.getChildAt(arg2);
+                                        CheckedTextView cv = (CheckedTextView) arg1;
+                                        if(!cv.isChecked())
+                                            cv.setChecked(true);
+                                        lastChecked = arg2;
+                                        somethingChecked = true;
+
+                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items[arg2]);
+                                    }
+                                });
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            /**
+             * Error catcher
+             *
+             * @param error
+             */
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             **/
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+        };
+
+        mQueue.add(jsonObjReq);
+
+    }
 
     private void getJson(String userID)
     {

@@ -76,6 +76,8 @@ public class GroceryListActivity extends AppCompatActivity {
         //mAdapter = new MyAdapter(myDataset);
         //list.setAdapter(mAdapter);
 
+        getGroceries();
+
         addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
