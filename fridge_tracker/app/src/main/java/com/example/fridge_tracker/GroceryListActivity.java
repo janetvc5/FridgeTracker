@@ -66,16 +66,6 @@ public class GroceryListActivity extends AppCompatActivity {
         list = (ListView) findViewById(R.id.list);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
-        //myDataset = new ArrayList<String>();
-
-        // use a linear layout manager
-       // layoutManager = new LinearLayoutManager(this);
-        //list.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        //mAdapter = new MyAdapter(myDataset);
-        //list.setAdapter(mAdapter);
-
         getGroceries();
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +114,11 @@ public class GroceryListActivity extends AppCompatActivity {
 
         private void getGroceries()
         {
+            //set list items to - if there is no food in fridge
+            for(int f=0; f<items.length; f++){
+                items[f]="-";
+            }
+
             RequestQueue mQueue = Volley.newRequestQueue(this);
             String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,

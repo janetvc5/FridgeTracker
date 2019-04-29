@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="80dp"
         android:text="GET" />
 
     <EditText
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/getbutton"
         android:layout_marginLeft="19dp"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="136dp" />
 
 
     <Button
@@ -28,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendtext"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginLeft="116dp"
+        android:layout_marginTop="80dp"
         android:text="Send" />
 
 
@@ -38,8 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendbutton"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="157dp"
+        android:layout_marginLeft="119dp"
+        android:layout_marginTop="127dp"
         android:text="fridgeid" />
 
     <EditText
@@ -47,16 +47,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendbutton"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="166dp" />
+        android:layout_marginLeft="119dp"
+        android:layout_marginTop="136dp" />
 
     <TextView
         android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendfridgeid"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="127dp"
         android:text="role" />
 
     <EditText
@@ -64,14 +64,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendfridgeid"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="220dp" />
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="136dp" />
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="494dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="200dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
         app:layout_constraintTop_toBottomOf="@+id/searchButton"
@@ -92,11 +92,22 @@
         app:srcCompat="@drawable/baseline_add_white_18dp"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="My Fridge"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <!--
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="686dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
     <!--<Button-->
         <!--android:id="@+id/button"-->
