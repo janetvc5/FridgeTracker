@@ -42,7 +42,6 @@ autoDeploy:
 
     
 # To build android projects
-
 android-build:
   image: javiersantos/android-ci:latest
   stage: androidbuild
