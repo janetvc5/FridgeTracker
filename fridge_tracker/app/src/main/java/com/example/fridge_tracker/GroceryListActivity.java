@@ -139,7 +139,7 @@ public class GroceryListActivity extends AppCompatActivity {
                             if (response.length() != 0) {
                                 for (int i = 0; (i < response.length() && i < 20); i++) {
                                     JSONObject groceryItem = response.getJSONObject(i);
-                                    String grocery = groceryItem.get("itemname").toString();
+                                    String grocery = groceryItem.get("foodname").toString();
 
                                     items.add(grocery);
                                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this, android.R.layout.simple_list_item_single_choice, items);
