@@ -24,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         list = (ListView) findViewById(R.id.list);
 
         floatingActionButton.setImageResource(R.drawable.listicon);
+
+        getFridge(1);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 
@@ -105,12 +108,15 @@ public class MainActivity extends AppCompatActivity {
                         if (item.getTitle().equals("Grocery List")) {
                              Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
                              startActivity(intent1);
-                        } else if (item.getTitle().equals("Fridge View")) {
+                        } else if (item.getTitle().equals("Search")) {
                             Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                             startActivity(intent2);
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent3);
+                        } else if (item.getTitle().equals("My Fridge")){
+                            Intent intent4 = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(intent4);
                         }
 
                         return true;
@@ -127,11 +133,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void getFridge(int idNum)
     {
+        //set list items to - if there is no food in fridge
+        for(int f=0; f<items.length; f++){
+            items[f]="-";
+        }
+
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/"+idNum+"/contents";
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONArray>() {
 
                     /**
                      * api returns the list
@@ -139,19 +150,20 @@ public class MainActivity extends AppCompatActivity {
                      * @param response
                      */
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try {
-                            JSONArray foodNames = response.getJSONArray("foodname");
+                            //JSONArray foodNames = response.getJSONArray("itemname");
                             //String stuff = foodNames.getString(1);
                             //Log.d("hints", "hints response " + stuff);
 
 
-                            for (int i = 0; (i < foodNames.length() && i < 20); i++){
-                                JSONObject itemInList= (JSONObject)foodNames.get(i);
-                                String fridgeItem = itemInList.toString();
+                            for (int i = 0; (i < response.length() && i < 20); i++){
+                                JSONObject groceryItem=response.getJSONObject(i);
+                                String grocery=groceryItem.get("itemname").toString();
+                                //String groceryItem = itemInList.toString();
                                 //String groceryItem = itemInList.getString("label");
 
-                                items[i]= fridgeItem;
+                                items[i]= grocery;
                                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                 list.setAdapter(adapter);
 
@@ -212,8 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        mQueue.add(jsonObjReq);
-
+        mQueue.add(jsonArrReq);
     }
 
     private void getJson(String userID)

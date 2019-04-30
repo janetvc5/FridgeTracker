@@ -7,10 +7,14 @@
 
     <item
         android:id="@+id/two"
-        android:title="Search"/>
+        android:title="My Fridge"/>
 
     <item
         android:id="@+id/three"
+        android:title="Search"/>
+
+    <item
+        android:id="@+id/four"
         android:title="Chat"/>
 
 </menu>
