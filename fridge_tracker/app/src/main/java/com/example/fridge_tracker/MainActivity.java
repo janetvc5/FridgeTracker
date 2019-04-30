@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(MainActivity.this, AddScreen.class);
+                Intent i=new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(i);
             }
         });

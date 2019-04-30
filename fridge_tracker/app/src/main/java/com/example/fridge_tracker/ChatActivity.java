@@ -48,7 +48,7 @@ public class ChatActivity extends AppCompatActivity {
                  * computer, and change the ip address to that of your computer.
                  * If running on the emulator, you can use localhost.
                  */
-                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/" + ((GlobalVariables) getApplication()).getUsername();
+                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/" + ((GlobalVariables) getApplication()).getFridgeID() + "/" + ((GlobalVariables) getApplication()).getUsername();
 
                 try {
                     Log.d("Socket:", "Trying socket");
@@ -63,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
                         public void onMessage(String message) {
                             String username = ((GlobalVariables) getApplication()).getUsername();
                             Log.d("", "run() returned: " + message);
-                            t1.setText(username + "\n " + message);
+                            t1.append(username + "\n " + message);
                         }
 
                         /**

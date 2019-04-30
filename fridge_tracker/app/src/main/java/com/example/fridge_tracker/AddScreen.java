@@ -102,7 +102,7 @@ public class AddScreen extends AppCompatActivity {
 
     private void postJsonToFridge() throws JSONException{
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/add";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/new";
         JSONObject jsob = getJsFridge( etName.getText().toString(), etQuantity.getText().toString(), etExpiration.getText().toString(), ((GlobalVariables) getApplication()).getFridgeID());
         Log.d("myObject", "this is the string value: " + jsob.toString());
 
@@ -164,7 +164,7 @@ public class AddScreen extends AppCompatActivity {
 
     private void postJsonToGrocery () throws JSONException {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridgecontents/add";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/grocerylist/new";
         JSONObject jsob = getJsGrocery( etName.getText().toString(), etQuantity.getText().toString(), ((GlobalVariables) getApplication()).getFridgeID());
         Log.d("myObject", "this is the string value: " + jsob.toString());
 
