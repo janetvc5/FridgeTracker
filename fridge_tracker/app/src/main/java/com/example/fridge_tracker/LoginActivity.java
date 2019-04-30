@@ -113,8 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                             if ( valid ) {
 
                                 String userID = response.getString("id");
-//                                ((GlobalVariables) getApplication()).setUserID(userID);
-//                                ((GlobalVariables) getApplication()).setUsername(username);
+                                ((GlobalVariables) getApplication()).setUserID(userID);
+                                ((GlobalVariables) getApplication()).setUsername(username);
 
                                 ((GlobalVariables) getApplication()).getAndSetGlobalVariables(userID);
 
