@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -29,6 +32,8 @@ public class AddUser extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
     TextView confirmAdd, viewFridge;
+    Spinner spinner;
+    int userRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,25 @@ public class AddUser extends AppCompatActivity {
         confirmAdd = (TextView) findViewById(R.id.confirmAdd);
         viewFridge = (TextView) findViewById(R.id.viewFridge);
 
+
+        spinner = (Spinner) findViewById(R.id.role_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.roles_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                userRole=position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                sendButton.setEnabled(false);
+            }
+        });
+
         sendButton.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -54,7 +78,7 @@ public class AddUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    sendJson(String.valueOf(sendID.getText()), String.valueOf(sendRole.getText()));
+                    sendJson(String.valueOf(sendID.getText()), userRole);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -143,7 +167,7 @@ public class AddUser extends AppCompatActivity {
 
     }
 
-    private void sendJson(final String userID, final String userRole) throws JSONException {
+    private void sendJson(final String userID, final int userRole) throws JSONException {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/user/new";
 
@@ -167,57 +191,49 @@ public class AddUser extends AppCompatActivity {
                         {
 
                         }
-
                     }
-
                 }, new Response.ErrorListener() {
+                     /**
+                      * Error catcher
+                      *
+                      * @param error
+                      */
+                      @Override
+                      public void onErrorResponse(VolleyError error) {
+                          error.printStackTrace();
+                      }
+                }) {
 
-            /**
-             * Error catcher
-             *
-             * @param error
-             */
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
+                /**
+                  * Passing some request headers
+                  * */
+                 @Override
+                 public Map<String, String> getHeaders() throws AuthFailureError {
+                 HashMap<String, String> headers = new HashMap<String, String>();
+                 headers.put("Content-Type", "application/json");
+                 return headers;
+                 }
 
-        }) {
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-            /**
-             * passing some params
-             *
-             * @return
-             */
-            @Override
-            protected Map<String, String> getParams() {
+                 /**
+                * passing some params
+                *@return
+                */
+                @Override
+                protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("fridgeid", userID);
-                params.put("role", userRole);
+                params.put("role", getString(userRole));
 
                 return params;
-            }
-
-
-
-        };
+                }
+                };
 
         mQueue.add(jsonObjReq);
 
     }
 
 
-    protected JSONObject getJs(String role, String id) throws JSONException {
+    protected JSONObject getJs(int role, String id) throws JSONException {
         JSONObject params = new JSONObject();
         params.put("fridgeid", id);
         params.put("role", role);

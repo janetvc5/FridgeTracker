@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">fridge_tracker</string>
     <string name="my_fridge">My Fridge</string>
@@ -5,4 +6,11 @@
     <string name="recipes">Recipes</string>
     <string name="settings">Settings</string>
     <string name="chat">Chat</string>
+
+    <string-array name="roles_array">
+        <item>--Select Role--</item>
+        <item>Household Member</item>
+        <item>Grocery Shopper</item>
+        <item>Admin</item>
+    </string-array>
 </resources>
