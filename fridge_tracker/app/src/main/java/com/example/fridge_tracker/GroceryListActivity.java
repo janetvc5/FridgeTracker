@@ -1,6 +1,5 @@
 package com.example.fridge_tracker;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
@@ -55,7 +54,8 @@ public class GroceryListActivity extends AppCompatActivity {
     ListView list;
     ArrayList<String> myDataset;
     FloatingActionButton floatingActionButton;
-    String[] items = new String[20];
+    ArrayList<String> items = new ArrayList<String>();
+    //String[] items = new String[20];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,10 +116,10 @@ public class GroceryListActivity extends AppCompatActivity {
 
         private void getGroceries()
         {
-            //set list items to - if there is no food in fridge
-            for(int f=0; f<items.length; f++){
-                items[f]="-";
-            }
+//            //set list items to - if there is no food in fridge
+//            for(int f=0; f<items.length; f++){
+//                items.[f]="-";
+//            }
 
             RequestQueue mQueue = Volley.newRequestQueue(this);
             String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
@@ -146,7 +146,7 @@ public class GroceryListActivity extends AppCompatActivity {
                                     //String groceryItem = itemInList.toString();
                                     //String groceryItem = itemInList.getString("label");
 
-                                    items[i]= grocery;
+                                    items.add(grocery);
                                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                     list.setAdapter(adapter);
 
@@ -170,7 +170,7 @@ public class GroceryListActivity extends AppCompatActivity {
                                             lastChecked = arg2;
                                             somethingChecked = true;
 
-                                            ((GlobalVariables) getApplication()).setSelectedSearchItem(items[arg2]);
+                                            ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
                                         }
                                     });
 

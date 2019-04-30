@@ -24,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -32,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
     ListView list;
-    String[] items=new String[20];
+    ArrayList<String> items = new ArrayList<String>();
+    //String[] items=new String[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         list = (ListView) findViewById(R.id.list);
 
         floatingActionButton.setImageResource(R.drawable.listicon);
+
+        getFridge(1);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 
@@ -129,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/"+idNum+"/contents";
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONArray>() {
 
                     /**
                      * api returns the list
@@ -139,19 +144,23 @@ public class MainActivity extends AppCompatActivity {
                      * @param response
                      */
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try {
-                            JSONArray foodNames = response.getJSONArray("foodname");
+                            //JSONArray foodNames = response.getJSONArray("itemname");
                             //String stuff = foodNames.getString(1);
                             //Log.d("hints", "hints response " + stuff);
 
 
-                            for (int i = 0; (i < foodNames.length() && i < 20); i++){
-                                JSONObject itemInList= (JSONObject)foodNames.get(i);
-                                String fridgeItem = itemInList.toString();
+                            for (int i = 0; (i < response.length()); i++){
+                                JSONObject fridgeItem = response.getJSONObject(i);
+                                String fridge = fridgeItem.getString("foodname");
+                                Log.d("hints", "hints response " + fridge);
+
+                                //String fridge = fridgeItem.get("foodname").toString();
+                                //String groceryItem = itemInList.toString();
                                 //String groceryItem = itemInList.getString("label");
 
-                                items[i]= fridgeItem;
+                                items.add(fridge);
                                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                 list.setAdapter(adapter);
 
@@ -175,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                                         lastChecked = arg2;
                                         somethingChecked = true;
 
-                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items[arg2]);
+                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
                                     }
                                 });
 
@@ -212,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        mQueue.add(jsonObjReq);
+        mQueue.add(jsonArrReq);
 
     }
 
