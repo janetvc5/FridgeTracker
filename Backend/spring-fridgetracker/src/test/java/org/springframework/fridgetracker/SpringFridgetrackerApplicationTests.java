@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringFridgetrackerApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SpringFridgetrackerApplicationTests {
-
 	@Test
 	public void contextLoads() {
 	}
