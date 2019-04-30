@@ -30,7 +30,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -121,9 +123,9 @@ public class GroceryListActivity extends AppCompatActivity {
 
             RequestQueue mQueue = Volley.newRequestQueue(this);
             String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+            JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
                     url, null,
-                    new Response.Listener<JSONObject>() {
+                    new Response.Listener<JSONArray>() {
 
                         /**
                          * api returns the list
@@ -131,19 +133,20 @@ public class GroceryListActivity extends AppCompatActivity {
                          * @param response
                          */
                         @Override
-                        public void onResponse(JSONObject response) {
+                        public void onResponse(JSONArray response) {
                             try {
-                                JSONArray foodNames = response.getJSONArray("itemname");
+                                //JSONArray foodNames = response.getJSONArray("itemname");
                                 //String stuff = foodNames.getString(1);
                                 //Log.d("hints", "hints response " + stuff);
 
 
-                                for (int i = 0; (i < foodNames.length() && i < 20); i++){
-                                    JSONObject itemInList= (JSONObject)foodNames.get(i);
-                                    String groceryItem = itemInList.toString();
+                                for (int i = 0; (i < response.length() && i < 20); i++){
+                                    JSONObject groceryItem=response.getJSONObject(i);
+                                    String grocery=groceryItem.get("itemname").toString();
+                                    //String groceryItem = itemInList.toString();
                                     //String groceryItem = itemInList.getString("label");
 
-                                    items[i]= groceryItem;
+                                    items[i]= grocery;
                                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                     list.setAdapter(adapter);
 
@@ -204,7 +207,7 @@ public class GroceryListActivity extends AppCompatActivity {
 
             };
 
-            mQueue.add(jsonObjReq);
+            mQueue.add(jsonArrReq);
 
         }
 
