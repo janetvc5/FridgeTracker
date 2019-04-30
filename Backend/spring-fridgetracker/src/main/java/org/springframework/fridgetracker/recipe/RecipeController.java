@@ -52,6 +52,7 @@ public class RecipeController {
 			return ret;
 		}
 		Iterator<LinkedHashMap> i = recipe.getItems().iterator();
+		recipe = recipeRepository.save(recipe);
 		ArrayList<Recipeitem> newList = new ArrayList<Recipeitem>();
 		Recipeitem out;
 		LinkedHashMap in;
@@ -61,6 +62,7 @@ public class RecipeController {
 			out.setItemname((String)in.get("itemname"));
 			out.setQuantity(((String)in.get("quantity")));
 			out.setUnit((String)in.get("unit"));
+			out.setRecipe(recipe);
 			newList.add(recipeitemRepository.save(out));
 		}
 		recipe.setItems(newList);
