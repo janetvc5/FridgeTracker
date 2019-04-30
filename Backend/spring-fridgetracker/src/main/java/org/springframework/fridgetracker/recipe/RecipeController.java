@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import org.springframework.fridgetracker.fridge.Fridge;
 import org.springframework.fridgetracker.fridge.FridgeRepository;
 import org.springframework.fridgetracker.fridgecontents.Fridgecontents;
 import org.springframework.fridgetracker.recipeitem.Recipeitem;
+import org.springframework.fridgetracker.recipeitem.RecipeitemRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +31,8 @@ public class RecipeController {
 	RecipeRepository recipeRepository;
 	@Autowired
 	FridgeRepository fridgeRepository;
+	@Autowired
+	RecipeitemRepository recipeitemRepository;
 	
 	
 	@RequestMapping(method= RequestMethod.GET, path="/recipes")
@@ -47,6 +51,19 @@ public class RecipeController {
 			ret.put("success", "false");
 			return ret;
 		}
+		Iterator<LinkedHashMap> i = recipe.getItems().iterator();
+		ArrayList<Recipeitem> newList = new ArrayList<Recipeitem>();
+		Recipeitem out;
+		LinkedHashMap in;
+		while(i.hasNext()) {
+			in = i.next();
+			out = new Recipeitem();
+			out.setItemname((String)in.get("itemname"));
+			out.setQuantity(((String)in.get("quantity")));
+			out.setUnit((String)in.get("unit"));
+			newList.add(recipeitemRepository.save(out));
+		}
+		recipe.setItems(newList);
 		recipeRepository.save(recipe);
 		ret.put("success", "true");
 		return ret;

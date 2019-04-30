@@ -24,7 +24,7 @@ public class Recipeitem {
 	@Column(name="itemname")
 	private String itemname;
 	@Column(name="quantity")
-	private Integer quantity;
+	private String quantity;
 	@Column(name="unit")
 	private String unit;
 	@ManyToOne(targetEntity = Recipe.class)
@@ -44,10 +44,10 @@ public class Recipeitem {
 	public void setItemname(String itemname) {
 		this.itemname = itemname;
 	}
-	public Integer getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 	public String getUnit() {
