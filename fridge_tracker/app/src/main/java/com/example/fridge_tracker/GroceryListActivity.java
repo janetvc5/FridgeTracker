@@ -1,5 +1,6 @@
 package com.example.fridge_tracker;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
@@ -56,6 +57,7 @@ public class GroceryListActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     ArrayList<String> items = new ArrayList<String>();
     Boolean loaded = false;
+    JSONArray grocArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +149,9 @@ public class GroceryListActivity extends AppCompatActivity {
                         public void onResponse(JSONArray response) {
                             try {
                                 Log.d("groclist", "response: " + response.toString());
+
+                                grocArr = response;
+
                                 if (response.length() != 0) {
                                     for (int i = 0; (i < response.length() && i < 20); i++) {
                                         JSONObject groceryItem = response.getJSONObject(i);
@@ -176,7 +181,22 @@ public class GroceryListActivity extends AppCompatActivity {
                                                 lastChecked = arg2;
                                                 somethingChecked = true;
 
+                                                try{
+                                                    JSONObject item = grocArr.getJSONObject(arg2);
+                                                    String itemID = item.getString("id");
+                                                    String quantity = item.getString("quantity");
+                                                    String expires = item.getString("expirationdate");
+                                                    ((GlobalVariables) getApplication()).setItemID(itemID);
+                                                    ((GlobalVariables) getApplication()).setQuantity(quantity);
+                                                    ((GlobalVariables) getApplication()).setExpiration(expires);
+                                                } catch (JSONException e){
+
+                                                }
                                                 ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
+
+                                                Intent intent = new Intent(GroceryListActivity.this, ItemInfo.class);
+                                                startActivity(intent);
+
                                             }
                                         });
 
