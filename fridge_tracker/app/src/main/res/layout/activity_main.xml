@@ -7,73 +7,20 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/getbutton"
+        android:id="@+id/addbutton"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
-        android:text="GET" />
+        android:text="Add Food" />
 
-    <EditText
-        android:id="@+id/sendtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/getbutton"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="136dp" />
-
-
-    <Button
-        android:id="@+id/sendbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:layout_below="@+id/sendtext"
-        android:layout_marginLeft="116dp"
-        android:layout_marginTop="80dp"
-        android:background="@color/colorPrimary"
-        android:text="Send" />
-
-
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendbutton"
-        android:layout_marginLeft="119dp"
-        android:layout_marginTop="127dp"
-        android:text="fridgeid" />
-
-    <EditText
-        android:id="@+id/sendfridgeid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendbutton"
-        android:layout_marginLeft="119dp"
-        android:layout_marginTop="136dp" />
-
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendfridgeid"
-        android:layout_marginLeft="175dp"
-        android:layout_marginTop="127dp"
-        android:text="role" />
-
-    <EditText
-        android:id="@+id/sendrole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sendfridgeid"
-        android:layout_marginLeft="175dp"
-        android:layout_marginTop="136dp" />
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="451dp"
-        android:layout_marginTop="200dp"
+        android:layout_height="544dp"
+        android:layout_marginTop="80dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
         app:layout_constraintTop_toBottomOf="@+id/searchButton"
@@ -99,8 +46,8 @@
         android:id="@+id/pageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="18dp"
         android:text="My Fridge"
         android:textColor="@color/colorTitles"
         android:textSize="30sp"

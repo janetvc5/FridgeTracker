@@ -48,28 +48,30 @@
 
     <EditText
         android:id="@+id/et2"
-        android:layout_width="253dp"
-        android:layout_height="wrap_content"
+        android:layout_width="289dp"
+        android:layout_height="43dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="142dp"
         android:hint="message"
         android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tx1" />
 
     <Button
         android:id="@+id/bt2"
-        android:layout_width="119dp"
-        android:layout_height="wrap_content"
+        android:layout_width="68dp"
+        android:layout_height="62dp"
         android:layout_marginStart="279dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="27dp"
-        android:text="Send"
+        android:background="@android:color/background_light"
+        android:foreground="@drawable/speechsend"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.214"
+        app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tx1" />
 

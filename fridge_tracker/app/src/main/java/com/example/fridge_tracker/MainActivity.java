@@ -2,11 +2,7 @@ package com.example.fridge_tracker;
 
 
 import android.content.Intent;
-import android.location.LocationManager;
-import android.location.LocationListener;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,8 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -43,7 +37,7 @@ import java.util.Map;
  * This is the user's list of items in their fridge.
  */
 public class MainActivity extends AppCompatActivity {
-    Button sendButton, getButton;
+    Button add;
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
     ListView list;
@@ -55,46 +49,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sendButton = (Button) findViewById(R.id.sendbutton);
-        getButton = (Button) findViewById(R.id.getbutton);
-        getUserInfo = (EditText) findViewById(R.id.sendtext);
-        sendRole = (EditText) findViewById(R.id.sendrole);
-        sendID = (EditText) findViewById(R.id.sendfridgeid);
+       // sendButton = (Button) findViewById(R.id.sendbutton);
+       // getButton = (Button) findViewById(R.id.addbutton);
+        //getUserInfo = (EditText) findViewById(R.id.sendtext);
+       // sendRole = (EditText) findViewById(R.id.sendrole);
+        //sendID = (EditText) findViewById(R.id.sendfridgeid);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         list = (ListView) findViewById(R.id.list);
-
+        add = (Button) findViewById(R.id.addbutton);
         floatingActionButton.setImageResource(R.drawable.listicon);
-
 
         getFridge();
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * sends the back end the new users ID and Role
-             *
-             * @param v
-             */
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    sendJson(String.valueOf(sendID.getText()), String.valueOf(sendRole.getText()));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        getButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * requests the user's information
-             *
-             * @param v
-             */
-            @Override
-            public void onClick(View v) {
-                getJson(String.valueOf(getUserInfo.getText()));
+                Intent i=new Intent(MainActivity.this, AddScreen.class);
+                startActivity(i);
             }
         });
 
@@ -113,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
                         if (item.getTitle().equals("Grocery List")) {
                             Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
                             startActivity(intent1);
-                        } else if (item.getTitle().equals("Fridge View")) {
-                            Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
-                            startActivity(intent2);
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent3);
@@ -244,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+/**
     private void getJson(String userID)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
@@ -258,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                      * Back end returns different values for role and fridge id per user
                      *
                      * @param response
-                     */
+                     *
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -279,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
              * Error catcher
              *
              * @param error
-             */
+             *
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
@@ -288,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
             /**
              * Passing some request headers
-             **/
+             **
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -325,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                      * prints on log for testing
                      *
                      * @param response
-                     */
+                     *
                     @Override
                     public void onResponse(JSONObject response) {
                         try
@@ -345,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
              * Error catcher
              *
              * @param error
-             */
+             *
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
@@ -355,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
             /**
              * Passing some request headers
-             * */
+             * *
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -367,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
              * passing some params
              *
              * @return
-             */
+             *
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -392,5 +360,5 @@ public class MainActivity extends AppCompatActivity {
         params.put("role", role);
 
         return params;
-    }
+    } **/
 }
