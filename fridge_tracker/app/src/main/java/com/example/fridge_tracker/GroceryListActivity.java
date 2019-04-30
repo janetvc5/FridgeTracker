@@ -114,13 +114,8 @@ public class GroceryListActivity extends AppCompatActivity {
 
 
     private void getGroceries() {
-//            //set list items to - if there is no food in fridge
-//            for(int f=0; f<items.length; f++){
-//                items.[f]="-";
-//            }
-
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/grocerylist/" + ((GlobalVariables) getApplication()).getFridgeID();
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONArray>() {
@@ -133,45 +128,46 @@ public class GroceryListActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            //JSONArray foodNames = response.getJSONArray("itemname");
-                            //String stuff = foodNames.getString(1);
-                            //Log.d("hints", "hints response " + stuff);
+                            Log.d("groclist", "response: " + response.toString());
+                            if (response.length() != 0) {
+                                for (int i = 0; (i < response.length() && i < 20); i++) {
+                                    JSONObject groceryItem = response.getJSONObject(i);
+                                    String grocery = groceryItem.get("itemname").toString();
 
+                                    items.add(grocery);
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this, android.R.layout.simple_list_item_single_choice, items);
+                                    list.setAdapter(adapter);
 
-                            for (int i = 0; (i < response.length() && i < 20); i++){
-                                JSONObject groceryItem=response.getJSONObject(i);
-                                String grocery=groceryItem.get("itemname").toString();
-                                //String groceryItem = itemInList.toString();
-                                //String groceryItem = itemInList.getString("label");
+                                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        boolean somethingChecked = false;
+                                        int lastChecked;
 
-                                items.add(grocery);
-                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this,android.R.layout.simple_list_item_single_choice, items);
-                                list.setAdapter(adapter);
-
-                                list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                                {
-                                    boolean somethingChecked = false;
-                                    int lastChecked;
-                                    public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                                            long arg3) {
-                                        if(somethingChecked){
+                                        public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                                                long arg3) {
+                                            if (somethingChecked) {
 //                                            ListView lv = (ListView) arg0;
 //                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
-                                            CheckedTextView cv = (CheckedTextView) arg1;
-                                            cv.setChecked(false);
-                                        }
+                                                CheckedTextView cv = (CheckedTextView) arg1;
+                                                cv.setChecked(false);
+                                            }
 //                                        ListView lv = (ListView) arg0;
 //                                        TextView tv = (TextView) lv.getChildAt(arg2);
-                                        CheckedTextView cv = (CheckedTextView) arg1;
-                                        if(!cv.isChecked())
-                                            cv.setChecked(true);
-                                        lastChecked = arg2;
-                                        somethingChecked = true;
+                                            CheckedTextView cv = (CheckedTextView) arg1;
+                                            if (!cv.isChecked())
+                                                cv.setChecked(true);
+                                            lastChecked = arg2;
+                                            somethingChecked = true;
 
-                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
-                                    }
-                                });
+                                            ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
+                                        }
+                                    });
 
+                                }
+                            }
+                            else{
+                                items.add("There are no items in your grocery list");
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this, android.R.layout.simple_list_item_single_choice, items);
+                                list.setAdapter(adapter);
                             }
 
                         } catch (JSONException e) {

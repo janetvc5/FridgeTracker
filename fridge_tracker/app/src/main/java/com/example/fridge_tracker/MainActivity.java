@@ -126,19 +126,12 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    //JSONArray foodNames = response.getJSONArray("itemname");
-                                    //String stuff = foodNames.getString(1);
-                                    //Log.d("hints", "hints response " + stuff);
 
                                     if (response.length() != 0) {
                                         for (int i = 0; (i < response.length()); i++) {
                                             JSONObject fridgeItem = response.getJSONObject(i);
                                             String fridge = fridgeItem.getString("foodname");
                                             Log.d("hints", "hints response " + fridge);
-
-                                            //String fridge = fridgeItem.get("foodname").toString();
-                                            //String groceryItem = itemInList.toString();
-                                            //String groceryItem = itemInList.getString("label");
 
                                             items.add(fridge);
                                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_single_choice, items);

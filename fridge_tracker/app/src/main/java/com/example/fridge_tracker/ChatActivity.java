@@ -61,9 +61,8 @@ public class ChatActivity extends AppCompatActivity {
                          */
                         @Override
                         public void onMessage(String message) {
-                            String username = ((GlobalVariables) getApplication()).getUsername();
                             Log.d("", "run() returned: " + message);
-                            t1.append(username + "\n " + message);
+                            t1.append("\n " + message);
                         }
 
                         /**
