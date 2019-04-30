@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ItemInfo">
+    tools:context=".GrocItemInfo">
 
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="144dp"
         android:text="Food Name: "
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,25 +24,11 @@
         android:id="@+id/tvQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="183dp"
         android:text="Quantity: "
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvExpiration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="221dp"
-        android:text="Expiration Date: "
-        android:textColor="@color/colorText"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +36,7 @@
         android:id="@+id/button2"
         android:layout_width="78dp"
         android:layout_height="35dp"
-        android:layout_marginTop="385dp"
+        android:layout_marginTop="330dp"
         android:background="@color/colorPrimaryAcc"
         android:text="Delete"
         android:textColor="@color/colorText"
@@ -58,6 +44,4 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 </android.support.constraint.ConstraintLayout>

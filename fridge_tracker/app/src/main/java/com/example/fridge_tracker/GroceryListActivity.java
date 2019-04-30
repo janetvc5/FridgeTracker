@@ -185,16 +185,16 @@ public class GroceryListActivity extends AppCompatActivity {
                                                     JSONObject item = grocArr.getJSONObject(arg2);
                                                     String itemID = item.getString("id");
                                                     String quantity = item.getString("quantity");
-                                                    String expires = item.getString("expirationdate");
+
                                                     ((GlobalVariables) getApplication()).setItemID(itemID);
                                                     ((GlobalVariables) getApplication()).setQuantity(quantity);
-                                                    ((GlobalVariables) getApplication()).setExpiration(expires);
+
                                                 } catch (JSONException e){
 
                                                 }
                                                 ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
 
-                                                Intent intent = new Intent(GroceryListActivity.this, ItemInfo.class);
+                                                Intent intent = new Intent(GroceryListActivity.this, GrocItemInfo.class);
                                                 startActivity(intent);
 
                                             }
