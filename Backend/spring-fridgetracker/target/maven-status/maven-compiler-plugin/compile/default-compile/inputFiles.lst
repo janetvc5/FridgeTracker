@@ -1,6 +1,7 @@
 C:\Users\janet\Documents\team_40\Backend\spring-fridgetracker\src\main\java\org\springframework\fridgetracker\recipe\RecipeRepository.java
 C:\Users\janet\Documents\team_40\Backend\spring-fridgetracker\src\main\java\org\springframework\fridgetracker\system\NotFoundException.java
 C:\Users\janet\Documents\team_40\Backend\spring-fridgetracker\src\main\java\org\springframework\fridgetracker\recipe\RecipeController.java
+C:\Users\janet\Documents\team_40\Backend\spring-fridgetracker\src\main\java\org\springframework\fridgetracker\recipeitem\RecipeitemRepository.java
 C:\Users\janet\Documents\team_40\Backend\spring-fridgetracker\src\main\java\org\springframework\fridgetracker\fridge\FridgeController.java
 C:\Users\janet\Documents\team_40\Backend\spring-fridgetracker\src\main\java\org\springframework\fridgetracker\item\ItemController.java
 C:\Users\janet\Documents\team_40\Backend\spring-fridgetracker\src\main\java\org\springframework\fridgetracker\websockets\WebSocketConfig.java
