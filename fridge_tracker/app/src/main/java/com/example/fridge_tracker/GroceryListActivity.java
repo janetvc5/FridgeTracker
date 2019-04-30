@@ -100,11 +100,13 @@ public class GroceryListActivity extends AppCompatActivity {
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(GroceryListActivity.this, ChatActivity.class);
                             startActivity(intent3);
+                        } else if (item.getTitle().equals("My Fridge")) {
+                            Intent intent4 = new Intent(GroceryListActivity.this, MainActivity.class);
+                            startActivity(intent4);
                         }
-
                         return true;
-
                     }
+
                 });
 
                 popup.show(); //showing popup menu
@@ -114,101 +116,100 @@ public class GroceryListActivity extends AppCompatActivity {
     }
 
 
-        private void getGroceries()
-        {
+    private void getGroceries() {
 //            //set list items to - if there is no food in fridge
 //            for(int f=0; f<items.length; f++){
 //                items.[f]="-";
 //            }
 
-            RequestQueue mQueue = Volley.newRequestQueue(this);
-            String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
-            JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
-                    url, null,
-                    new Response.Listener<JSONArray>() {
+        RequestQueue mQueue = Volley.newRequestQueue(this);
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
 
-                        /**
-                         * api returns the list
-                         *
-                         * @param response
-                         */
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            try {
-                                //JSONArray foodNames = response.getJSONArray("itemname");
-                                //String stuff = foodNames.getString(1);
-                                //Log.d("hints", "hints response " + stuff);
+                    /**
+                     * api returns the list
+                     *
+                     * @param response
+                     */
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            //JSONArray foodNames = response.getJSONArray("itemname");
+                            //String stuff = foodNames.getString(1);
+                            //Log.d("hints", "hints response " + stuff);
 
 
-                                for (int i = 0; (i < response.length() && i < 20); i++){
-                                    JSONObject groceryItem=response.getJSONObject(i);
-                                    String grocery=groceryItem.get("itemname").toString();
-                                    //String groceryItem = itemInList.toString();
-                                    //String groceryItem = itemInList.getString("label");
+                            for (int i = 0; (i < response.length() && i < 20); i++){
+                                JSONObject groceryItem=response.getJSONObject(i);
+                                String grocery=groceryItem.get("itemname").toString();
+                                //String groceryItem = itemInList.toString();
+                                //String groceryItem = itemInList.getString("label");
 
-                                    items.add(grocery);
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this,android.R.layout.simple_list_item_single_choice, items);
-                                    list.setAdapter(adapter);
+                                items.add(grocery);
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this,android.R.layout.simple_list_item_single_choice, items);
+                                list.setAdapter(adapter);
 
-                                    list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                                    {
-                                        boolean somethingChecked = false;
-                                        int lastChecked;
-                                        public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                                                long arg3) {
-                                            if(somethingChecked){
+                                list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                                {
+                                    boolean somethingChecked = false;
+                                    int lastChecked;
+                                    public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                                            long arg3) {
+                                        if(somethingChecked){
 //                                            ListView lv = (ListView) arg0;
 //                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
-                                                CheckedTextView cv = (CheckedTextView) arg1;
-                                                cv.setChecked(false);
-                                            }
+                                            CheckedTextView cv = (CheckedTextView) arg1;
+                                            cv.setChecked(false);
+                                        }
 //                                        ListView lv = (ListView) arg0;
 //                                        TextView tv = (TextView) lv.getChildAt(arg2);
-                                            CheckedTextView cv = (CheckedTextView) arg1;
-                                            if(!cv.isChecked())
-                                                cv.setChecked(true);
-                                            lastChecked = arg2;
-                                            somethingChecked = true;
+                                        CheckedTextView cv = (CheckedTextView) arg1;
+                                        if(!cv.isChecked())
+                                            cv.setChecked(true);
+                                        lastChecked = arg2;
+                                        somethingChecked = true;
 
-                                            ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
-                                        }
-                                    });
+                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
+                                    }
+                                });
 
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
 
-
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }, new Response.ErrorListener() {
 
-                /**
-                 * Error catcher
-                 *
-                 * @param error
-                 */
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            }) {
 
-                /**
-                 * Passing some request headers
-                 **/
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
+                    }
+                }, new Response.ErrorListener() {
 
-            };
+            /**
+             * Error catcher
+             *
+             * @param error
+             */
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
 
-            mQueue.add(jsonArrReq);
+            /**
+             * Passing some request headers
+             **/
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
 
-        }
+        };
+
+        mQueue.add(jsonArrReq);
+
+    }
 
 }

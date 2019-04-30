@@ -108,14 +108,17 @@ public class MainActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getTitle().equals("Grocery List")) {
-                             Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
-                             startActivity(intent1);
+                            Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
+                            startActivity(intent1);
                         } else if (item.getTitle().equals("Fridge View")) {
                             Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                             startActivity(intent2);
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent3);
+                        } else if (item.getTitle().equals("My Fridge")) {
+                            Intent intent4 = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(intent4);
                         }
 
                         return true;
@@ -262,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onErrorResponse(VolleyError error) {
-              error.printStackTrace();
+                error.printStackTrace();
             }
         }) {
 
