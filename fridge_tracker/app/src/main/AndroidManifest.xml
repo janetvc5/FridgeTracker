@@ -28,6 +28,7 @@
         <activity android:name=".ChatActivity" />
         <activity android:name=".GroceryListActivity" />
         <activity android:name=".AddUser" />
+        <activity android:name=".ItemInfo" />
 
 
 

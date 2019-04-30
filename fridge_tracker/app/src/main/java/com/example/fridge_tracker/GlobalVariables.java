@@ -24,6 +24,9 @@ public class GlobalVariables extends Application {
     private String role;
     private String username;
     private String selectedSearchItem;
+    private String itemID;
+    private String quantity;
+    private String expiration;
 
     // TO USE
 
@@ -139,6 +142,33 @@ public class GlobalVariables extends Application {
     public void setSelectedSearchItem(String selectedSearchItem) {
         this.selectedSearchItem = selectedSearchItem;
         Log.d("variable5", "Global Variable SelectedSearchItem set to " + selectedSearchItem);
+    }
+
+    public String getItemID() {
+        return itemID;
+    }
+
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
+        Log.d("variable6", "Global Variable SelectedSearchItem set to " + itemID);
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+        Log.d("variable7", "Global Variable SelectedSearchItem set to " + quantity);
+    }
+
+    public String getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(String expiration) {
+        this.expiration = expiration;
+        Log.d("variable8", "Global Variable SelectedSearchItem set to " + expiration);
     }
 
 }

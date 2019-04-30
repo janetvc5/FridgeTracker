@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     ListView list;
     ArrayList<String> items = new ArrayList<String>();
     Boolean loaded = false;
+    JSONArray fridgeArr;
 
 
     @Override
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
+                                    fridgeArr = response;
 
                                     if (response.length() != 0) {
                                         for (int i = 0; (i < response.length()); i++) {
@@ -153,25 +155,33 @@ public class MainActivity extends AppCompatActivity {
 
                                             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                 boolean somethingChecked = false;
-                                                int lastChecked;
 
-                                                public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                                                        long arg3) {
+                                                public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3) {
                                                     if (somethingChecked) {
-                                                        //                                            ListView lv = (ListView) arg0;
-                                                        //                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
                                                         CheckedTextView cv = (CheckedTextView) arg1;
                                                         cv.setChecked(false);
                                                     }
-                                                    //                                        ListView lv = (ListView) arg0;
-                                                    //                                        TextView tv = (TextView) lv.getChildAt(arg2);
                                                     CheckedTextView cv = (CheckedTextView) arg1;
                                                     if (!cv.isChecked())
                                                         cv.setChecked(true);
-                                                    lastChecked = arg2;
                                                     somethingChecked = true;
 
+                                                    try{
+                                                        JSONObject item = fridgeArr.getJSONObject(arg2);
+                                                        String itemID = item.getString("id");
+                                                        String quantity = item.getString("quantity");
+                                                        String expires = item.getString("expirationdate");
+                                                        ((GlobalVariables) getApplication()).setItemID(itemID);
+                                                        ((GlobalVariables) getApplication()).setQuantity(quantity);
+                                                        ((GlobalVariables) getApplication()).setExpiration(expires);
+                                                    } catch (JSONException e){
+
+                                                    }
+
                                                     ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
+
+                                                    Intent intent = new Intent(MainActivity.this, ItemInfo.class);
+                                                    startActivity(intent);
                                                 }
                                             });
 
