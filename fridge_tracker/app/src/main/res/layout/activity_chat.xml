@@ -43,7 +43,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="100dp"
-        android:text="Chat Log:\n"
+        android:text="Chat Log: Messages will be deleted upon close.\n"
         android:textSize="20sp" />
 
     <EditText

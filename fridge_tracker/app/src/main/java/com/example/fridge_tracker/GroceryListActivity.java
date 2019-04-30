@@ -55,7 +55,7 @@ public class GroceryListActivity extends AppCompatActivity {
     ArrayList<String> myDataset;
     FloatingActionButton floatingActionButton;
     ArrayList<String> items = new ArrayList<String>();
-    //String[] items = new String[20];
+    Boolean loaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,9 @@ public class GroceryListActivity extends AppCompatActivity {
         refButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getGroceries();
+                if(loaded == false){
+                    getGroceries();
+                }
             }
         });
 
@@ -122,94 +124,104 @@ public class GroceryListActivity extends AppCompatActivity {
 
 
     private void getGroceries() {
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/" + ((GlobalVariables) getApplication()).getFridgeID() + "/list";
-        JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
-                url, null,
-                new Response.Listener<JSONArray>() {
-                    /**
-                     * api returns the list
-                     *
-                     * @param response
-                     */
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            Log.d("groclist", "response: " + response.toString());
-                            if (response.length() != 0) {
-                                for (int i = 0; (i < response.length() && i < 20); i++) {
-                                    JSONObject groceryItem = response.getJSONObject(i);
-                                    String grocery = groceryItem.get("foodname").toString();
+        String fridgeID = ((GlobalVariables) getApplication()).getFridgeID();
+        if (fridgeID == null){
+            items.add("Please refresh while contents are loading...");
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this, android.R.layout.simple_list_item_single_choice, items);
+            list.setAdapter(adapter);
+        }
+        else {
+            loaded = true;
+            items.clear();
+            RequestQueue mQueue = Volley.newRequestQueue(this);
+            String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/" + fridgeID + "/list";
+            JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
+                    url, null,
+                    new Response.Listener<JSONArray>() {
+                        /**
+                         * api returns the list
+                         *
+                         * @param response
+                         */
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try {
+                                Log.d("groclist", "response: " + response.toString());
+                                if (response.length() != 0) {
+                                    for (int i = 0; (i < response.length() && i < 20); i++) {
+                                        JSONObject groceryItem = response.getJSONObject(i);
+                                        String grocery = groceryItem.get("foodname").toString();
 
-                                    items.add(grocery);
+                                        items.add(grocery);
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this, android.R.layout.simple_list_item_single_choice, items);
+                                        list.setAdapter(adapter);
+
+                                        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            boolean somethingChecked = false;
+                                            int lastChecked;
+
+                                            public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                                                    long arg3) {
+                                                if (somethingChecked) {
+                                                    //                                            ListView lv = (ListView) arg0;
+                                                    //                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
+                                                    CheckedTextView cv = (CheckedTextView) arg1;
+                                                    cv.setChecked(false);
+                                                }
+                                                //                                        ListView lv = (ListView) arg0;
+                                                //                                        TextView tv = (TextView) lv.getChildAt(arg2);
+                                                CheckedTextView cv = (CheckedTextView) arg1;
+                                                if (!cv.isChecked())
+                                                    cv.setChecked(true);
+                                                lastChecked = arg2;
+                                                somethingChecked = true;
+
+                                                ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
+                                            }
+                                        });
+
+                                    }
+                                } else {
+                                    items.add("There are no items in your grocery list");
                                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this, android.R.layout.simple_list_item_single_choice, items);
                                     list.setAdapter(adapter);
-
-                                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        boolean somethingChecked = false;
-                                        int lastChecked;
-
-                                        public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                                                long arg3) {
-                                            if (somethingChecked) {
-//                                            ListView lv = (ListView) arg0;
-//                                            TextView tv = (TextView) lv.getChildAt(lastChecked);
-                                                CheckedTextView cv = (CheckedTextView) arg1;
-                                                cv.setChecked(false);
-                                            }
-//                                        ListView lv = (ListView) arg0;
-//                                        TextView tv = (TextView) lv.getChildAt(arg2);
-                                            CheckedTextView cv = (CheckedTextView) arg1;
-                                            if (!cv.isChecked())
-                                                cv.setChecked(true);
-                                            lastChecked = arg2;
-                                            somethingChecked = true;
-
-                                            ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
-                                        }
-                                    });
-
                                 }
-                            }
-                            else{
-                                items.add("There are no items in your grocery list");
-                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(GroceryListActivity.this, android.R.layout.simple_list_item_single_choice, items);
-                                list.setAdapter(adapter);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
                         }
 
+                    }, new Response.ErrorListener() {
 
-                    }
-                }, new Response.ErrorListener() {
+                /**
+                 * Error catcher
+                 *
+                 * @param error
+                 */
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            }) {
 
-            /**
-             * Error catcher
-             *
-             * @param error
-             */
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }) {
+                /**
+                 * Passing some request headers
+                 **/
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
 
-            /**
-             * Passing some request headers
-             **/
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
+            };
 
-        };
+            mQueue.add(jsonArrReq);
 
-        mQueue.add(jsonArrReq);
-
+        }
     }
 
 }
