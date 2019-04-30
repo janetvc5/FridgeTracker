@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +39,8 @@ public class SearchActivity extends AppCompatActivity {
     EditText search;
     Button searchButton, buttonAdd;
     ListView list;
-    String[] items = new String[20];
+    ArrayList<String> items = new ArrayList<String>();
+    //String[] items = new String[20];
 
 
     @Override
@@ -112,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
                                 String foodInIndex = hintItem.getString("label");
                                 Log.d("fooditem", "food label" + foodInIndex);
 
-                                items[i]= foodInIndex;
+                                items.add(foodInIndex);
                                 ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                 list.setAdapter(adapter);
 
@@ -136,7 +138,7 @@ public class SearchActivity extends AppCompatActivity {
                                         lastChecked = arg2;
                                         somethingChecked = true;
 
-                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items[arg2]);
+                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
                                     }
                                 });
 

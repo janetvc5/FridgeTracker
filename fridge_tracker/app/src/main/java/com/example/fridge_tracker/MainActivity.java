@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
     ListView list;
-    String[] items=new String[20];
+    ArrayList<String> items = new ArrayList<String>();
+    //String[] items=new String[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,17 +108,14 @@ public class MainActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getTitle().equals("Grocery List")) {
-                             Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
-                             startActivity(intent1);
-                        } else if (item.getTitle().equals("Search")) {
+                            Intent intent1 = new Intent(MainActivity.this, GroceryListActivity.class);
+                            startActivity(intent1);
+                        } else if (item.getTitle().equals("Fridge View")) {
                             Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                             startActivity(intent2);
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent3);
-                        } else if (item.getTitle().equals("My Fridge")){
-                            Intent intent4 = new Intent(MainActivity.this, MainActivity.class);
-                            startActivity(intent4);
                         }
 
                         return true;
@@ -133,11 +132,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void getFridge(int idNum)
     {
-        //set list items to - if there is no food in fridge
-        for(int f=0; f<items.length; f++){
-            items[f]="-";
-        }
-
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/"+idNum+"/contents";
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
@@ -157,13 +151,16 @@ public class MainActivity extends AppCompatActivity {
                             //Log.d("hints", "hints response " + stuff);
 
 
-                            for (int i = 0; (i < response.length() && i < 20); i++){
-                                JSONObject groceryItem=response.getJSONObject(i);
-                                String grocery=groceryItem.get("itemname").toString();
+                            for (int i = 0; (i < response.length()); i++){
+                                JSONObject fridgeItem = response.getJSONObject(i);
+                                String fridge = fridgeItem.getString("foodname");
+                                Log.d("hints", "hints response " + fridge);
+
+                                //String fridge = fridgeItem.get("foodname").toString();
                                 //String groceryItem = itemInList.toString();
                                 //String groceryItem = itemInList.getString("label");
 
-                                items[i]= grocery;
+                                items.add(fridge);
                                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_single_choice, items);
                                 list.setAdapter(adapter);
 
@@ -187,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                                         lastChecked = arg2;
                                         somethingChecked = true;
 
-                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items[arg2]);
+                                        ((GlobalVariables) getApplication()).setSelectedSearchItem(items.get(arg2));
                                     }
                                 });
 
@@ -225,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mQueue.add(jsonArrReq);
+
     }
 
     private void getJson(String userID)
@@ -264,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onErrorResponse(VolleyError error) {
-              error.printStackTrace();
+                error.printStackTrace();
             }
         }) {
 
