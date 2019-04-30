@@ -116,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent3);
+                        } else if (item.getTitle().equals("My Fridge")) {
+                            Intent intent4 = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(intent4);
                         }
 
                         return true;

@@ -100,11 +100,13 @@ public class GroceryListActivity extends AppCompatActivity {
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(GroceryListActivity.this, ChatActivity.class);
                             startActivity(intent3);
+                        } else if (item.getTitle().equals("My Fridge")) {
+                            Intent intent4 = new Intent(GroceryListActivity.this, MainActivity.class);
+                            startActivity(intent4);
                         }
-
                         return true;
-
                     }
+
                 });
 
                 popup.show(); //showing popup menu
@@ -114,8 +116,7 @@ public class GroceryListActivity extends AppCompatActivity {
     }
 
 
-    private void getGroceries()
-    {
+    private void getGroceries() {
 //            //set list items to - if there is no food in fridge
 //            for(int f=0; f<items.length; f++){
 //                items.[f]="-";
