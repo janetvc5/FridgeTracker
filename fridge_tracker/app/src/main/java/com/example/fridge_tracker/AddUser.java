@@ -41,7 +41,7 @@ public class AddUser extends AppCompatActivity {
         setContentView(R.layout.activity_add_user);
 
         sendButton = (Button) findViewById(R.id.sendbutton);
-        getButton = (Button) findViewById(R.id.getbutton);
+        getButton = (Button) findViewById(R.id.addbutton);
         getUserInfo = (EditText) findViewById(R.id.sendtext);
         sendRole = (EditText) findViewById(R.id.sendrole);
         sendID = (EditText) findViewById(R.id.sendfridgeid);

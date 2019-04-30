@@ -94,9 +94,6 @@ public class GroceryListActivity extends AppCompatActivity {
                         if (item.getTitle().equals("Grocery List")) {
                             Intent intent1 = new Intent(GroceryListActivity.this, GroceryListActivity.class);
                             startActivity(intent1);
-                        } else if (item.getTitle().equals("Fridge View")) {
-                            Intent intent2 = new Intent(GroceryListActivity.this, SearchActivity.class);
-                            startActivity(intent2);
                         } else if (item.getTitle().equals("Chat")) {
                             Intent intent3 = new Intent(GroceryListActivity.this, ChatActivity.class);
                             startActivity(intent3);
