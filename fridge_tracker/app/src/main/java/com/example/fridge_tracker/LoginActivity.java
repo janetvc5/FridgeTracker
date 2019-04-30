@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView title;
     TextView attempts;
     int counter = 5;
+    String fridgeNum;
 
     String loggeduser;
     ArrayList<String> loggedInUsers;
@@ -116,7 +117,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 //user userID to get other values
 
-
+                                getJson(userID);
+                                ((GlobalVariables) getApplication()).setFridgeID(fridgeNum);
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
@@ -208,6 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             String fName = response.getString("role");
                             String lName = String.valueOf(response.getInt("fridgeid"));
+                            fridgeNum=lName;
 
 
                             Log.d("Role: ",fName + "  Fridge for user: " + lName);
