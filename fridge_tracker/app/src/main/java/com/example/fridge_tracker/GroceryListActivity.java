@@ -116,6 +116,10 @@ public class GroceryListActivity extends AppCompatActivity {
 
         private void getGroceries()
         {
+            //set list items to - if there is no food in fridge
+            for(int f=0; f<items.length; f++){
+                items[f]="-";
+            }
 
             RequestQueue mQueue = Volley.newRequestQueue(this);
             String url = "http://cs309-af-1.misc.iastate.edu:8080/item";
