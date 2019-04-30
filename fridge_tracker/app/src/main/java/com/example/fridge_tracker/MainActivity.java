@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     EditText getUserInfo, sendID, sendRole;
     ListView list;
     ArrayList<String> items = new ArrayList<String>();
+    Boolean loaded = false;
 
 
     @Override
@@ -73,7 +74,10 @@ public class MainActivity extends AppCompatActivity {
         ref.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFridge();
+                if (loaded == false){
+                    getFridge();
+                }
+
             }
         });
 
@@ -115,11 +119,12 @@ public class MainActivity extends AppCompatActivity {
     {
         String fridgeID = ((GlobalVariables) getApplication()).getFridgeID();
             if (fridgeID == null){
-                items.add("Please wait while contents are loading...");
+                items.add("Please refresh while contents are loading...");
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_single_choice, items);
                 list.setAdapter(adapter);
             }
             else {
+                loaded = true;
                 RequestQueue mQueue = Volley.newRequestQueue(this);
                 String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/" + fridgeID + "/contents";
                 JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
