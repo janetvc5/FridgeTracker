@@ -111,12 +111,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             if ( valid ) {
-                                getAndSetGlobalVariables();
-                                String userID = response.getString("id");
-                                ((GlobalVariables) getApplication()).setUserID(userID);
-                                ((GlobalVariables) getApplication()).setUsername(username);
 
-                                //user userID to get other values
+                                String userID = response.getString("id");
+//                                ((GlobalVariables) getApplication()).setUserID(userID);
+//                                ((GlobalVariables) getApplication()).setUsername(username);
+
+                                ((GlobalVariables) getApplication()).getAndSetGlobalVariables(userID);
+
 
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -191,78 +192,7 @@ public class LoginActivity extends AppCompatActivity {
         return params;
     }
 
-    private void getAndSetGlobalVariables(){
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/user/" + ((GlobalVariables) getApplication()).getUserID();
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, new JSONObject(),
-                new Response.Listener<JSONObject>() {
-
-                    /**
-                     * Back end returns different values for role and fridge id per user
-                     *
-                     * @param response
-                     */
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Log.d("user", "user info: " + response.toString());
-
-
-                            String role = response.getString("role");
-                            ((GlobalVariables) getApplication()).setRole(role);
-
-                            JSONObject fridge = response.getJSONObject("fridge");
-                            String fridgeID = fridge.getString("id");
-                            ((GlobalVariables) getApplication()).setFridgeID(fridgeID);
-
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-
-            /**
-             * Error catcher
-             *
-             * @param error
-             */
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }) {
-
-            /**
-             * Passing some request headers
-             **/
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("fridgeid", "36");
-//                params.put("role", "abc@androidhive.info");
-//
-//
-//                return params;
-//            }
-
-        };
-
-        mQueue.add(jsonObjReq);
-    }
 
 
 

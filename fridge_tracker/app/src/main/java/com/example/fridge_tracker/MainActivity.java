@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 loaded = true;
+                items.clear();
                 RequestQueue mQueue = Volley.newRequestQueue(this);
                 String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/" + fridgeID + "/contents";
                 JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
