@@ -227,7 +227,6 @@ public class AddScreen extends AppCompatActivity {
             params.put("foodname", food);
             params.put("quantity", quantity);
             params.put("expirationdate", expiration);
-
             JSONObject fridge = new JSONObject();
             fridge.put("id", fridgeID);
 

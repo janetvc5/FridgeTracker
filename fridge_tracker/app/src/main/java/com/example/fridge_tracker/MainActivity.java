@@ -37,7 +37,7 @@ import java.util.Map;
  * This is the user's list of items in their fridge.
  */
 public class MainActivity extends AppCompatActivity {
-    Button add;
+    Button add, ref;
     FloatingActionButton floatingActionButton;
     EditText getUserInfo, sendID, sendRole;
     ListView list;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         list = (ListView) findViewById(R.id.list);
         add = (Button) findViewById(R.id.addbutton);
+        ref = (Button) findViewById(R.id.buttonRef2);
         floatingActionButton.setImageResource(R.drawable.listicon);
 
         getFridge();
@@ -66,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i=new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(i);
+            }
+        });
+
+        ref.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFridge();
             }
         });
 

@@ -49,7 +49,7 @@ public class GroceryListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     TextView title;
-    Button addButton;
+    Button addButton, refButton;
     //RecyclerView list;
     ListView list;
     ArrayList<String> myDataset;
@@ -63,6 +63,7 @@ public class GroceryListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grocery_list);
 
         addButton = (Button) findViewById(R.id.buttonAdd);
+        refButton = (Button) findViewById(R.id.buttonRef);
         title = (TextView) findViewById(R.id.title);
         //list = (RecyclerView) findViewById(R.id.groceryList);
         list = (ListView) findViewById(R.id.list);
@@ -76,6 +77,13 @@ public class GroceryListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GroceryListActivity.this, SearchActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        refButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getGroceries();
             }
         });
 
@@ -115,11 +123,10 @@ public class GroceryListActivity extends AppCompatActivity {
 
     private void getGroceries() {
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        String url = "http://cs309-af-1.misc.iastate.edu:8080/grocerylist/" + ((GlobalVariables) getApplication()).getFridgeID();
+        String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/" + ((GlobalVariables) getApplication()).getFridgeID() + "/list";
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONArray>() {
-
                     /**
                      * api returns the list
                      *
