@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         floatingActionButton.setImageResource(R.drawable.listicon);
 
-        getFridge(1);
+        getFridge(((GlobalVariables) getApplication()).getFridgeID());
 
         sendButton.setOnClickListener(new View.OnClickListener() {
 
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getFridge(int idNum)
+    private void getFridge(String idNum)
     {
         RequestQueue mQueue = Volley.newRequestQueue(this);
         String url = "http://cs309-af-1.misc.iastate.edu:8080/fridge/"+idNum+"/contents";
