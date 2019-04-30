@@ -21,30 +21,26 @@ import java.net.URISyntaxException;
  * Using web sockets, this is a live chat between fridge users
  */
 public class ChatActivity extends AppCompatActivity {
-    Button  b1,b2;
-    EditText e1,e2;
+    //Button  b1;
+    Button b2;
+    //EditText e1;
+    EditText e2;
     TextView t1;
+
 
     private WebSocketClient cc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        b1 = (Button) findViewById(R.id.bt1);
+
+
+        //b1 = (Button) findViewById(R.id.bt1);
         b2 = (Button) findViewById(R.id.bt2);
-        e1 = (EditText) findViewById(R.id.et1);
+        //e1 = (EditText) findViewById(R.id.et1);
         e2 = (EditText) findViewById(R.id.et2);
         t1 = (TextView) findViewById(R.id.tx1);
 
-        b1.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * This is the encasement for the chat, holding the code for opening the socket, and sending and receiving messages
-             *
-             * @param view
-             */
-            @Override
-            public void onClick(View view) {
                 Draft[] drafts = {new Draft_6455()};
 
                 /**
@@ -52,7 +48,7 @@ public class ChatActivity extends AppCompatActivity {
                  * computer, and change the ip address to that of your computer.
                  * If running on the emulator, you can use localhost.
                  */
-                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/" + String.valueOf(e1.getText());
+                String w = "ws://cs309-af-1.misc.iastate.edu:8080/websocket/1/" + ((GlobalVariables) getApplication()).getUsername();
 
                 try {
                     Log.d("Socket:", "Trying socket");
@@ -65,13 +61,9 @@ public class ChatActivity extends AppCompatActivity {
                          */
                         @Override
                         public void onMessage(String message) {
+                            String username = ((GlobalVariables) getApplication()).getUsername();
                             Log.d("", "run() returned: " + message);
-                            String s = t1.getText().toString();
-                            //t1.setText("hello world");
-                            //Log.d("first", "run() returned: " + s);
-                            //s=t1.getText().toString();
-                            //Log.d("second", "run() returned: " + s);
-                            t1.setText(s + "\n " + message);
+                            t1.setText(username + "\n " + message);
                         }
 
                         /**
@@ -112,8 +104,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
                 cc.connect();
 
-            }
-        });
 
         b2.setOnClickListener(new View.OnClickListener() {
 
@@ -129,7 +119,8 @@ public class ChatActivity extends AppCompatActivity {
                 }
                 catch (Exception e)
                 {
-                    Log.d("ExceptionSendMessage:", e.getMessage().toString());
+                    Log.d("ExceptionSendMessage:", "there was an error");
+                    t1.setText("We're sorry, your message is not able to be sent right now. Please try again later.");
                 }
             }
         });
