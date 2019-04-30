@@ -43,7 +43,7 @@ public class AddUser extends AppCompatActivity {
         sendButton = (Button) findViewById(R.id.sendbutton);
         getButton = (Button) findViewById(R.id.addbutton);
         getUserInfo = (EditText) findViewById(R.id.sendtext);
-        sendRole = (EditText) findViewById(R.id.sendrole);
+        //sendRole = (EditText) findViewById(R.id.sendRole);
         sendID = (EditText) findViewById(R.id.sendfridgeid);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         confirmAdd = (TextView) findViewById(R.id.confirmAdd);

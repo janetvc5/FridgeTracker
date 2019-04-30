@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         //sendID = (EditText) findViewById(R.id.sendfridgeid);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         list = (ListView) findViewById(R.id.list);
-        add = (Button) findViewById(R.id.addbutton)
+        add = (Button) findViewById(R.id.addbutton);
         floatingActionButton.setImageResource(R.drawable.listicon);
 
         getFridge();

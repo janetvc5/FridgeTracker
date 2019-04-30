@@ -65,6 +65,7 @@
         android:layout_width="395dp"
         android:layout_height="45dp"
         android:layout_marginBottom="36dp"
+        android:background="@color/colorPrimary"
         android:text="Add Food"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
