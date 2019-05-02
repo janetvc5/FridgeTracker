@@ -1,6 +1,8 @@
 package com.example.fridge_tracker;
 
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +36,8 @@ public class AddScreen extends AppCompatActivity {
     EditText etName, etQuantity, etExpiration;
     Button buttonAdd;
     Switch location;
+    Snackbar popUp;
+//    Snackbar popUp2, popUp3;
 
 
 
@@ -54,6 +58,11 @@ public class AddScreen extends AppCompatActivity {
 
         location = (Switch) findViewById(R.id.switch1);
         response = (TextView) findViewById(R.id.response);
+
+        popUp = (Snackbar) Snackbar.make(findViewById(R.id.Coordinator), "You must be a Grocery Shopper or Admin to add items to the grocery list.", Snackbar.LENGTH_SHORT);
+//        popUp2 = (Snackbar) Snackbar.make(findViewById(R.id.Coordinator), ((GlobalVariables) getApplication()).getSelectedSearchItem() + " added to Fridge List", Snackbar.LENGTH_LONG);
+//       popUp3 = (Snackbar) Snackbar.make(findViewById(R.id.Coordinator), ((GlobalVariables) getApplication()).getSelectedSearchItem() + " added to Grocery List", Snackbar.LENGTH_LONG);
+
 
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +92,16 @@ public class AddScreen extends AppCompatActivity {
                 else
                 {
                     try{
-                        postJsonToGrocery();
-                        Intent intentG = new Intent(AddScreen.this, GroceryListActivity.class);
-                        //based on item add info to intent
-                        startActivity(intentG);
+                        if (((GlobalVariables) getApplication()).getRole() != "2" ){
+                            postJsonToGrocery();
+                            Intent intentG = new Intent(AddScreen.this, GroceryListActivity.class);
+                            //based on item add info to intent
+                            startActivity(intentG);
+                        }
+                        else{
+                            popUp.show();
+                        }
+
                     } catch (JSONException e){
 
                     }
@@ -95,7 +110,6 @@ public class AddScreen extends AppCompatActivity {
             }
         });
 
-        //etName.setText((String)SearchActivity.carryOverName);
         etName.setText(((GlobalVariables) getApplication()).getSelectedSearchItem());
 
     }
@@ -119,7 +133,9 @@ public class AddScreen extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject jsonresponse) {
 
-                            response.setText(jsonresponse.toString());
+                        //popUp2.show();
+                        response.setText(jsonresponse.toString());
+
 
                     }
                 },new Response.ErrorListener() {
@@ -180,6 +196,7 @@ public class AddScreen extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject jsonresponse) {
 
+                        //popUp3.show();
                         response.setText(jsonresponse.toString());
 
                     }

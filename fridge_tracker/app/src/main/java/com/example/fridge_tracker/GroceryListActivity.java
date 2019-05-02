@@ -3,6 +3,7 @@ package com.example.fridge_tracker;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,6 +59,7 @@ public class GroceryListActivity extends AppCompatActivity {
     ArrayList<String> items = new ArrayList<String>();
     Boolean loaded = false;
     JSONArray grocArr;
+    Snackbar popUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +69,10 @@ public class GroceryListActivity extends AppCompatActivity {
         addButton = (Button) findViewById(R.id.buttonAdd);
         refButton = (Button) findViewById(R.id.buttonRef);
         title = (TextView) findViewById(R.id.title);
-        //list = (RecyclerView) findViewById(R.id.groceryList);
         list = (ListView) findViewById(R.id.list);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        popUp = (Snackbar) Snackbar.make(findViewById(R.id.Coordinator1), "You must be a Grocery Shopper or Admin to add items to the grocery list.", Snackbar.LENGTH_SHORT);
+
 
         getGroceries();
 
@@ -77,8 +80,14 @@ public class GroceryListActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroceryListActivity.this, SearchActivity.class);
-                startActivity(intent);
+                if (((GlobalVariables) getApplication()).getRole() != "2" ){
+                    Intent intent = new Intent(GroceryListActivity.this, SearchActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    popUp.show();
+                }
+
             }
         });
 
